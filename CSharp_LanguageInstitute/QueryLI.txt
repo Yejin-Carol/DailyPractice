@@ -1,0 +1,201 @@
+﻿-- 1. 과목 테이블 만들기
+CREATE TABLE course_t
+(
+    crs_id    INT             NOT NULL, 
+    crs_name   VARCHAR2(30)    NOT NULL, 
+    crs_level  VARCHAR2(20)    NOT NULL, 
+    semester     VARCHAR2(20)    NOT NULL, 
+    CONSTRAINT PK_course_t PRIMARY KEY (crs_id)
+)
+/
+
+CREATE SEQUENCE course_t_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+COMMENT ON TABLE course_t IS 'CourseInfo';
+
+COMMENT ON COLUMN course_t.crs_id IS 'courseid';
+
+COMMENT ON COLUMN course_t.crs_name IS 'coursename';
+
+COMMENT ON COLUMN course_t.crs_level IS 'courselevel';
+
+COMMENT ON COLUMN course_t.semester IS 'coursesemeter';
+
+-- 2. 학생 테이블 만들기
+CREATE TABLE STUDENT_T
+(
+    stu_id      INT             NOT NULL, 
+    stu_name    VARCHAR2(30)    NOT NULL, 
+    tel         VARCHAR2(30)    NOT NULL, 
+    birth       VARCHAR2(30)    NOT NULL, 
+    email       VARCHAR2(40)    NOT NULL, 
+    course_id   INT             NOT NULL,
+    CONSTRAINT PK_student_t PRIMARY KEY (stu_id)
+);
+
+CREATE SEQUENCE STUDENT_T_SEQ
+START WITH 1
+INCREMENT BY 1;
+
+COMMENT ON TABLE STUDENT_T IS 'StudentInfo';
+
+COMMENT ON COLUMN STUDENT_T.stu_id IS 'studentid';
+
+COMMENT ON COLUMN STUDENT_T.stu_name IS 'studentname';
+
+COMMENT ON COLUMN STUDENT_T.tel IS 'studenttel';
+
+COMMENT ON COLUMN STUDENT_T.birth IS 'studentbirth';
+
+COMMENT ON COLUMN STUDENT_T.email IS 'studentemail';
+
+COMMENT ON COLUMN STUDENT_T.course_id IS 'course_id';
+
+ALTER TABLE STUDENT_T
+    ADD CONSTRAINT FK_student_t_crs_id_course_t_ FOREIGN KEY (crs_id)
+        REFERENCES course_t (crs_id);
+
+--3. 강사진 테이블 만들기
+
+CREATE TABLE staff_t
+(
+    staff_id    INT             NOT NULL, 
+    name        VARCHAR2(20)    NOT NULL, 
+    tel         VARCHAR2(20)    NOT NULL, 
+    birth       VARCHAR2(20)    NOT NULL, 
+    subject     VARCHAR2(20)    NOT NULL, 
+    workType    VARCHAR2(20)    NOT NULL, 
+    salary      VARCHAR2(20)    NOT NULL, 
+    CONSTRAINT PK_staff_t PRIMARY KEY (staff_id)
+)
+/
+
+CREATE SEQUENCE staff_t_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+--DROP TRIGGER staff_t_AI_TRG;
+/
+
+--DROP SEQUENCE staff_t_SEQ;
+/
+
+COMMENT ON TABLE staff_t IS 'Staff info'
+/
+
+COMMENT ON COLUMN staff_t.staff_id IS 'staffid'
+/
+
+COMMENT ON COLUMN staff_t.name IS 'staffname'
+/
+
+COMMENT ON COLUMN staff_t.tel IS 'stafftel'
+/
+
+COMMENT ON COLUMN staff_t.birth IS 'staffbirth'
+/
+
+COMMENT ON COLUMN staff_t.subject IS 'staffsubject'
+/
+
+COMMENT ON COLUMN staff_t.workType IS 'staffworktype'
+/
+
+COMMENT ON COLUMN staff_t.salary IS 'staffsalary'
+/
+
+--4. 과목 상세 테이블
+
+CREATE TABLE crsitem_t
+(
+    crsitem_id  INT             NOT NULL, 
+    idx            INT             NOT NULL, 
+    crsName        VARCHAR2(30)    NOT NULL, 
+    price          VARCHAR2(20)    NOT NULL, 
+    crs_id         INT             NOT NULL, 
+    CONSTRAINT PK_crsitem_t PRIMARY KEY (crsitem_id)
+);
+
+CREATE SEQUENCE crsitem_t_SEQ
+START WITH 1
+INCREMENT BY 1;
+
+
+COMMENT ON TABLE crsitem_t IS 'CourseItem';
+
+COMMENT ON COLUMN crsitem_t.crsitem_id IS 'CourseItemId';
+
+COMMENT ON COLUMN crsitem_t.idx IS 'crsdetailidx';
+
+COMMENT ON COLUMN crsitem_t.crsName IS 'courseName';
+
+COMMENT ON COLUMN crsitem_t.price IS 'courseprice';
+
+COMMENT ON COLUMN crsitem_t.crs_id IS 'courseid';
+
+ALTER TABLE crsitem_t
+    ADD CONSTRAINT FK_crsitem_t_crs_id_course_t FOREIGN KEY (crs_id)
+        REFERENCES course_t (crs_id);
+
+-- 수강 등록 내역
+CREATE TABLE reg_t
+(
+    reg_id     INT             NOT NULL, 
+    stu_id         INT             NOT NULL, 
+    indate         VARCHAR2(20)    NOT NULL, 
+    staff_id       INT             NOT NULL, 
+    crsitem_id    INT             NOT NULL, 
+    total_price    INT             NOT NULL, 
+    CONSTRAINT PK_reg_t PRIMARY KEY (reg_id)
+);
+
+CREATE SEQUENCE reg_t_SEQ
+START WITH 1
+INCREMENT BY 1;
+
+COMMENT ON TABLE reg_t IS 'RegisDetail';
+
+COMMENT ON COLUMN reg_t.reg_id IS 'registerid';
+
+COMMENT ON COLUMN reg_t.stu_id IS 'studentid';
+
+COMMENT ON COLUMN reg_t.indate IS 'registerdate';
+
+COMMENT ON COLUMN reg_t.staff_id IS 'staffid';
+
+COMMENT ON COLUMN reg_t.crsitem_id IS 'courseitemid';
+
+COMMENT ON COLUMN reg_t.total_price IS 'coursetotal';
+
+ALTER TABLE reg_t
+    ADD CONSTRAINT FK_reg_t_staff_id_staff_t_ FOREIGN KEY (staff_id)
+        REFERENCES staff_t (staff_id);
+
+ALTER TABLE reg_t
+    ADD CONSTRAINT FK_reg_t_stu_id_student_t_ FOREIGN KEY (stu_id)
+        REFERENCES student_t (stu_id);
+
+ALTER TABLE reg_t
+    ADD CONSTRAINT FK_reg_t_crsitem_id_crsitem_t FOREIGN KEY (crsitem_id)
+        REFERENCES crsitem_t (crsitem_id);
+
+-- 테이블/시퀀스 지우기
+DROP SEQUENCE reg_t_SEQ;
+DROP TABLE reg_t;
+
+DROP SEQUENCE crsitem_t_SEQ;
+DROP TABLE crsitem_t;
+
+DROP SEQUENCE staff_t_SEQ;
+DROP TABLE staff_t;
+
+DROP SEQUENCE student_t_SEQ;
+DROP TABLE student_t;
+
+DROP SEQUENCE course_t_SEQ;
+DROP TABLE course_t;
+
