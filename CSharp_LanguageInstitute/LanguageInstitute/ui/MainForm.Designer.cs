@@ -100,7 +100,7 @@ namespace LanguageInstitute
             this.stu_RegisterInfo.FillHoverColor = System.Drawing.Color.DarkSlateBlue;
             this.stu_RegisterInfo.FillPressColor = System.Drawing.Color.BlueViolet;
             this.stu_RegisterInfo.FillSelectedColor = System.Drawing.Color.MediumSlateBlue;
-            this.stu_RegisterInfo.Font = new System.Drawing.Font("Han Santteut Dotum", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.stu_RegisterInfo.Font = new System.Drawing.Font("KBIZ한마음고딕 M", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.stu_RegisterInfo.ForeColor = System.Drawing.Color.GhostWhite;
             this.stu_RegisterInfo.Location = new System.Drawing.Point(563, 98);
             this.stu_RegisterInfo.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -128,7 +128,7 @@ namespace LanguageInstitute
             this.stuView.FillHoverColor = System.Drawing.Color.DarkSlateBlue;
             this.stuView.FillPressColor = System.Drawing.Color.BlueViolet;
             this.stuView.FillSelectedColor = System.Drawing.Color.MediumSlateBlue;
-            this.stuView.Font = new System.Drawing.Font("Han Santteut Dotum", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.stuView.Font = new System.Drawing.Font("KBIZ한마음고딕 M", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.stuView.ForeColor = System.Drawing.Color.GhostWhite;
             this.stuView.Location = new System.Drawing.Point(563, 195);
             this.stuView.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -155,7 +155,7 @@ namespace LanguageInstitute
             this.uiSymbolButton1.FillHoverColor = System.Drawing.Color.DarkSlateBlue;
             this.uiSymbolButton1.FillPressColor = System.Drawing.Color.BlueViolet;
             this.uiSymbolButton1.FillSelectedColor = System.Drawing.Color.MediumSlateBlue;
-            this.uiSymbolButton1.Font = new System.Drawing.Font("Han Santteut Dotum", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.uiSymbolButton1.Font = new System.Drawing.Font("KBIZ한마음고딕 M", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.uiSymbolButton1.ForeColor = System.Drawing.Color.GhostWhite;
             this.uiSymbolButton1.Location = new System.Drawing.Point(563, 292);
             this.uiSymbolButton1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -182,7 +182,7 @@ namespace LanguageInstitute
             this.regView.FillHoverColor = System.Drawing.Color.DarkSlateBlue;
             this.regView.FillPressColor = System.Drawing.Color.BlueViolet;
             this.regView.FillSelectedColor = System.Drawing.Color.MediumSlateBlue;
-            this.regView.Font = new System.Drawing.Font("Han Santteut Dotum", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.regView.Font = new System.Drawing.Font("KBIZ한마음고딕 M", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.regView.ForeColor = System.Drawing.Color.GhostWhite;
             this.regView.Location = new System.Drawing.Point(563, 389);
             this.regView.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -209,7 +209,7 @@ namespace LanguageInstitute
             this.btnAdmin.FillHoverColor = System.Drawing.Color.DarkSlateBlue;
             this.btnAdmin.FillPressColor = System.Drawing.Color.BlueViolet;
             this.btnAdmin.FillSelectedColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnAdmin.Font = new System.Drawing.Font("Han Santteut Dotum", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnAdmin.Font = new System.Drawing.Font("KBIZ한마음고딕 M", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnAdmin.ForeColor = System.Drawing.Color.GhostWhite;
             this.btnAdmin.Location = new System.Drawing.Point(563, 583);
             this.btnAdmin.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -236,7 +236,7 @@ namespace LanguageInstitute
             this.studyResources.FillHoverColor = System.Drawing.Color.DarkSlateBlue;
             this.studyResources.FillPressColor = System.Drawing.Color.BlueViolet;
             this.studyResources.FillSelectedColor = System.Drawing.Color.MediumSlateBlue;
-            this.studyResources.Font = new System.Drawing.Font("Han Santteut Dotum", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.studyResources.Font = new System.Drawing.Font("KBIZ한마음고딕 M", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.studyResources.ForeColor = System.Drawing.Color.GhostWhite;
             this.studyResources.Location = new System.Drawing.Point(563, 486);
             this.studyResources.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
@@ -273,7 +273,7 @@ namespace LanguageInstitute
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 33F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.White;

@@ -13,7 +13,7 @@ namespace LanguageInstitute.handler
             "(PORT=1521)))" +
             "(CONNECT_DATA=(SERVER=DEDICATED)" +
             "(SERVICE_NAME=xe)));" +
-            "User Id=SQLDB;Password=1234;";
+            "User Id=Practice;Password=1234;";
         OracleConnection conn;
         OracleCommand cmd;
 

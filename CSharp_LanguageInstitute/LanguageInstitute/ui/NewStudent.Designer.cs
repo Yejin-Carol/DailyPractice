@@ -62,6 +62,7 @@ namespace LanguageInstitute.ui
             this.level = new Sunny.UI.UIComboBox();
             this.uiSymbolLabel10 = new Sunny.UI.UISymbolLabel();
             this.period = new Sunny.UI.UIComboBox();
+            this.uiButton1 = new Sunny.UI.UIButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,7 +89,7 @@ namespace LanguageInstitute.ui
             this.newStuSave.Cursor = System.Windows.Forms.Cursors.Hand;
             this.newStuSave.FillColor = System.Drawing.Color.Green;
             this.newStuSave.Font = new System.Drawing.Font("Microsoft YaHei", 12F);
-            this.newStuSave.Location = new System.Drawing.Point(152, 471);
+            this.newStuSave.Location = new System.Drawing.Point(152, 490);
             this.newStuSave.Margin = new System.Windows.Forms.Padding(2);
             this.newStuSave.MinimumSize = new System.Drawing.Size(1, 1);
             this.newStuSave.Name = "newStuSave";
@@ -103,8 +104,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel6
             // 
             this.uiSymbolLabel6.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel6.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel6.Location = new System.Drawing.Point(144, 109);
+            this.uiSymbolLabel6.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel6.Location = new System.Drawing.Point(142, 109);
             this.uiSymbolLabel6.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel6.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel6.Name = "uiSymbolLabel6";
@@ -120,8 +121,8 @@ namespace LanguageInstitute.ui
             // 
             this.stuEmailId.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.stuEmailId.FillColor = System.Drawing.Color.White;
-            this.stuEmailId.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stuEmailId.Location = new System.Drawing.Point(248, 185);
+            this.stuEmailId.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuEmailId.Location = new System.Drawing.Point(246, 185);
             this.stuEmailId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuEmailId.Maximum = 2147483647D;
             this.stuEmailId.Minimum = -2147483648D;
@@ -138,13 +139,13 @@ namespace LanguageInstitute.ui
             // 
             this.stuEmailD.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.stuEmailD.FillColor = System.Drawing.Color.White;
-            this.stuEmailD.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuEmailD.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stuEmailD.Items.AddRange(new object[] {
             "@naver.com",
             "@gmail.com",
             "@kakao.com",
             "@hotmail.com"});
-            this.stuEmailD.Location = new System.Drawing.Point(319, 185);
+            this.stuEmailD.Location = new System.Drawing.Point(317, 185);
             this.stuEmailD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuEmailD.MinimumSize = new System.Drawing.Size(44, 0);
             this.stuEmailD.Name = "stuEmailD";
@@ -159,8 +160,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel2
             // 
             this.uiSymbolLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel2.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel2.Location = new System.Drawing.Point(142, 182);
+            this.uiSymbolLabel2.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel2.Location = new System.Drawing.Point(140, 182);
             this.uiSymbolLabel2.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel2.Name = "uiSymbolLabel2";
@@ -177,7 +178,7 @@ namespace LanguageInstitute.ui
             this.stuClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.stuClose.FillColor = System.Drawing.Color.Orchid;
             this.stuClose.Font = new System.Drawing.Font("Microsoft YaHei", 12F);
-            this.stuClose.Location = new System.Drawing.Point(248, 471);
+            this.stuClose.Location = new System.Drawing.Point(248, 490);
             this.stuClose.Margin = new System.Windows.Forms.Padding(2);
             this.stuClose.MinimumSize = new System.Drawing.Size(1, 1);
             this.stuClose.Name = "stuClose";
@@ -192,8 +193,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel3
             // 
             this.uiSymbolLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel3.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel3.Location = new System.Drawing.Point(144, 149);
+            this.uiSymbolLabel3.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel3.Location = new System.Drawing.Point(142, 149);
             this.uiSymbolLabel3.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel3.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel3.Name = "uiSymbolLabel3";
@@ -208,8 +209,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel1
             // 
             this.uiSymbolLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel1.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel1.Location = new System.Drawing.Point(144, 74);
+            this.uiSymbolLabel1.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel1.Location = new System.Drawing.Point(142, 74);
             this.uiSymbolLabel1.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel1.Name = "uiSymbolLabel1";
@@ -225,7 +226,7 @@ namespace LanguageInstitute.ui
             // 
             this.stuDay.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.stuDay.FillColor = System.Drawing.Color.White;
-            this.stuDay.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuDay.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stuDay.Items.AddRange(new object[] {
             "01",
             "02",
@@ -258,7 +259,7 @@ namespace LanguageInstitute.ui
             "29",
             "30",
             "31"});
-            this.stuDay.Location = new System.Drawing.Point(391, 149);
+            this.stuDay.Location = new System.Drawing.Point(389, 149);
             this.stuDay.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuDay.MinimumSize = new System.Drawing.Size(63, 0);
             this.stuDay.Name = "stuDay";
@@ -274,7 +275,7 @@ namespace LanguageInstitute.ui
             // 
             this.stuMonth.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.stuMonth.FillColor = System.Drawing.Color.White;
-            this.stuMonth.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuMonth.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stuMonth.Items.AddRange(new object[] {
             "12",
             "11",
@@ -288,7 +289,7 @@ namespace LanguageInstitute.ui
             "03",
             "02",
             "01"});
-            this.stuMonth.Location = new System.Drawing.Point(319, 149);
+            this.stuMonth.Location = new System.Drawing.Point(317, 149);
             this.stuMonth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuMonth.MinimumSize = new System.Drawing.Size(63, 0);
             this.stuMonth.Name = "stuMonth";
@@ -304,7 +305,7 @@ namespace LanguageInstitute.ui
             // 
             this.stuYear.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.stuYear.FillColor = System.Drawing.Color.White;
-            this.stuYear.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuYear.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stuYear.Items.AddRange(new object[] {
             "2010",
             "2009",
@@ -327,7 +328,7 @@ namespace LanguageInstitute.ui
             "1992",
             "1991",
             "1990"});
-            this.stuYear.Location = new System.Drawing.Point(249, 149);
+            this.stuYear.Location = new System.Drawing.Point(247, 149);
             this.stuYear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuYear.MinimumSize = new System.Drawing.Size(63, 0);
             this.stuYear.Name = "stuYear";
@@ -343,8 +344,8 @@ namespace LanguageInstitute.ui
             // 
             this.stuTelB.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.stuTelB.FillColor = System.Drawing.Color.White;
-            this.stuTelB.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stuTelB.Location = new System.Drawing.Point(326, 109);
+            this.stuTelB.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuTelB.Location = new System.Drawing.Point(324, 109);
             this.stuTelB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuTelB.Maximum = 2147483647D;
             this.stuTelB.Minimum = -2147483648D;
@@ -361,12 +362,12 @@ namespace LanguageInstitute.ui
             // 
             this.stuTelH.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.stuTelH.FillColor = System.Drawing.Color.White;
-            this.stuTelH.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuTelH.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stuTelH.Items.AddRange(new object[] {
             "010",
             "011",
             "016"});
-            this.stuTelH.Location = new System.Drawing.Point(250, 109);
+            this.stuTelH.Location = new System.Drawing.Point(248, 109);
             this.stuTelH.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuTelH.MinimumSize = new System.Drawing.Size(63, 0);
             this.stuTelH.Name = "stuTelH";
@@ -382,8 +383,8 @@ namespace LanguageInstitute.ui
             // 
             this.stuName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.stuName.FillColor = System.Drawing.Color.White;
-            this.stuName.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stuName.Location = new System.Drawing.Point(249, 74);
+            this.stuName.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stuName.Location = new System.Drawing.Point(247, 74);
             this.stuName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.stuName.Maximum = 2147483647D;
             this.stuName.Minimum = -2147483648D;
@@ -410,7 +411,7 @@ namespace LanguageInstitute.ui
             this.uiLine1.FillColor = System.Drawing.Color.White;
             this.uiLine1.Font = new System.Drawing.Font("Microsoft YaHei", 12F);
             this.uiLine1.LineColor = System.Drawing.Color.LightBlue;
-            this.uiLine1.Location = new System.Drawing.Point(13, 212);
+            this.uiLine1.Location = new System.Drawing.Point(13, 257);
             this.uiLine1.Margin = new System.Windows.Forms.Padding(2);
             this.uiLine1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiLine1.Name = "uiLine1";
@@ -421,8 +422,8 @@ namespace LanguageInstitute.ui
             // type
             // 
             this.type.BackColor = System.Drawing.Color.Transparent;
-            this.type.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.type.Location = new System.Drawing.Point(19, 364);
+            this.type.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.type.Location = new System.Drawing.Point(19, 411);
             this.type.Margin = new System.Windows.Forms.Padding(2);
             this.type.MinimumSize = new System.Drawing.Size(1, 1);
             this.type.Name = "type";
@@ -437,8 +438,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel8
             // 
             this.uiSymbolLabel8.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel8.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel8.Location = new System.Drawing.Point(19, 227);
+            this.uiSymbolLabel8.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel8.Location = new System.Drawing.Point(19, 274);
             this.uiSymbolLabel8.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel8.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel8.Name = "uiSymbolLabel8";
@@ -455,7 +456,7 @@ namespace LanguageInstitute.ui
             this.uiLine2.FillColor = System.Drawing.Color.White;
             this.uiLine2.Font = new System.Drawing.Font("Microsoft YaHei", 12F);
             this.uiLine2.LineColor = System.Drawing.Color.LightBlue;
-            this.uiLine2.Location = new System.Drawing.Point(13, 458);
+            this.uiLine2.Location = new System.Drawing.Point(14, 477);
             this.uiLine2.Margin = new System.Windows.Forms.Padding(2);
             this.uiLine2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiLine2.Name = "uiLine2";
@@ -467,7 +468,7 @@ namespace LanguageInstitute.ui
             // 
             this.staffName.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.staffName.FillColor = System.Drawing.Color.White;
-            this.staffName.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.staffName.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.staffName.Items.AddRange(new object[] {
             "Leonardo DiCaprio",
             "Johnny Depp",
@@ -478,7 +479,7 @@ namespace LanguageInstitute.ui
             "Penélope Cruz",
             "Paz Vega",
             ""});
-            this.staffName.Location = new System.Drawing.Point(142, 227);
+            this.staffName.Location = new System.Drawing.Point(142, 274);
             this.staffName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.staffName.MinimumSize = new System.Drawing.Size(44, 0);
             this.staffName.Name = "staffName";
@@ -494,8 +495,8 @@ namespace LanguageInstitute.ui
             // 
             this.engB.BackColor = System.Drawing.Color.Transparent;
             this.engB.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.engB.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.engB.Location = new System.Drawing.Point(142, 364);
+            this.engB.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.engB.Location = new System.Drawing.Point(142, 411);
             this.engB.Margin = new System.Windows.Forms.Padding(2);
             this.engB.MinimumSize = new System.Drawing.Size(1, 1);
             this.engB.Name = "engB";
@@ -509,8 +510,8 @@ namespace LanguageInstitute.ui
             // 
             this.engI.BackColor = System.Drawing.Color.Transparent;
             this.engI.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.engI.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.engI.Location = new System.Drawing.Point(142, 387);
+            this.engI.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.engI.Location = new System.Drawing.Point(142, 434);
             this.engI.Margin = new System.Windows.Forms.Padding(2);
             this.engI.MinimumSize = new System.Drawing.Size(1, 1);
             this.engI.Name = "engI";
@@ -524,8 +525,8 @@ namespace LanguageInstitute.ui
             // 
             this.engA.BackColor = System.Drawing.Color.Transparent;
             this.engA.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.engA.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.engA.Location = new System.Drawing.Point(142, 411);
+            this.engA.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.engA.Location = new System.Drawing.Point(142, 458);
             this.engA.Margin = new System.Windows.Forms.Padding(2);
             this.engA.MinimumSize = new System.Drawing.Size(1, 1);
             this.engA.Name = "engA";
@@ -539,8 +540,8 @@ namespace LanguageInstitute.ui
             // 
             this.spaB.BackColor = System.Drawing.Color.Transparent;
             this.spaB.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.spaB.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.spaB.Location = new System.Drawing.Point(310, 364);
+            this.spaB.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.spaB.Location = new System.Drawing.Point(310, 411);
             this.spaB.Margin = new System.Windows.Forms.Padding(2);
             this.spaB.MinimumSize = new System.Drawing.Size(1, 1);
             this.spaB.Name = "spaB";
@@ -554,8 +555,8 @@ namespace LanguageInstitute.ui
             // 
             this.spaI.BackColor = System.Drawing.Color.Transparent;
             this.spaI.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.spaI.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.spaI.Location = new System.Drawing.Point(310, 387);
+            this.spaI.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.spaI.Location = new System.Drawing.Point(310, 434);
             this.spaI.Margin = new System.Windows.Forms.Padding(2);
             this.spaI.MinimumSize = new System.Drawing.Size(1, 1);
             this.spaI.Name = "spaI";
@@ -569,8 +570,8 @@ namespace LanguageInstitute.ui
             // 
             this.spaA.BackColor = System.Drawing.Color.Transparent;
             this.spaA.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.spaA.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.spaA.Location = new System.Drawing.Point(310, 411);
+            this.spaA.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.spaA.Location = new System.Drawing.Point(310, 458);
             this.spaA.Margin = new System.Windows.Forms.Padding(2);
             this.spaA.MinimumSize = new System.Drawing.Size(1, 1);
             this.spaA.Name = "spaA";
@@ -583,8 +584,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel5
             // 
             this.uiSymbolLabel5.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel5.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel5.Location = new System.Drawing.Point(19, 262);
+            this.uiSymbolLabel5.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel5.Location = new System.Drawing.Point(19, 309);
             this.uiSymbolLabel5.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel5.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel5.Name = "uiSymbolLabel5";
@@ -599,8 +600,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel7
             // 
             this.uiSymbolLabel7.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel7.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel7.Location = new System.Drawing.Point(19, 293);
+            this.uiSymbolLabel7.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel7.Location = new System.Drawing.Point(19, 340);
             this.uiSymbolLabel7.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel7.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel7.Name = "uiSymbolLabel7";
@@ -616,7 +617,7 @@ namespace LanguageInstitute.ui
             // 
             this.subject.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.subject.FillColor = System.Drawing.Color.White;
-            this.subject.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.subject.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.subject.Items.AddRange(new object[] {
             "영어",
             "스페인어",
@@ -627,7 +628,7 @@ namespace LanguageInstitute.ui
             "포루투칼어",
             "태국어",
             "아랍어"});
-            this.subject.Location = new System.Drawing.Point(142, 262);
+            this.subject.Location = new System.Drawing.Point(142, 309);
             this.subject.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.subject.MinimumSize = new System.Drawing.Size(44, 0);
             this.subject.Name = "subject";
@@ -643,12 +644,12 @@ namespace LanguageInstitute.ui
             // 
             this.level.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.level.FillColor = System.Drawing.Color.White;
-            this.level.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.level.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.level.Items.AddRange(new object[] {
             "초급",
             "중급",
             "고급"});
-            this.level.Location = new System.Drawing.Point(142, 296);
+            this.level.Location = new System.Drawing.Point(142, 343);
             this.level.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.level.MinimumSize = new System.Drawing.Size(44, 0);
             this.level.Name = "level";
@@ -663,8 +664,8 @@ namespace LanguageInstitute.ui
             // uiSymbolLabel10
             // 
             this.uiSymbolLabel10.BackColor = System.Drawing.Color.Transparent;
-            this.uiSymbolLabel10.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uiSymbolLabel10.Location = new System.Drawing.Point(19, 328);
+            this.uiSymbolLabel10.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uiSymbolLabel10.Location = new System.Drawing.Point(19, 375);
             this.uiSymbolLabel10.Margin = new System.Windows.Forms.Padding(2);
             this.uiSymbolLabel10.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiSymbolLabel10.Name = "uiSymbolLabel10";
@@ -680,13 +681,13 @@ namespace LanguageInstitute.ui
             // 
             this.period.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.period.FillColor = System.Drawing.Color.White;
-            this.period.Font = new System.Drawing.Font("HCR Dotum", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.period.Font = new System.Drawing.Font("함초롬돋움", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.period.Items.AddRange(new object[] {
             "봄학기(3~5월)",
             "여름학기(6~8월)",
             "가을학기(9~11월)",
             "겨울학기(12~2월)"});
-            this.period.Location = new System.Drawing.Point(142, 328);
+            this.period.Location = new System.Drawing.Point(142, 375);
             this.period.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.period.MinimumSize = new System.Drawing.Size(44, 0);
             this.period.Name = "period";
@@ -698,12 +699,24 @@ namespace LanguageInstitute.ui
             this.period.Text = "선택";
             this.period.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // uiButton1
+            // 
+            this.uiButton1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.uiButton1.Font = new System.Drawing.Font("Microsoft YaHei", 12F);
+            this.uiButton1.Location = new System.Drawing.Point(8, 206);
+            this.uiButton1.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiButton1.Name = "uiButton1";
+            this.uiButton1.Size = new System.Drawing.Size(129, 29);
+            this.uiButton1.TabIndex = 147;
+            this.uiButton1.Text = "이미지 등록";
+            // 
             // NewStudent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(486, 534);
+            this.ClientSize = new System.Drawing.Size(475, 534);
             this.ControlBox = false;
+            this.Controls.Add(this.uiButton1);
             this.Controls.Add(this.uiSymbolLabel9);
             this.Controls.Add(this.period);
             this.Controls.Add(this.uiSymbolLabel10);
@@ -779,5 +792,6 @@ namespace LanguageInstitute.ui
         private Sunny.UI.UIComboBox level;
         private Sunny.UI.UISymbolLabel uiSymbolLabel10;
         private Sunny.UI.UIComboBox period;
+        private Sunny.UI.UIButton uiButton1;
     }
 }

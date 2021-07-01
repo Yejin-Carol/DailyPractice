@@ -142,6 +142,9 @@
     <EmbeddedResource Include="ui\StudyResources.resx">
       <DependentUpon>StudyResources.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ui\ViewStudent.resx">
+      <DependentUpon>ViewStudent.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\LanguageInstitute.ui.Video.datasource" />
     <None Include="Properties\DataSources\YoutubeSearch.VideoInformation.datasource" />
