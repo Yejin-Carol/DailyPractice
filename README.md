@@ -1,4 +1,4 @@
-# DailyPractice :muscle:
+# Daily Practice :muscle:
 ## Courses, Toy Projects, Study and Many Mores!
 
 - :wave: 2021년 7월 새로운 마음으로~ 기존 Repository를 정리하고 다시 시작하려고 합니다.
