@@ -294,6 +294,7 @@ namespace LanguageInstitute
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "                                                               ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
