@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@page import="user.UserDAO" %>
+<%@page import="user.UserDTO" %>
+<%@page import="java.io.PrintWriter" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+	request.setCharacterEncoding("EUC-KR");
+	UserDTO NewUser = new UserDTO();
+	if(request.getParameter("userID")!=null)
+	{
+		NewUser.setUserID(request.getParameter("userID"));
+	}
+	if(request.getParameter("userPassword")!=null)
+	{
+		NewUser.setUserPassword(request.getParameter("userPassword"));
+	}
+	
+	if(NewUser.getUserID() ==null
+			|| NewUser.getUserPassword() == null)
+	{
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('입력이 안 된 게 있다.')");
+		script.println("</script>");
+		script.close();
+		return;
+	}
+	
+	UserDAO userDAO = new UserDAO();
+	
+	
+%>
+
+</body>
+</html>
