@@ -136,6 +136,7 @@ class DataOfExecution {
 	- import static java.lang.Math.*;//모든 클래스 변수와 메소드에 대한 import 선언
 	- import static java.lang.Math.PI; //PI에 대한 static import 선언
 
+
 ## Ch 11. Method Overloading과 String Class
 ### 11-1 Method Overloading (중복 정의)
 * 메소드 오버로딩: 한 클래스 내에 동일한 이름 메소드 둘 이상 정의 허용되지 않지만 매개변수 선언하여 중복 정의하는 것
@@ -179,3 +180,230 @@ class ThisExample {
 ### 11-2 String Class (문자열 표현을 위해 정의된 클래스)
 * String 클래스의 인스턴스 생성
 > String str = new String("Simple String");
+* 하나의 인스턴스 생성 후 공유 가능 왜냐하면 String 인스턴스는 그 안에 저장된 데이터를 수정할 수 없는, 참조만 가능한 인스턴스이기 때문이다. 
+> 참고 equals( )
+> if(str1.equals(str2)) //문자열 내용이 같으면 equals 메소드는 true 반환
+* String 인스턴스를 이용한 switch문의 구성
+> 자바 7 부터가능, 
+> switch(str) {
+> case "one" : .....}
+
+### 11-3 String 클래스의 메소드
+* 자바 문자 참고: (https://docs.oracle.com/javase/8/docs/api/index.html)
+* 문자열 연결시키기: Concatenating 
+> public String concat(String str)
+> String1.concat(String2); //String1과 String2 연결한 결과를 반환
+> String st3 = "Hi".concat(2) 도 가능!
+*문자열 일부 추출: Substring
+> public String substring(int beginIndex) // beginIndex ~ 끝까지 추출
+> String str = "abcdef";
+> str.substring(2); -> 결과값: "cdef"
+> String st3 = st1.substring(2, 4) -> st3 결과값: "cd"
+"cdef"가 담긴 인스턴스가 생성, 이 인스턴스 참조 값 반환돔. substring 메소드 오버로딩 됨.
+* 문자열 내용 비교: comparing
+	- public boolean equals(Object object) -> true/false
+	- public int compareTo (String anotherString)
+	- public int compareToIgnoreCase(String str)
+* 기본 자료형의 값을 문자열로 바꾸기
+	- static String valueOf(boolean b)
+	- static String valueOf(char c)
+	- static String valueOf(double d)
+	- static String valueOf(float f)
+	- static String valueOf(int i)
+	- static String valueOf(long l)
+> 클래스 메소드 이므로 사용법 간단함.
+> double e = 3.143123;
+> String se = String.valueOf(e);
+* 문자열을 대상으로 하는 +연산과 +=연산
+	- System.out.println("hot" + "summer"); //문자열 + 문자열
+	- ("hot".concat("summer"));
+	- String str = "hot" + "summer";
+	- String str = "age: ".concat(String.valueOf(17));
+> String str = "hot"; 
+> str += "summer"; //str = str + "summer" 
+
+* concat 메소드 이어서 호출 가능
+	- String str = "AB".concat("CD").concat("EF");
+		-> String str = "ABCDEF";
+		-> String str = ("AB".concat("CD")).concat("EF");
+		->String str = ("ABCD".concat("EF");
+* 문자열 결합의 최적화: Optimization of String Concatenation
+* StringBuilder 클래스
+	- 내부적으로 문자열을 저장하기 위한 메모리 공간을 지님
+	- public StringBuilder append(int i)  -> 기본 자료형 데이터를 문자열 내용에 추가
+	- public StringBuilder delete(int start, int end) -> 인덱스 start에서부터 end 이전까지의 내용을 삭제
+	- public StringBuilder insert(int offset, String str) -> 인덱스 offset 위치에 str에 전달된 문자열 추가
+	- public StringBuilder replace(int start, int end, String str) -> 인덱스 start에서부터 end 이전까지의 내용을 str의 문자열로 대체
+	- public StringBuilder reverse() -> 저장된 문자열의 내용을 뒤집는다.
+	- public String substring(int start, int end) -> 인덱스 start에서부터 end 이전까지의 내용만 담은 String 인스턴스의 생성 및 반환
+	- public String toString() -> 저장된 문자열의 내용을 담은 String 인스턴스의 생성 및 반환
+* StringBuilder 클래스 이전에 사용이 되던 StringBuffer 클래스
+* 공통점
+	- 생성자를 포함한 메소드의 수
+	- 메소드의 기능
+	- 메소드의 이름과 매개변수의 선언
+* StringBuffer는 쓰레드에 안전하지만, StringBuilder는 쓰레드에 안전하지 않음
+* 멀티 쓰레드에 안전하게 설계된 StringBuffer 클래스는 속도가 느림.
+
+## Ch 12 콘솔 입력과 출력
+### 12-1 콘솔 출력(Console Output)
+* 콘솔: 컴퓨터 대상으로 데이터를 입력 및 출력하는 장치의 총칭. 키보드와 모니터도 콘솔 입출력 장치에 해당함.
+> System.out.println(stb.toString()); : 참조 값이 전달되면, 이 값의 인스턴스를 대상으로 toString 메소드를 호출함. 이때 반환되는 문자열을 출력함.
+> System.out.print (개행 없음)
+* 문자열을 조합해서 출력하는 System.out.printf("정수는 %d, 실수는 %f, 문자는 %c", 12, 24.5, 'A');
+	* printf (1. 출력의 기본 구성을 담은 문자열, 2 문자열 채우기 위한 값)
+		- %d :  10진수 정수 형태
+		- %f : 10진수 실수 형태
+		- %c : 문자 형태, %s: 문자열 형태
+### 12-2 콘솔 입력(Console Input)
+* Scanner 클래스
+	- Scanner (File Source)
+	- Scanner (String source)
+	- Scanner (InputStream source)
+> Scanner sc = new Scanner(source);
+* Scanner 클래스의 키보드 적용
+	- Scanner sc =new Scanner(source); -> Scanner sc = new Scanner(*System.in*);
+* Scanner 클래스의 주요 메소드들
+	- int nextInt( )
+	- byte nextByte( )
+	- String nextLine( )
+	- double nextDouble( )
+	- boolean nextBoolean( )
+
+## Ch 13. 배열 (Array)
+### 13-1 1차원 배열의 이해와 활용
+* 배열은 '자료형이 같은 둘 이상의 값'을 저장할 수 있는 메모리 공간을 의미함.
+* 1차원 배열 생성 방법
+	- 타입이 같은 둘 이상의 데이터를 저장할 수 있는 1차원 구조의 메모리 공간
+	- 자바는 배열도 인스턴스임!
+	- int [ ] : int형 변수로 이뤄진 배열을 참조한다는 의미!
+	- 다양한 배열 생성 -> 메모리 할당
+> int[ ] ref = new int[5]; //길이가 5인 int형 1차원 배열의 생성문
+> int[ ] ref : int형 1차원 배열 인스턴스를 참조할 수 있는 '참조변수의 선언', ref (참조변수) -> 참조 변수 생성 
+> new int[5] : int형 값 5개를 저장할 수 있는 '배열 인스턴스의 생성', length = 5 (인스턴스 변수 length) , 인스턴스 생성 다섯 개의 int형 변수. 즉 배열 생성
+```java
+public static void main(String[] args) {
+		//1. 길이가 3인 int형 1차원 배열 생성
+		int[] arr1 = new int[3];
+				
+		//2. 길이가 5인 double형 1차원 배열 생성
+		double[] arr2 = new double[5];
+		
+		//3. 배열의 참조변수와 인스턴스 생성 분리
+		float[] arr3;
+		arr3 = new float[7];
+		
+		//4. 배열의 인스턴스 변수 접근
+		System.out.println("배열 arr1 길이: " + arr1.length);
+		System.out.println("배열 arr2 길이: " + arr2.length);
+		System.out.println("배열 arr3 길이: " + arr3.length);
+	}
+```
+* 배열 생성과 동시에 초기화
+> int[ ] arr = new int[3]; //왼쪽 더 선호 하지만 int arr[ ] = new int[3]; 가능!
+> int[ ] arr = new int[ ] {1, 2, 3};
+> int[ ] arr = {1, 2, 3};
+
+* 배열의 초기화와 배열의 복사
+	- int[ ] arr = new int[10]; //배열의 모든 요소 0으로 초기화
+	- String[ ] arrs = new String[10];//배열의 모든 요소 null로 초기화
+	- java.util.Arrays 클래스에 정의되어있음
+>public satic void fill(int[] a, int val) -> 두 번째 인자로 전달된 값으로 배열 초기화
+> public static void fill(int[] a, int fromIndex, int toIndex, int val) -> 인덱스 fromIndex ~ (toIndex-1)의 범위까지 val의 값으로 배열 초기화
+* - java.lang.System 클래스
+> public static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length) -> 복사 원본의 위치: 배열 src 인덱스 srcPos
+> 복사 대상의 위치: 배열 dest의 인덱스 destPos
+> 복사할 요소의 수: length
+* main 메소드의 매개변수 선언
+> String[] bts = new String[] {"Jimin", "Jin", "RM", "V", "Jungkook", "Suga", "J-Hope};
+> main(bts);
+```java
+public static void main(String[] args) {
+	
+		String[] bts = new String[] 
+				{"Jimin", "Jin", "RM", "V", "Jungkook", "Suga", "J-Hope"};
+		for(int i=0; i<bts.length; i++) {
+			System.out.println("BTS 멤버 " + (i+1) + " = " + bts[i]);
+		}		
+	}
+```
+> 결과 출력
+> BTS 멤버 1 = Jimin
+BTS 멤버 2 = Jin
+BTS 멤버 3 = RM
+BTS 멤버 4 = V
+BTS 멤버 5 = Jungkook
+BTS 멤버 6 = Suga
+BTS 멤버 7 = J-Hope
+
+### 13-2 enhanced for(for-each)문
+* 새로운 for문의 장점
+	- 코드의 양이 절대적으로 줄어듬
+	- 반복문 구성 과정에서 배열의 길이 정보를 직접 확인하고 입력할 필요가 없음
+	- for(요소: 배열) { 반복할 문장들 }
+```java
+int[] arr = {1, 2, 3, 4, 5};
+		for(int e : arr) {
+			System.out.println(e);
+		}
+```
+```java
+
+	int[] arr = {1, 2, 3, 4, 5};
+		int sum = 0;
+		for(int e : arr) {
+			sum += e;
+		}
+		System.out.println(sum);
+```
+* 인스턴스 배열을 대상으로 하는 enhanced for 문
+	- '기본 자료형의 값'이 아닌 '인스턴스 참조 값'인 경우에도 사용 가능
+	- e가 String형 참조변수로 선언되었음.
+```java
+for(String e : bts) { 
+			//e = bts[0];
+			System.out.println(e);
+		}
+```
+
+### 13-3 다차원 배열의 이해와 활용
+* 2차원 배열의 생성과 접근
+* int[ ][ ] arr = new int [4][3]
+
+|[0][0]  | [0][1]  | [0][2] |
+|--|--|--|
+|[1][0]  | [1][1]  | [1][2] |
+|[2][0]  | [2][1]  | [2][2] |
+|[3][0]  | [3][1]  | [3][2] |
+
+
+```java
+int[][] arr = new int[3][4];
+		int num = 1;
+		// 배열에 값 저장
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				arr[i][j] = num;
+				num++;
+			}
+		}
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				System.out.println(arr[i][j] + "\t");
+				;
+				num++;
+			}
+			System.out.println();
+		}
+
+```
+```java
+int[][] arr = { { 11 }, { 22, 33 }, { 44, 55, 66 } };
+		// 배열의 구조대로 내용 출력
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				System.out.println(arr[i][j] + "\t");
+			}
+			System.out.println();
+		}
+```
