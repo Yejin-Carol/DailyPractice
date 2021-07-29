@@ -122,3 +122,47 @@ class SuperSubStatic {
 ### 15-2 메소드 오버라이딩 (재정의)
 * 상위 클래스의 참조변수는 하위 클래스의 인스턴스를 참조할 수 있음.
 * 참조변수의 형을 기준으로 접근 가능한 멤버를 제한하는 것은 코드를 단순하게 함.
+* 클래스의 상속과 참조변수의 참조 가능성에 대한 정리
+
+```mermaid
+graph LR
+A[StrawberryCheeseCake]  --> B[CheeseCake] --> C[Cake]
+```
+> Cake cake1 = new StrawberryCheeseCake();
+> CheeseCake cake2 = new StrawberryCheeseCake();
+> cake1.sweet();//Cake에 정의된 메소드 호출
+> cake2.sweet();//Cake에 정의된 메소드 호출
+> cake2.milky(); //CheeseCake에 정의된 메소드 호출
+
+* 참조변수 간 대입과 형 변환
+> class Cake {
+> public void sweet() {...} }
+> class CheeseCake extends Cake { public void milkey() {...}}
+> CheeseCake ca1 = new CheeseCake();
+> Cake ca2 = ca1; //가능
+> Cake ca3 = new CheeseCake();
+> CheeseCake ca4 = ca 3; // 불가능
+> Cake ca3 =...
+> CheeseCake ca4 = (CheeseCake)ca3; //가능
+
+* 클래스의 상속과 참조변수의 참조 가능성: 배열 관점에서의 정리
+* CheeseCake[] cakes = new CheeseCake[10];
+
+* 메소드 오버라이딩 (Method Overriding) -> 무효화 시키다;;
+> Cake c1 = new Cheesecake();
+> CheeseCake c2 = new CheeseCake();
+> c1.yummmy();//오버라이딩 한 CheeseCake의 yummy 메소드 호출
+> c2.yummy()// 동일
+* 메소드의 이름, 반환형, 매개변수 선언 -> 이 세가지 같아야 '메소드 오버라이딩' 성립함.
+* 메소드 오버라이딩의 일반화
+> > Cake c1 = new StrawberryCheesecake();
+> CheeseCake c2 = new StrawberryCheeseCake();
+> StrawberryCheeseCake c3 = new StrawberryCheeseCake();
+* super.yummy(); 사용시 Cake의 yummy 메소드 호출 가능. 즉, 오버라이딩 된 메소드의 호출을 목적으로도 super가 사용됨.
+* 인스턴스 변수와 클래스 변수도 오버라이딩 대상? 
+	- 변수는 오버라이딩 되지 않음. 참조변수의 형에 따라서 접근하는 변수가 결정됨. 클래스 변수와 클래스 메소드도 오버라이딩 대상 아님.
+### 15-3 instance of 연산자
+* instance of 연산자의 기본
+	- 연산자 instanceof는 참조변수가 참조하는 인스턴스의 '클래스'나 참조하는 인스턴스가 '상속하는 클래스'를 묻는 연산자.
+> if (cake instanceof Cake) ... true/false
+	- 연산자 instanceof는 명시적 형 변환의 가능성을 판단해주는 연산자이다.
