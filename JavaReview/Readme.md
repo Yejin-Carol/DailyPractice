@@ -11,5 +11,5 @@
   - DAY 5: ~ ch 22. 제네릭 (Generics) 2
   - DAY 6: ~ ch 26. Nested Class & Lambda 소개
   - DAY 7: ~ ch 30. 스트림 2
-  - DAY 8: ~ ch 34. 쓰레드 그리고 동기화
+  - [DAY 8: ~ ch 34. 쓰레드 그리고 동기화](https://github.com/Yejin-Carol/DailyPractice/blob/main/JavaReview/DAY8.md) only ch 34. updated!
 
