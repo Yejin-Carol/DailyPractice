@@ -166,3 +166,335 @@ A[StrawberryCheeseCake]  --> B[CheeseCake] --> C[Cake]
 	- 연산자 instanceof는 참조변수가 참조하는 인스턴스의 '클래스'나 참조하는 인스턴스가 '상속하는 클래스'를 묻는 연산자.
 > if (cake instanceof Cake) ... true/false
 	- 연산자 instanceof는 명시적 형 변환의 가능성을 판단해주는 연산자이다.
+```java
+package InstanceOf;
+
+class Box {
+	public void simpleWrap() {
+		System.out.println("Simple Wrapping");
+	}
+}
+
+class PaperBox extends Box {
+	public void paperWrap() {
+		System.out.println("Paper Wrapping");
+	}
+}
+
+class GoldPaperBox extends PaperBox {
+	public void goldWrap() {
+		System.out.println("Gold Wrapping");
+	}
+}
+
+public class Wrapping {
+
+	public static void main(String[] args) {
+		Box box1 = new Box();
+		PaperBox box2 = new PaperBox();
+		GoldPaperBox box3 = new GoldPaperBox();
+		
+		wrapBox(box1);
+		wrapBox(box2);
+		wrapBox(box3);
+
+	}
+	
+	public static void wrapBox(Box box) {
+		if (box instanceof GoldPaperBox) {
+			((GoldPaperBox)box).goldWrap(); //형 변환 후 메소드 호출
+		}
+		else if (box instanceof PaperBox) {
+			((PaperBox)box).paperWrap(); //형 변환 후 메소드 호출
+		}
+		else {
+			box.simpleWrap();
+		}
+	}
+}
+```
+* 연산자 instanceof는 명시적 형 변환의 가능성을 판단해주는 연산자이다.
+
+## Ch 16. 클래스의 상속 3: 상속의 목적
+### 16-1 상속이 도움 되는 상황
+* 상속의 목적: 연관된 일련의 클래스들에 대해 공통적인 규약을 정의
+```java
+class Friend {//친구 공통 정보
+	protected String name;
+	protected String phone; //상속하는 클래스에 사용가능
+
+	public Friend(String na, String ph) {
+		name = na;
+		phone = ph;
+	}
+	public void showInfo() {
+		System.out.println("이름: " + name);
+		System.out.println("전화: " + phone);
+	}
+}
+
+class UnivFriend extends Friend {//Friend 클래스를 상속함
+	private String major;
+	
+	public UnivFriend(String na, String ma, String ph) {
+		super(na, ph);
+		major = ma;
+	}
+	public void showInfo() {
+		super.showInfo();
+		System.out.println("전공: " + major);
+	}
+}
+
+class CompFriend extends Friend {//Friend 클래스를 상속함
+	private String department;
+	
+	public CompFriend(String na, String de, String ph) {
+		super(na, ph);
+		department = de;
+	}
+	public void showInfo() {
+		super.showInfo();
+		System.out.println("부서: " + department);
+	}
+}
+
+public class MyFriend {
+	public static void main(String[] args) {
+		Friend[] frns = new Friend[10];
+		int cnt = 0;
+		
+		frns[cnt++] = new UnivFriend("V", "Computer", "010-1234-5678");
+		frns[cnt++] = new UnivFriend("RM", "English", "010-1111-5678");
+		frns[cnt++] = new CompFriend("Suga", "Composition", "010-2222-5678");
+		frns[cnt++] = new CompFriend("Jimin", "Dance", "010-3333-5678");
+
+		//모든 동창 및 동료의 정보 전체 출력
+		for(int i = 0; i < cnt; i++) {
+			frns[i].showInfo();//오버라이딩 한 메소드가 호출됨.
+			System.out.println();
+		}			
+	}
+}
+```
+* Friend 클래스 목적: UnivFriend클래스와 CompFriend 클래스에 공통 규약을 적용하기 위해 정의된 클래스
+	- 인스턴스를 저장하는 배열이 하나이다. 
+		* -> Friend 클래스를 상속하는 클래스가 더 추가되어도 이 사실은 변함이 없다.
+	- 정보를 저장하는 과정이 나뉘지 않는다.
+		* -> 하나의 배열에 모든 인스턴스를 저장할 수 있다.
+	- 저장된 정보를 모두 출력할 때 하나의 for문으로 충분하다.
+		*-> 하나의 배열이 사용되었고 또 메소드 오버라이딩이 도움이 되었다.
+### 16-2 Object 클래스와 final 선언 그리고 @Override
+* 모든 클래스는Object 클래스를 상속함.
+	- java.lang 패키지에 묶여 있는 Object 클래스를 상속함.
+	- class MyClass extends Object {...} 하지만 상속하는 클래스가 있는 경우에는 Object 클래스를 상속하지 않음. 그러나 다른 클래스가 Object을 직/간접으로 상속하게 되어있음.
+	- public void println(Object x) -> System.out.println 메소드
+		* 위 메소드의 매개변수 형이 Object임. 모든 인스턴스 위 메소드의 인자가 될 수 있음. 메소드는 이자로 전달된 인스턴스의 다음 메소드를 호출함. 이 메소드는 Object 클래스에 정의되어 있는 메소드이므로 모든 인스턴스를 대상으로 호출이 가능함. 
+		* public String toString(), 즉 Object 클래스의 toString 메소드를 오버라이딩 한 것임.
+
+```java
+class Cake {
+	//Object 클래스의 toString 메소드를 오버라이딩
+	public String toString() {
+		//Object 클래스의 toString 메소드 호출하여 반환 결과 출력
+		System.out.println(super.toString());
+		return "My birthday cake";
+	}
+}
+class CheeseCake extends Cake {
+	//Cake 클래스의 toString 메소드를 오버라이딩
+	public String toString() {
+		return "My birthday cheese cake";
+	}
+}
+public class OverridingToString {
+
+	public static void main(String[] args) {
+		Cake c1 = new Cake();
+		Cake c2 = new CheeseCake();
+		
+		//c1이 참조하는 인스턴스의 toString 메소드 호출로 이어짐
+		System.out.println(c1);
+		System.out.println();
+		
+		//c2가 참조하는 인스턴스의 toString 메소드 호출로 이이점
+		System.out.println(c2);
+	}
+}
+```
+* System.out.println(super.toString());
+* 실행 결과:  
+	- InstanceOf.Cake@cac736f 
+	- My birthday cake
+	- My birthday cheese cake
+* 클래스와 메소드의 final 선언: 해당 클래스를 다른 클래스 상속하는 것 원치 않을 때 final 선언하면 됨.
+	- public final class MyLastCLS {...} : 다른 클래스 상속 안됨
+> class Simple {
+> //아래의 메소드는 다른 클래스에서 오버라이딩 할 수 없음
+> public final void func(int n) {...} 
+> }
+
+* @Override
+	- "Annotation은 일종의 메모로 자바 컴파일러에게 메시지를 전달하는 목적 -> 이 메소드는 상위 클래스의 메소드를 오버라딩 할 목적으로 정의하였음. 
+	- 하기 예제는 메소드 매개변수 형과 반환영 달랐으나 annotation없이는 컴파일 실행 됨. 이를 방지하기 위해 어노테이션 사용. 
+```java
+package InstanceOf;
+
+class ParentAdder {
+	public int add(int a, int b) {
+		return a + b;
+	}
+}
+
+class ChildAdder extends ParentAdder {
+	//상위 클래스의 add를 오버라이딩 하려 합니다.
+	@Override //이거 넣으면 error: method does not override or implement a method from a supertype 
+	public double add(double a, double b) {
+		System.out.println("덧셈을 진행합니다.");
+		return a + b;
+	}
+}
+
+class OverrideMistake {
+	public static void main(String[] args) {
+		ParentAdder adder = new ChildAdder();
+		System.out.println(adder.add(3, 4));
+	}
+}
+```
+### 17-2 인터페이스의 문법 구성과 추상 클래스
+* 인터페이스에 존재할 수 있는 메소드: 
+	- 추상 메소드
+	- 디폴트 메소드
+	-   static 메소드
+* 클래스와 유사한 특성
+	- 인터페이스 간 상속도 가능
+	- 인터페이스의 형(Type) 이름을 대상으로 instanceof 연산 가능
+1. 추상 메소드
+* 인터페이스의 모든 메소드는 public으로 선언된 것으로 간주함. (별도의 선언 없어도 public이 됨)
+* 인터페이스 내에 선언되는 변수 특징
+	- 1) 반드시 선언과 동시에 값으로 초기화 해야함.
+	- 2) 모든 변수는 public, static, final이 선언된 것으로 간주함.
+>interface Printable {
+>int PAPER_WIDTH = 70;
+>int PAPER_HEIGHT = 120;
+>void print(String doc);
+> }
+* 인터페이스 내에 선언된 변수는 상수. final과 static으로 자동 선언되니 다음과 같이 가능한 상수.
+> System.out.println(Printable.PAPER_WIDT); //인터페이스 내에 위치한 상수의 접근
+* 마지막으로 인터페이스를 구현하는 클래스는 인터페이스에 존재하는 모든 '추상 메소드'를 구현해야함. 하나라도 구현하지 않으면, 해당 클래스를 대상으로 인스턴스 생성 불가능. (즉 다 채워지지 않았으므로 인턴스턴 생성 불가능함)
+
+2. 인터페이스 간 상속
+* S사 새로운 모델 프린터 출시
+> interface ColorPrintable extends Printable { //Printable을 상속하는 인터페이스 
+> void printCMYK(string doc);
+* 인터페이스 상속으로 기존에 제작 및 배포가 되어 사용 중인 드라이버 수정 필요 없게 됨. 인터페이스 사이에도 상속 가능. 
+	- 두 클래스 사이 상속 extends로 명시함.
+	- 두 인터페이스 사이 상속도 extends로 명시함.
+	- 인터페이스와 클래스 사이의 구현만 implements로 명시함.
+
+3. 인터페이스의 디폴트 메소드 (Default Method)
+* 문제: 이미 정의되어 다양한 프로젝트에 사용 중인 수십 개의 인터페이스가 있는데, 대대적인 기능 보강을 위해 모든 인터페이스에 최소 한 개 이상의 추상 메소드를 추가해야 하는 상황. 
+* 인터페이스 상속으로 해결하면, 인터페이스의 수는 두배로 늘어남
+* 해결 방법: Default Method
+> interface Printable {
+> void print(String doc);
+> default void printCMYK(String doc) { } //인터페이스의 디폴트 메소드 }
+* 디폴트 메소드 특징
+	- 자체로 완전한 메소드 (비록 인터페이스 내에 정의되어 있지만)
+	- 따라서 이를 구현하는 클래스가 오버라이딩 하지 않아도 됨.
+* 즉, 디폴트 메소드는 인터페이스에 추상 메소드를 추가해야 하는 상황에서, 이전에 개발해 놓은 코드에 영향을 미치지 않기 위해 등장한 문법.
+
+4. 인터페이스의 static 메소드(클래스 메소드)
+```java
+package Interface;
+
+interface Printable {
+	static void printLine(String str) {
+		System.out.println(str);
+	}
+	default void print(String doc) {
+		printLine(doc); //인터페이스 static 메소드 호출
+	}
+}
+
+//인터페이스 Printable에는 구현해야 할 메소드가 존재하지 않음.
+class Printer implements Printable { } 
+
+public class SimplePrinter {
+	public static void main(String[] args) {
+		String myDoc = "This is a report about...";
+		Printable prn = new Printer();
+		prn.print(myDoc);
+		//인터페이스 static 메소드 직접 호출
+		Printable.printLine("end of line");
+	}
+}
+```
+* 실제 프로그래머가 static 메소드 정의하는 것 드뭄.... 그냥 이런 방법이 있음.. 클래스 static 메소드 호출 방법과 같음.
+
+5. 인터페이스 대상의 instanceof 연산
+```java
+package Interface;
+
+interface Printable {
+	 void printLine(String str);
+	}
+
+	class SimplePrinter implements Printable { // Printable 직접 구현함
+		public void printLine(String str) {
+			System.out.println(str);
+		}
+	}
+
+	class MultiPrinter extends SimplePrinter { // Printable을 간접 구현함
+		public void printLine(String str) {
+			super.printLine("start of multi...");
+			super.printLine(str);
+			super.printLine("end of multi");
+		}
+	}
+
+public class InstanceofInterface {
+	public static void main(String[] args) {
+		Printable prn1 = new SimplePrinter();
+		Printable prn2 = new MultiPrinter();
+		
+		if(prn1 instanceof Printable)
+			prn1.printLine("This is a report about...");
+		System.out.println();
+		
+		if(prn2 instanceof Printable)
+			prn2.printLine("This is a multiful printer.");
+	}
+}
+```
+6. 인터페이스의 또 다른 사용 용도: Marker Interface
+* 인터페이스는 클래스에 특별한 표식을 다는 용도로도 사용됨. 
+> interface Upper {  } //Marker Interface
+> interface Lower {  } //Marker Interface
+>...
+>if(doc instanceof Upper) {...}
+>if(doc instanceof Lower){..} 
+* public String toUpperCase() //문자열의 모든 문자를 대문자로 바꿈.
+* public String toLowerCasE() //문자열의 모든 문자를 소문자로 바꿈.
+
+7. 추상 클래스: 하나 이상의 추상 메소드를 갖는 클래스
+```java
+public abstract class House { //추상 클래스
+	public void methodOne() {
+		System.out.println("method one");
+	public abstract void methodTwo(); //추상 메소드
+}
+```
+* 클래스 선언부에 abstract 선언 추가 (인터페이스와 유사함)
+* 추상 클래스를 대상으로 인스턴스 생성도 불가능하며 다른 클래스에 의해서 추상 메소드가 구현 되어야 함. 클래스는 구현이 아닌 상속의 형태를 띔! (키워드 extends를 사용)
+```java
+public class MyHouse extends House {
+	@override
+	public void methodTwo() {
+		System.out.println("method two");
+		}
+}
+```
+* 즉, 다른 클래스와 같이 인스턴스 변수와 인스턴스 메소드 갖지만, 이를 상속하는 하위 클래스에 의해서 구현되어야 할 메소드가 하나 이상 있는 경우 '추상 클래스'.
