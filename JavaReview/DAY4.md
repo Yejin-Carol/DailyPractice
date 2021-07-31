@@ -498,3 +498,109 @@ public class MyHouse extends House {
 }
 ```
 * 즉, 다른 클래스와 같이 인스턴스 변수와 인스턴스 메소드 갖지만, 이를 상속하는 하위 클래스에 의해서 구현되어야 할 메소드가 하나 이상 있는 경우 '추상 클래스'.
+
+## Ch 18. 예외 처리 (Exception Handling)
+###18-1 자바 예외처리의 기본
+> java.lang.ArithmeticException : 수학 연산 오류
+> java.util.InputMismatchException: 클랫 Scanner 통한 값의 입력에서의 오류
+* 예외의 처리를 위한 try ~ catch
+> try { ...관찰 영역
+> }
+> catch(Exception name) {
+> ...처리 영역...
+> }
+> "try 영역에서 발생한 예외 상황을 catch 영역에서 처리한다."
+```java
+package Exception;
+
+import java.util.Scanner;
+
+public class ExceptionCase {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		try { 
+			System.out.println("a/b...a? ");
+			int n1 = sc.nextInt();
+			System.out.println("a/b...a? ");
+			int n2 = sc.nextInt();
+			System.out.printf("%d / %d = %d \n", n1, n2, n1 / n2);//예외 발생 지점
+		}
+		catch(ArithmeticException e) {
+			System.out.println(e.getMessage());
+		}//입렵갑 오류시 (InputMismatchException e)	
+		System.out.println("Good bye~~!");
+	}
+}
+```
+>  실행 결과
+>a/b...a? 
+8
+a/b...a? 
+0
+/ by zero
+Good bye~~!
+
+* 둘 이상의 예외 처리하기 위한 구성
+	> catch 구문 둘 일어서 구성하면 됨
+	> catch(AsrithmeticException | InputMismatchException e) {
+	e.getMessage(); 
+	}
+* Throwable 클래스와 예외처리의 책임 전가
+> java.lang.Throwable: 예외 클래스의 최상위 클래스
+> public String getMessage() -> 예외의 원인을 담고 있는 문자열 반환
+> public void printStackTrace() -> 예외가 발생한 위치와 호출된 메소드의 정보를 출력
+> try { m1(3);//md1으로부터 예외가 넘어옴.
+> }
+> catch(Throwable e) {
+> e.printStackTrace();
+> }
+* 예외 상황을 알리기 위해 정의된 클래스의 종류
+> ArrayIndexOutOfBoundsException: 배열 접근에 잘못된 인덱스 값을 사용해서 발생하는 예외의 상황
+> ClassCastException : 형 변환을 강제로 진행하는 경우 발생
+> NullPointerException: null이 저장된 참조변수를 대상으로 메소드 호출할 때 발생하는 예외의 상황.
+* 예외 클래스의 구분
+> Error 클래스를 상속하는 예외 클래스
+> Exception 클래스를 상속하는 예외 클래스
+> RuntimeException 클래스를 상속하는 예외 클래스 -> RuntimeException 클래스는 Exception 클래스를 상속한다.
+* Error 클래스를 상속하는 예외 클래스
+> VirturalMachineError: 가상머신에 심각한 오류 발생
+> IOError: 입출력 관련해서 코드 수준 복구가 불가능한 오류 발생
+* 모든 예외 클래스
+	- ArithmeticException
+	- ClassCastException
+	- IndexOutOfBoundsException
+	- NegativeArraySizeException: 배열 생성시 길이를 음수로 지정하는 예외의 발생, Object[] ar1 = new Object[-5];
+	- NullPointerException
+	- ArrayStoreException: 배열에 적절치 않은 인스턴스를 저장하는 예외의 발생
+* Exception을 상속하는 예외 클래스의 예외처리
+> java.io.IOException
+* try ~ catch문을 통해서 IOException을 직접 처리
+* or throws IOException 선언을 추가해서 예외의 처리를 넘기거나 
+	- main 메소드에 예외를 넘기면, 이 예외는 main 호출한 가상머신에게 넘어감. 
+* 프로그래머가 정의하는 예외
+	- class ReadAgeException extends Exception { //Exception을 상속하는 것이 핵심
+		public ReadAgeException() {
+		super("유효하지 않은 나이가 입력되었습니다."); } } 
+	- public String getMessage() 호출시 반환 
+
+* finally 구문
+	-	 try~ finally~
+	-	try ~ catch ~ finally~
+> write = Files.newBufferedWriter(file);
+> writer.close(); //반드시 실행해야 하는 문장
+> finally {
+>  if(write !=null)
+> write.close(); // IOException 발생 가능
+> }
+
+* try-with-resources 구문
+	- writer = Files.newBufferedWriter(file);
+	- writer.close();
+> try( resource1; resource2) {...
+> }
+> catch(Exception name) {...
+> }
+* writer.close(); //직접 이 문장 넣지 않아도됨.  -> java.lang.AutoCloseable 인터페이스는 try-with-resources문에 의해 자동으로 종료되어야 할 리소스 관련 클래스가 반드시 구현해야 하는 인터페이스. -> 추상 메소드 존재 void close() throws Exception
+* try 구문 안에 위치한 코드는 밖에 위치한 코드에 비해 실행 속도가 느림. 과도한 예외처리는 지양해야함.
