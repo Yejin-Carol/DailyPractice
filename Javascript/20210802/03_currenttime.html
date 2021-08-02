@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=M, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p#one
+        {
+            color: blue
+        }
+        p#two
+        {
+            color: magenta
+        }
+        /* 클래스명이 colorbaby인 태그의 속성 지정 */
+        .colorbaby
+        {
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+    <p id="one">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque reiciendis libero accusamus perspiciatis beatae culpa, voluptates natus in harum excepturi eos, amet ratione ad ipsam quisquam a, molestiae laudantium asperiores.
+    </p>
+    <p id="two></p>
+    <p class="colorbaby">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt illum sed nesciunt error facilis, asperiores eius commodi molestiae similique eligendi mollitia numquam recusandae ducimus reprehenderit explicabo dolores at optio incidunt!</p>
+    <img src="https://picsum.photos/id/684/600/400" alt="">
+    <p id="three"></p>
+    <script>
+        var now = new Date()
+        // br: 한 줄 띄기
+        document.write("현재 시각: "+now+"<br>")
+        //js코드로 태그를 선택하고 스타일 등 지정하는 방법
+        document.getElementById('three').innerText="즐거운 하루"
+        document.getElementById('three').style.color= "springgreen"
+        document.getElementById('one').style.background= "yellow"
+
+    </script>
+    
+</body>
+</html>

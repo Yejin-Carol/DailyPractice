@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <!--br 태그는 한 줄 띄는 거임
+    띄어쓰기는 '&nbsp;' 이거해야함
+    (p 태그 등에서 쓰임)
+    <p>안녕 </p>
+    prompt, input에 읽는 것 
+    1. 내가 태어난 연도를 입력하면 그 연도에 맞는 동물을 출력
+    2. 내가 태어난 계절을 입력하면 그 계절에 걸맞는 이미지가 출력 (12,1,2는 겨울/ 3,4,5는 봄/ 6,7,8 여름/ 9,10,11 가을 )
+    --> 
+    Your Season! <img id="season">
+    <script>
+    const input = prompt('태어난 월을 입력해주세요', '')
+    const season = Number(input)
+    let result = document.getElementById('season')
+    let image = ["spring.png", "summer.png", "autumn.png", "winter.png"]
+
+    if(season == "3"||season == "4"||season == "5") {
+        alert(`${input}월은 봄 입니다.`)
+        result.src = image[0]     
+    } 
+    else if(season == "6"||season == "7" ||season == "8") {
+        alert(`${input}월은 여름 입니다.`)
+        result.src = image[1]
+       
+    } 
+    else if(season == "9"||season == "10" ||season == "11") {
+        alert(`${input}월은 가을 입니다.`)
+        result.src = image[2]
+        
+    }
+    else if(season == "12" ||season == "1" ||season == "2") {
+        alert(`${input}월은 겨울을 입니다.`)
+        result.src = image[3]
+        
+    } 
+    else {
+        alert("잘못 입력했습니다. 1~12월 중에 입력해 주세요.")   
+    }
+    </script>
+</body>
+</html>

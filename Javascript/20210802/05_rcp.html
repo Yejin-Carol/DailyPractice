@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img id="me" src="" alt="">
+    <img id="com" src="" alt="">
+    <script>        
+        function practice() {
+            //가위, 바위, 보?
+            //prompt = 입력창
+            const mine = prompt("가위, 바위, 보 중 하나를 입력하세요.")
+            //Math.random : 0.0 ~ 1.0 미만
+            //Math.floor : 소수점을 버리는 객체
+            const computer = Math.floor(Math.random() * 3) //0, 1, 2
+
+            //자바스크립트 배열(배열 안에 함수, 객체 등 이것저것 다 들어감 상당히 유동적임)
+            const comChoice = ["가위", "바위", "보"]
+            console.log("나 : " + mine)
+            console.log(`컴퓨터 : ${comChoice[computer]}`)//익명함수
+
+            let me = document.getElementById('me')
+            let com = document.getElementById('com')
+
+
+            switch(mine) {
+                case "가위":
+                me.src = 'scissors.png'
+                    switch(comChoice[computer]) {
+                        case "가위":
+                            console.log("비김")
+                            com.src = 'scissors.png'
+                            break;
+                        case "바위":
+                            console.log("짐")
+                            com.src = 'rock.png'
+                            break;
+                        case "보":
+                            console.log("이김")
+                            com.src = 'paper.png'
+                            break;
+                        default:
+                            break;
+                    }
+                case "바위":
+                me.src = 'rock.png'
+                    switch(computer) {
+                        case "가위":
+                            com.src = 'scissors.png'
+                            console.log("이김")
+                            break;
+                        case "바위":
+                            com.src = 'rock.png'
+                            console.log("비김")
+                            break;
+                        case "보":
+                            com.src = 'paper.png'
+                            console.log("짐")
+                            break;
+                        default:
+                            break;
+                    }
+                case "보":
+                me.src = 'paper.png'
+                    switch(computer) {
+                        case "가위":
+                            com.src = 'scissors.png'
+                            console.log("짐")
+                            break;
+                        case "바위":
+                            com.src = 'rock.png'
+                            console.log("이김")
+                            break;
+                        case "보":
+                            com.src = 'paper.png'
+                            console.log("짐")
+                            break;
+                        default:
+                            break;
+                    }
+                default:
+                break;
+
+            }
+         
+
+
+        }
+        practice()
+    </script>
+</body>
+</html>
