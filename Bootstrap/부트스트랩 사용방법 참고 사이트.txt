@@ -1,0 +1,58 @@
+1. 부트스트랩, 어떻게 사용할까? 1
+https://brunch.co.kr/@clay1987/131
+2. 부트스트랩, 어떻게 사용할까? 2
+https://brunch.co.kr/@clay1987/132
+
+
+부트스트랩 사용법
+
+1) https://getbootstrap.com/docs/4.2/getting-started/introduction/#starter-template
+여기에 있는 코드를 copy하고, body 안에 내가 원하는 코드들을 작성한다.
+
+4. 예시들
+(소스코드들 다운받으면 다 있음)
+https://getbootstrap.com/docs/4.2/examples/
+
+5. 필요 내용들은 Document에서 보거나 예시들을 볼 것
+https://getbootstrap.com/docs/4.2/layout/overview/
+example들을 잘 활용하자
+
+
+
+5. 다른 사람들이 만들어 놓은 샘플들쓰기(부트스트랩의 단점 중 하나가 획일화된 디자인인데, 그 약점을 극복할 수 있다.)
+이 사이트 회원가입은 매우 간편하니 할 수 있으면 하도록 하자
+https://www.codeply.com/
+https://www.codeply.com/bootstrap-4-examples
+
+
+내가 활용한 예시
+1. myblog
+https://www.codeply.com/p/8eRVMOqqqo
+2. 카드 example
+https://www.codeply.com/p/ArBKWs616Y
+
+--------------------------------------------------------
+
+부트스트랩 사용법2
+css, js등을 다운받아서 하고 싶을 경우 아래 링크 참고
+
+https://tworab.tistory.com/71?category=689942
+
+-------------------------------------------------
+
+그 외 참고하기 좋은 사이트들...
+https://cordelia273.space/34?category=709761
+https://cordelia273.space/35?category=709761
+
+카드만들기(부트스트랩이용)
+https://blog.cordelia273.space/35
+
+테이블 태그를 이용하여 게시판 만들기
+부트스트랩에서는 테이블태그에도 디자인이 적용되어 있다.
+https://tworab.tistory.com/79?category=689942
+
+*부트스트랩을 이해하기 위해선 그리드를 어느정도 알아야 함
+https://www.w3schools.com/css/css_grid.asp
+
+부트스트랩 도입이유가 잘 정리되어있음
+https://ict-nroo.tistory.com/21
