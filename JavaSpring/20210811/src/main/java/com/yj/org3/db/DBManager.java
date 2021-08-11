@@ -67,7 +67,7 @@ public class DBManager {
 			}
 		}	
 		
-		public void updatetest(String para1) {
+		public void updatetest(String para1,String para2) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			
@@ -75,9 +75,9 @@ public class DBManager {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carol","root","1234");	
-				pstmt = conn.prepareStatement("update test set para2='777' where para1=?");
+				pstmt = conn.prepareStatement("update test set para2=? where para1=?");
 				pstmt.setString(1, para1);
-				//pstmt.setString(2, para2);
+				pstmt.setString(2, para2);
 				pstmt.execute(); //실행		
 			} catch (Exception e) {
 				e.printStackTrace();

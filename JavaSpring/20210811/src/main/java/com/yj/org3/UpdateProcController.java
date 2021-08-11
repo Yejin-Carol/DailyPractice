@@ -21,8 +21,8 @@ public class UpdateProcController {
 	DBManager dbmd;
 	
 	@RequestMapping(value="/updateproc", method = RequestMethod.POST)
-	public String updateproc(Model model, String para1) {
-		dbmd.updatetest(para1);		
+	public String updateproc(Model model, String para1, String para2) {
+		dbmd.updatetest(para1,para2);		
 		//dbmd1.updatetest(para2);
 		return "updateproc";
 		

@@ -5,27 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-	window.onload = function() {
-		alert('윈도우 다 부르고 나서 함수 실행');
-		var send = document.getElementById('send');
-		alert(send);
-		send.onclick = function() {}
-		$('#frm').submit();
-	}
+<!-- <script type="text/javascript"> -->
+<!-- // 	window.onload = function() { -->
+<!-- // 		alert('윈도우 다 부르고 나서 함수 실행'); -->
+<!-- // 		var send = document.getElementById('send'); -->
+<!-- // 		alert(send); -->
+<!-- // 		send.onclick = function() {} -->
+<!-- // 		$('#frm').submit(); -->
+<!-- // 	} -->
 	
-</script>
-<!-- cdm파일 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- </script> -->
+<!-- <!-- cdm파일 --> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		alert('윈도우 다 부르고 나서 실행');
-		var send = $('#send')
-		});
+<!-- <script type="text/javascript"> -->
+<!-- // 	$(document).ready(function(){ -->
+<!-- // 		alert('윈도우 다 부르고 나서 실행'); -->
+<!-- // 		var send = $('#send') -->
+<!-- // 		}); -->
 
 
-</script>
+<!-- </script> -->
 </head>
 <body>
 <h1>insert/delete/update</h1>
