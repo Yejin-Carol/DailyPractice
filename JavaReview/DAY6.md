@@ -853,3 +853,277 @@ class CopyList {
 }
 ```
 
+## Ch 25. 열거형, 가변 인자 그리고 어노테이션
+### 25-1 열거형
+* 인터페이스 기반의 상수 정의
+*  자료형의 부여를 돕는 열거형
+	- enum Scale {//열거 자료형 Scale의 정의~~} 열거형 값 (Enumerated Values)
+* 클래스 내에 정의가 가능한 열거형의 정의
+```java
+package chapter25;
+
+class Customer {
+	enum Gender { //클래스 내에 정의된 열거형 Gender
+		MALE, FEMALE
+	}
+	
+	private String name;
+	private Gender gen;
+	
+	Customer(String n, String g) {
+		name = n;
+		
+		if(g.equals("man"))
+			gen = Gender.MALE;
+		else
+			gen = Gender.FEMALE;
+	}
+	
+	@Override
+	public String toString() {
+		if(gen == Gender.MALE)
+			return "Thank you, Mr " + name;
+		else 
+			return "Thank you, Mrs " + name;
+	}	
+}
+class InnerEnum {
+	public static void main(String[] args) {
+		Customer cus1 = new Customer("Jimin", "man");
+		Customer cus2 = new Customer("Jennie", "woman");
+		
+		System.out.println(cus1);
+		System.out.println(cus2);
+
+	}
+}
+```
+* 열거형 값의 정체
+- 열거형 값이 해당 자료형의 인스턴스 값이 될 수 있음.
+```java
+enum Person {
+	MAN(29), WOMAN(25);//소괄호를 통해 생성자 인자 전달 가능.
+	
+	int age;
+	private Person(int age) {//무조건 private으로 선언
+		this.age = age;
+	}
+	
+	@Override 
+	public String toString() {
+		return "I am " + age + " years old";
+	}
+}
+
+class EnumParamConstructor {
+	public static void main(String[] args) {
+		System.out.println(Person.MAN);
+		System.out.println(Person.WOMAN);
+	}
+}
+```
+### 25-2 매개변수의 가변 인자 선언
+* 매개변수의 가변 인자 선언과 호출
+```java
+class Varargs {
+	public static void showAll(String...vargs) {//vargs 배열 참조, length에 접근하여 그 길이를 확인할 수 있음.
+		System.out.println("LEN: " + vargs.length);
+		
+		for(String s : vargs)
+			System.out.print(s + '\t');
+		System.out.println();
+	}
+	
+	public static void main(String[] args) {
+		showAll("BTS");
+		showAll("BTS", "ARMY");
+		showAll("BTS", "ARMY", "PTD");//배열을 생성하여 전달되는 인자들을 모두 담음. 그 배열이 매개변수 vargs에 전달됨. 메소드 내에서 매개변수 vargs를 배열의 이름으로 이해하고 코드 작성 가능
+	}
+}
+```
+* 가변 인자 선언에 대한 컴파일러의 처리
+```java
+public class VarargsBefore {
+	public static void showAll(String...vargs) {
+		System.out.println("LEN: " + vargs.length);
+		
+		for(String s : vargs)
+			System.out.print(s + '\t');
+		
+		System.out.println('\n');
+	}
+
+	public static void main(String[] args) {
+		showAll(new String[]{"BTS"});
+		showAll(new String[]{"BTS", "ARMY"});
+		showAll(new String[]{"BTS", "ARMY", "PTD"});
+		}
+}
+```
+### 25-3 Annotations
+* 어노테이션은 '자바 컴파일러에게 메시지를 전달하는 목적의 메모'
+	- @Override: 상위 클래스의 메소드 오버라이딩(상속) 또는 인터페이스에 선언된 추상 메소드의 구현
+	- @Deprecated: 아직은 호환성 유지를 위해 존재하지만 이후에 사라질 수 있는 클래스 또는 메소드를 Deprecated라고 함.
+```java
+interface Viewable {
+	@Deprecated
+	public void showIt(String str);//Deprecated된 메소드
+	public void brShowIt(String str);
+}
+
+class Viewer implements Viewable {
+	@Override
+	public void showIt(String str) { //컴파일러가 경고하는 문장
+		System.out.println(str);
+	}
+	
+	@Override
+	public void brShowIt(String str) {
+		System.out.println('[' + str + ']');
+	}	
+}
+
+class AtDeprecated {
+	public static void main(String[] args) {
+		Viewable view = new Viewer();
+		view.showIt("Hello Annotations");//컴파일러가 경고하는 문장
+		view.brShowIt("Hello Annotations");
+
+	}
+}
+```
+* @SuppressWarnings: 컴파일러가 경고 메시지를 전달하는 특정 상황에 대해서, 경고 메시지를 전달하지 말라고 요청할 때 사용.
+위의 경고 보내지 말라는 요청 @SuppressWarnings("deprecation") 
+	- 아마 이제는 필요없는 듯? 
+
+## Ch 26. Nested Class & Lambda
+### 26-1 Nested Class & Inner Class
+```java
+class Outer {
+		class Nested { ...} //네스티드 클래스
+}
+```
+* 네스티드 클래스의 구분
+	- Static nested class: Static 네스티드 클래스 내에서 외부 클래스의 인스턴스 변수와 메소드에 접근 불가능하다. = 외부 클래스에 static으로 선언된 변수와 메소드에만 접근이 가능함.
+```java
+class Outer {
+	private static int num= 0;
+	static class Nested1 { //Static 네스티스 클래스
+		void add(int n) { num += n; }
+	}
+	static class Nested2{ //Static 네스티드 클래스
+		int get() { return num; }
+	}
+}
+
+class StaticNested {
+	public static void main(String[] args) {
+		// Static 네스티드 클래스의 인스턴스 생성문
+		Outer.Nested1 nst1 = new Outer.Nested1();
+		nst1.add(5);
+		Outer.Nested2 nst2 = new Outer.Nested2();
+		System.out.println(nst2.get());
+	}
+}		
+``` 
+* Inner Class의 구분
+	- Non-static nested class = Inner class 
+		- Member Inner Class: 멤버 이너 클래스 -> 인스턴스 변수, 인스턴스 메소드와 동일한 위치에 정의
+```java
+class Outer {
+		class MemberInner {...} //멤버 클래스: 멤버 클래스의 인스턴스는 외부 클래스의 인스턴스에 종속적이다. 클래스 정의를 감추어야 할 때 유용하게 사용됨. 
+	    void method() {
+		  class LocalInner {...} //로컬 클래스
+	  }
+}
+```
+```	java
+interface Printable { 
+	void print(); //인터페이스 정의
+}
+
+class Papers { //Printer 클래스 Papers 내에 정의함.
+	private String con;
+	public Papers(String s) { con = s; }
+	public Printable getPrinter() {
+		return new Printer(); //멤버 클래스 인스턴스 생성 및 반환
+	}
+	
+	private class Printer implements Printable { //멤버 클래스 정의
+		public void print() {
+			System.out.println(con);
+		}
+	}
+}
+
+class UseMemberInner {
+	public static void main(String[] args) {
+		Papers p = new Papers("서류 내용: 행복합니다.");
+		Printable prn = p.getPrinter();
+		prn.print();
+//Papers 클래스의 외부에서는 getPrinter 메소드가 어떠한 인스턴스의 참조 값을 반환하는지 알지 못함. 다만 반환되는 참조 값의 인스턴스가 Printable을 구현하고 있어서 Printable의 참조 변수로 참조할 수 있다는 사실. = '클래스의 정의가 감추어진 상황' (코드 유연성이 부여됨. 컬렉션 프레임워크 반복자 Iterator<E>와 비슷함.) 
+	}
+
+}
+```
+- Local Inner Class: 로컬 이너 클래스, 중괄호 내에, 특히 메소드 내에 정의. 메소드 내에 클래스를 정의하면 해당 메소드 내에서만 인스턴스 생성이 가능함. (클래스에 대한 private 선언 의미 없음). 멤버 클래스보다 클래스를 더 깊이 특정 블록 안으로 감추는 효과가 있음.
+```java
+class Papers {
+	private String con;
+	public Papers(String s) { con = s; }
+	
+	public Printable getPrinter() {
+		class Printer implements Printable {//로컬 클래스의 정의
+			public void print() {
+				System.out.println(con);
+			}
+		}
+		return new Printer(); //로컬 클래스의 인스턴스 생성 및 반환
+	}
+}
+```
+- Anonymous Inner Class: 익명 클래스, 람다와도 관련 있음.
+```java
+public Printable getPrinter() {
+		return new Printable() {//익명 클래스의 정의와 인스턴스 생성
+			public void print() {
+				System.out.println(con);
+			}
+		};
+```
+### 26-2 람다(Lambda)의 소개
+
+```java
+interface Printable {
+	void print(String s);
+}
+
+class Lambda {
+	public static void main(String[] args) {
+		//Lambda Expression
+		Printable prn = (s) -> { System.out.println(s); };
+		prn.print("What is Lambda?");
+	}
+}
+```
+vs 익명 클래스 
+```java
+Printable prn = new Printable() { //익명 클래스
+	public void print(String s)
+		System.out.println(s);
+	}
+};
+```
+* 람다식 인자 전달
+```java
+class Lambda {
+	public static void ShowString(Printable p, String s) {
+		p.print(s);
+	}
+	
+	public static void main(String[] args) {
+		ShowString((s) -> { System.out.println(s); }, "What is Lambda?");	
+	}
+}
+```
+
