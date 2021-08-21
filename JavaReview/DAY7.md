@@ -338,4 +338,295 @@ class NullPointerCaseStudy {
 			System.out.println("There's no address information");		
 	}
 ```
+* Optional 클래스의 기본적인 사용 방법
+	- 멤버 value에 인스턴스를 저장하는 일종의 Wrapper 클래스.
+```java
+import java.util.Optional;
 
+public class StringOptional1 {
+	public static void main(String[] args) {
+		Optional<String> os1 = Optional.of(new String("Toy1"));
+//String 인스턴스를 저장한 Optional 인스턴스 생성, of 메소드 호출
+		Optional<String> os2 = Optional.ofNullable(new String("Toy2"));
+//String 인스턴스를 저장한 Optional 인스턴스 생성, ofNullable 메소드 호출		
+		if(os1.isPresent())//내용물 존재하면 isPresent는 true 반환
+			System.out.println(os1.get());//get을 통한 내용물 반환
+	
+		if(os2.isPresent())
+			System.out.println(os2.get());
+	}
+}
+```
+```java
+class StringOptional2 {
+	public static void main(String[] args) {
+		Optional<String> os1 = Optional.of(new String("Toy1"));
+		Optional<String> os2 = Optional.ofNullable(new String("Toy2"));
+		os1.ifPresent(s -> System.out.println(s)); //람다식 버전
+		os2.ifPresent(System.out::println); //메소드 참조 버전
+	}
+}
+```
+* Optional 클래스를 사용하면 if~else문을 대신할 수 있음: map 메소드의 소개
+```java
+import java.util.Optional;
+class OptionalMap {
+	public static void main(String[] args) {
+		Optional<String> os1 = Optional.of("Optional String");
+		Optional<String> os2 = os1.map(s -> s.toUpperCase());// 문자열의 모든 문자를 대문자로 바꿔서 반환
+		System.out.println(os2.get());
+		
+		Optional<String> os3 = os1.map(s -> s.replace(' ', '_'))
+					              .map(s -> s.toLowerCase());
+		System.out.println(os3.get());
+	}
+}
+```
+apply 메소드가 반환하는 대상을 Optional 인스턴스에 담아서 반환한다.
+
+* Optional 클래스 사용, if~else 대신: orElse 메소드 관계
+```java
+Optional<String> os1 = Optional.empty();
+		Optional<String> os2 = Optional.of("So Basic");
+		
+		String s1 = os1.map(s -> s.toString())
+						.orElse("Empty");
+				
+		String s2 = os2.map(s -> s.toString())
+						.orElse("Empty");
+```		
+* map과 orElse
+```java
+String phone = ci.map(c -> c.getPhone())
+							.orElse("There is no phone number.");
+```
+* NullPointerCaseStudy.java의 개선 결과
+```java
+class NullPointerCaseStudy {
+	public static void showCompAddr(Optional<Friend> f) {
+		String addr = f.map(Friend::getCmp)
+					   .map(Company::getCInfo)
+					   .map(ContInfo::getAdrs)
+					   .orElse("There's no address information.");
+		System.out.println(addr);
+	}
+	
+	public static void main(String[] args) {
+		ContInfo ci = new ContInfo("123-456-789", "Republic of Korea");
+		Company cp = new Company("Army Co., Ltd.", ci);
+		Friend frn = new Friend("Jimin", cp);
+		showCompAddr(Optional.of(frn)); //친구가 다니느 회사의 주소 출력
+	}
+}
+```
+* Optional 클래스의 flatMap 메소드
+```java
+Optional<String> os3 = os1.flatMap(s -> Optional.of(s.toLowerCase()));
+```
+* flatMap + orElse
+```java
+String phone = ci.flatMap(c -> c.getPhone())
+						     .orElse("There is no phone number.")
+```
+```java
+class NullPointerCaseStudy {
+	public static void showCompAddr(Optional<Friend> f) {
+		String addr = f.map(Friend::getCmp)
+					   .map(Company::getCInfo)
+					   .map(ContInfo::getAdrs)
+					   .orElse("There's no address information.");
+		System.out.println(addr);
+	}
+	
+	public static void main(String[] args) {
+		Optional<ContInfo> ci = Optional.of(
+			new ContInfo(Optional.ofNullable(null), Optional.of("Republic of Korea"))
+		);
+		Optional<Company> cp = Optional.of(new Company("Army Co., Ltd.", ci));
+		Optional<Friend> frn = Optional.of(new Friend("Jimin", cp));
+		showCompAddr(frn);
+	}
+}
+```
+### 28-3 OptionalInt, OptionalLong, OptionalDouble 클래스
+* Optional과 OptionalXXX와의 차이점
+```java
+Optional<Integer< oi1 = Optional.of(3);
+OptionalInt oi1 = OptionalInt.of(3);
+```
+## Ch 29. 스트림 1
+### 29-1 스트림 이해와 생성
+* Stream: 데이터 흐름, 배열 또는 컬렉션 인스턴스에 저장된 데이터를 꺼내서 파이프에 흘려보냄. (흘려 보내는 것 = 스트림)
+	- 중간 연산(Intermediate Operation)
+	- 최종 연산(Terminal Operation): 마지막에 진행되는 연산
+```java
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
+public class MyFirstStream {
+	public static void main(String[] args) {
+		int[] ar = {1, 2, 3, 4, 5};
+		IntStream stm1 = Arrays.stream(ar);//배열 ar로부터 스트림 생성. stm1이 참조
+		IntStream stm2 = stm1.filter(n -> n%2 == 1); //stm1이 참조하는 스트림 대상으로 filter 중간 연산 실행 
+		int sum = stm2.sum(); // 최종 연산 진행
+		System.out.println(sum);
+	}
+}
+```
+* 스트림(Stream) 특성
+```java
+import java.util.Arrays;
+public class MyFirstStream2 {
+	public static void main(String[] args) {
+		int[] ar = {1, 2, 3, 4, 5};
+		
+		int sum = Arrays.stream(ar) //스트림 생성
+						.filter(n -> n%2 == 1) //filter 통과,
+						.sum(); //sum 통과시켜 그 결과 반환
+		System.out.println(sum);
+	}
+}
+```
+스트림의 연산은 효율과 성능을 고려하여 '지연(Lazy) 처리' 방식으로 동작
+* 스트림 생성: 배열
+```java
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+public class StringStream {
+	public static void main(String[] args) {
+		String[] names = {"Jungkook", "RM", "Jin"}; 
+		Stream<String> stm = Arrays.stream(names); //스트림 생성
+		stm.forEach(s -> System.out.println(s)); // 최종 연산 진행
+	}
+}
+```
+Arrays.stream(names) //스트림 생성
+			  .forEach(s -> System.out.println(s)); // 최종 연산 진행
+중간 연산 없이 최종 연산으로 진행 가능
+* double stream
+```java
+import java.util.Arrays;
+
+public class DoubleStream {
+	public static void main(String[] args) {
+		double[] ds = {1.1, 2.2, 3.3, 4.4, 5.5};
+		
+		Arrays.stream(ds)
+			.forEach(d -> System.out.print(d + "\t"));
+		System.out.println();
+		Arrays.stream(ds, 1, 4) //인덱스 1부터 인덱스 4 이전까지
+			   .forEach(d -> System.out.print(d + "\t"));
+		System.out.println();
+	}
+}
+```
+* 스트림 생성하기: Collection Instance
+```java
+public class ListStream {
+	public static void main(String[] args) {
+		List<String> list = Arrays.asList("Bts", "PTD", "Butter");
+		list.stream()
+		    .forEach(s -> System.out.print(s + "\t"));
+		System.out.println();
+	}
+}
+```
+### 29-2 Filtering & Mapping
+* Filtering
+	- Stream\<T> filter(Predicate<? super T > predicate): Stream\<T>에 존재
+	- Predicate\<T>: boolean test(T t)
+```java
+class FilterStream {
+	public static void main(String[] args) {
+		int[] ar = {1, 2, 3, 4, 5};
+		Arrays.stream(ar) //배열 기반 스트림 생성
+			  .filter(n -> n%2 == 1)//홀수만 통과시킴
+			  .forEach(n -> System.out.print(n + "\t"));
+		System.out.println();
+		
+		List<String> sl = Arrays.asList("Bts", "PTD", "Butter");
+		sl.stream() //컬렉션 인스턴스 기반 스트림 생성
+		  .filter(s -> s.length() == 3)// 길이가 3이면 통과시킴
+		  .forEach(s -> System.out.print(s + "\t"));
+		System.out.println();
+	}
+}
+```
+* Mapping 1
+```java
+class MapToInt {
+	public static void main(String[] args) {
+		List<String> ls = Arrays.asList("Bts", "PTD", "Butter");
+		
+		ls.stream() //컬렉션 인스턴스 기반 스트림 생성
+		  .map(s -> s.length())
+		  .forEach(n -> System.out.print(n + "\t"));
+		System.out.println();
+	}
+}
+```
+* Mapping 2
+	- 두 번의 중간 연산
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+class CafePriceInfo { // 카페 메뉴벌 가격 정보
+	private String menu; //메뉴명
+	private int price; //가격
+	
+	public CafePriceInfo(String m, int p) {
+		menu = m;
+		price = p;
+	} 
+	public int getPrice() {
+		return price;
+	}
+}
+
+class CafeStream {
+	public static void main(String[] args) {
+		List<CafePriceInfo> ls = new ArrayList<>();
+		ls.add(new CafePriceInfo("Americano", 3000));
+		ls.add(new CafePriceInfo("Cafe Latte", 3500));
+		ls.add(new CafePriceInfo("Capuccino", 4000));
+
+		int sum = ls.stream()
+					.filter(p -> p.getPrice() < 4000)//4000미만 가격 정보만 모아서 스트림 생성
+					.mapToInt(t -> t.getPrice())//인스턴스에 저장되어 있는 가격 정보 꺼내서 int형 스트림에 저장
+					.sum();// 정가가 4000원 미만인 메뉴의 총합
+		System.out.println("sum = " + sum);
+	}
+}
+```
+### 29-3 리덕션(Reduction), 병렬 스트림(Parallel Streams)
+* 리덕션과 reduce 메소드
+	- Reduction: 데이터를 축소하는 연산
+	- T reduce(T identity, BinaryOperator\<T> accumulator) //Stream\<T>에 존재
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BinaryOperator;
+
+public class ReduceStream {
+	public static void main(String[] args) {
+		List<String> ls = Arrays.asList("Bts", "Army", "PTD", "Butter");
+		BinaryOperator<String> lc = (s1, s2) -> {
+			if(s1.length() > s2.length())
+				return s1;
+			else
+				return s2;
+			};
+		String str = ls.stream()
+					   .reduce("", lc);//스트림이 빈 경우 빈 문자열 반환, .reduce("Empty Stream", lc) 빈 경우 "Empty Stream" 반환
+		System.out.println(str);
+	}
+}
+```
+* 병렬 스트림 (Parallel Stream): 연산 횟수보다는 연산의 단계를 줄임!
+String str = ls.parallelStream() //병렬 처리를 위한 스트림 생성
+						   .reduce("", lc);
+	- 빈 문자열과 각 인자 비교
+	- "Bts" vs. "Army", "PTD" vs. "Butter"
+	- "Army" vs. "Butter"		
