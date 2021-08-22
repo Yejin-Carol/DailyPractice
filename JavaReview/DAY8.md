@@ -426,8 +426,492 @@ public class DateTimeFormatterDemo {
 	}
 }
 ```
+## Ch 32. I/O Stream
+### I/O 스트림에 대한 이해
+* Stream vs. I/O Stream
 
+| Stream  | I/O Stream |
+|--|--|
+|데이터를 어떻게 원하는 형태로 걸러내고 가공  | 어떻게 데이터를 입/출력  |
+| 컬렉션 인스턴스에 저장된 문자열 중 길이가 5 이상인 문자열만 출력 | 파일에 저장된 문자열을 꺼내어 컬렉션 인스턴스에 저장  |
+* I/O Stream 모델
+	- 파일, 키보드/모니터, 그래픽카드/사운드카드, 프린터/팩스 같은 출력장치, 인터넷으로 연결되어 있는 서버 또는 클라이언트
+* I/O 모델과 Stream 이해, 파일 대상의 입력 스트림 생성
+	- - Stream: 데이터 흐름
+	- Input Stream: 실행 중인 자바 프로그램으로 데이터를 읽어 들이는 스트림, 데이터의 입력 통로
+	- Output Stream: 실행 중인 자바 프로그램으로 데이터를 내보내는 스트림, 데이터의 출력 통로
+	- InputStream in = new FileInputStream("data.dat"); //FileInputStream 클래스는 InputStream 클래스를 상속함 . 입력 스트림 생성
+	- public abstract int read() throws IOException //java.io.InputStream의 메소드
+	- int data = in.read(); //데이터 읽어 들임
+	- in.close(); //입력 스트림 종료
+	- OutputStream out = new FileOutStream("data.dat"); //출력스트림 생성, FileOutputStream 클래스는 OutputStream 클래스 상속함.
+	- out.write(7); //데이터 7을 파일에 전달
+	- out.close(); //출력 스트림의 종료 및 소멸 
+* 입출력 스트림 관련 코드의 개선(try-with-resources 문 사용)
+```java
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
+public class Write7ToFile2 {
+	public static void main(String[] args) throws IOException {
+		OutputStream out = null;
+		
+		try {
+			out = new FileOutputStream("data.dat");
+			out.write(7);
+		}
+		finally {
+			if(out != null) //출력 스트림 생성에 성공했다면,
+				out.close();
+		}
+	}
+}
+```
+```java
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Read7FromFile3 {
+	public static void main(String[] args) {
+		try(InputStream in = new FileInputStream("data.dat")) {
+			int dat = in.read();
+			System.out.println(dat);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+* Byte 단위 입출력 스트림
+* 보다 빠른 속도의 파일 복사 프로그램
+```java
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Scanner;
+
+public class BytesFileCopier {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("대상 파일: ");
+		String src = sc.nextLine();
+		
+		System.out.print("사본 이름: ");
+		String dst = sc.nextLine();
+		
+		try(InputStream in  = new FileInputStream(src);
+			OutputStream out = new FileOutputStream(dst)) {
+			byte buf[] = new byte[1024];
+			int len;
+			
+			while(true) {
+				len = in.read();// 배열 buf로 데이터 읽어 들임
+				if (len == -1) //더 이상 읽어 들일 데이터 없으면,
+					break;//반복문 탈출
+				out.write(buf, 0, len);//len 바이트만큼 데이터 저장
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+### 32-2 필터 스트림의 이해와 활용
+* 바이트 단위로 데이터를 읽고 쓸 줄은 알지만 
+	- 필터 스트림 생성 및 연결
+		- DataInputStream fIn = new DataInputStream(in); 
+		- 기본 자료형 데이터의 입력을 위한 필터 스트림
+		- DataOutputStream fOut = new DataOutputStream(out);
+		- 기본 자료형 데이터의 출력을 위한 필터 스트림
+* DataOutputStream out = new DataOutputStream(new FileOutputStream("data.dat"))
+
+```java
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class DataFilterInputStream {
+	public static void main(String[] args) {
+		try(DataInputStream in =
+				new DataInputStream(new FileInputStream("data.dat"))) {
+			int num1 = in.readInt(); // int형 데이터 저장
+			double num2 = in.readDouble(); //double형 데이터 저장
+			
+			System.out.println(num1);
+			System.out.println(num2);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+ ```java
+ public class DataFilterOutputStream {
+	public static void main(String[] args) {
+		try(DataOutputStream out =
+				new DataOutputStream(new FileOutputStream("data.dat"))) {
+			out.writeInt(370);//int형 데이터 꺼냄
+			out.writeDouble(3.14);//double형 데이터 꺼냄
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+* 버퍼링 기능을 제공하는 필터 스트림
+	- BufferedInputStream: 버퍼링 기능을 제공하는 버퍼 입력 스트림
+	- BufferedOutputStream: 버퍼링 기능을 제공하는 버퍼 출력 스트림
+	- 버퍼 입력 스트림 내부에 '버퍼(메모리 공간)'을 가짐. read메소드 호출시 파일에 저장된 데이터 반환이 아니라, 버퍼 스트림의 저장된 데이터 반환함. -> 성능 향상의 핵심
+	- 버퍼링: 메모리를 어느 정도 채운 다움에 데이터를 이동
+* 버퍼링 기능에 대한 대책, flush 메소드 호출
+	- public void flush() throws IOException //java.io.OutputStream의 메소드, 실제 파일에 데이터 저장되지 않았을 때, 버퍼 비우라고(파일로 데이터를 보내라고) 명령
+* 파일에 기본 자료형 데이터 저장, 버퍼링 기능도 추가
+```
+try(DataOutputStream out =
+		new DataOutputStream(
+			new BufferedOutputStream(
+				new FileOutputStream("data.dat")))) 
+```
+### 32-3 문자 스트림의 이해와 활용
+* Byte Stream과 문자 스트림
+	- 영문과 특수문자: 1byte로 표현(인코딩)
+	- 한글: 2byte로 표현(인코딩)
+* FileReader & FileWriter
+	- FileReader: 파일 대상 문자 입력 스트림 생성
+	- FileWriter: 파일 대상 문자 출력 스트림 생성
+* BufferedReader & BufferedWriter
+	- BufferedInputStream: 바이트 기반 버퍼 입력 스트림
+	- BufferedOutputStream: 바이트 기반 버퍼 출력 스트림
+```java
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class StringWriter {
+	public static void main(String[] args) {
+		String ks = "공부에 있어 돈이 꼭 필요한 것은 아니다.";
+		String es = "Life is long if you know how to use it.";
+		
+		try(BufferedWriter bw =
+				new BufferedWriter(new FileWriter("String.txt"))) {
+			bw.write(ks, 0, ks.length());
+			bw.newLine(); //줄 바꿈 문자 삽입
+			bw.write(es, 0, es.length());
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+```java
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class StringReader {
+	public static void main(String[] args) {
+		try(BufferedReader br = new BufferedReader(new FileReader("String.txt"))) {
+			String str;
+			while(true) {
+				str = br.readLine(); //한 문장 읽어 들이기
+				if(str == null)
+					break;
+				System.out.println(str);
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+### 32-4 IO 스트림 기반의 인스턴스 저장
+* 객체 직렬화(Object Serialization): 인스턴스를 통째로 저장
+* 객체 역 직렬화(Object Deserialization): 역으로 저장된 인스턴스를 꺼내는 것
+* ObjectInputStream & ObjectOutputStream
+	- 필터 입력/출력 스트림이 상속하는 클래스
+	- 입출력의 대상이 되는 인스턴스의 클래스는 java.io.Serializable을 구현
+```java
+public class SBox implements java.io.Serializable {
+	String s;//s가 참조하는 인스턴스까지 함께 저장
+	//transient String s; 이 참조변수가 참조하는 대상은 저장하지 않겠다는 선언
+	public SBox(String s) { this.s = s; }
+	public String get() { return s; }
+}
+```
+	- 인스턴스를 저장하면 인스턴스 변수가 참조하는 인스턴스까지 함께 저장됨.
+	- 위 클래스 인스턴스 바이트 스트림 통한 입출력 가능
+	- transient 선언 추가하면 이 변수가 참조하는 인스턴스는 저장되지 않고 복원시 이 참보변수는 null로 초기화됨.
+```
+public class IBox implements java.io.Serializable {
+	transient int n; //이 변수의 값은 저장 대상에서 제외함.
+	public IBox(int n) { this.n = n; }
+	public int get() { return n; }
+}
+```
+```java
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+class ObjectOutput {
+	public static void main(String[] args) {
+		SBox box1 = new SBox("Cafe Latte");
+		SBox box2 = new SBox("Capuccino");
+		
+		try(ObjectOutputStream oo = 
+				new ObjectOutputStream(new FileOutputStream("Object.bin"))) {//Object.bin 파일 생성
+			oo.writeObject(box1); //menu1이 참조하는 인스턴스 저장
+			oo.writeObject(box2); //menu2이 참조하는 인스턴스 저장
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+```java
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+public class ObjectInput {
+	public static void main(String[] args) {
+		try(ObjectInputStream oi=
+				new ObjectInputStream(new FileInputStream("Object.bin"))) {
+			SBox box1 = (SBox) oi.readObject();//인스턴스 복원
+			System.out.println(box1.get());
+			SBox box2 = (SBox) oi.readObject();//인스턴스 복원
+			System.out.println(box2.get());
+		}
+		catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
+## Ch 33. NIO 그리고 NIO.2
+### 33-1 File System
+
+* 기본적인 파일 시스템
+	-	절대경로: root directory부터 시작하는 파일의(디렉토리) 위치 정보
+		-	윈도우 절대 경로 C:\javastudy\simple.java
+		-	 리눅스 절대 경로: /javastudy/simple.java
+	- 상대경로: '현재 디렉토리' 기준으로 파일(디렉토리)의 위치 표현
+		- 윈도우 상대 경로: javastudy\simple.java
+		- 리눅스  상대 경로: javastudy/simple.java
+
+* Paths와 Path 클래스
+	- java.nio.file.Path 경로 표현 인터페이스
+	- Path path = Paths.get("C:\\JavaStudy\\PathDemo.java");
+	- Paths.get 메소드가 반환하는 '경로 정보를 담은 인스턴스'를 참조하는 참조변수 선언에 사용됨. 
+```java
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class PathDemo {
+	public static void main(String[] args) {
+		Path pt1 = Paths.get("C:\\Practice\\src\\ch32\\SBox.java");
+		Path pt2 = pt1.getRoot();//루트 디렉토리 반환
+		Path pt3 = pt2.getParent();//부모 디렉토리 반환
+		Path pt4 = pt1.getFileName();//파일 이름 반환
+		
+		System.out.println("Absolute: " + pt1);
+		//Absolute: C:\Practice\src\ch32\SBox.java
+		System.out.println("Root: " + pt2);
+		//Root: C:\
+		System.out.println("Parent: " + pt3);
+		//Parent: null
+		System.out.println("File: " + pt4);
+		//File: SBox.java
+	}
+}
+```
+* 현재 디렉토리
+```java
+public class CurrentDir {
+	public static void main(String[] args) {
+		Path cur = Paths.get("");//현재 디렉토리 정보 담긴 인스턴스 생성
+		String cdir;
+		
+		if(cur.isAbsolute())
+			cdir = cur.toString();
+		else
+			cdir = cur.toAbsolutePath().toString();
+		
+		System.out.println("Current dir: " + cdir);
+	}
+}
+```
+* 파일 및 디렉토리 생성과 소멸
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+class MakeFileAndDir {
+	public static void main(String[] args) throws IOException {
+		Path fp = Paths.get("C:\\IT_Programs\\empty.txt");
+		fp = Files.createFile(fp); //파일생성
+		
+		Path dp1 = Paths.get("C:\\IT_Programs\\Empty");
+		dp1 = Files.createDirectory(dp1); //디렉토리 생성
+		
+		Path dp2 = Paths.get("C:\\IT_Programs\\Full");
+		dp2 = Files.createDirectory(dp2);//경로의 모든 디렉토리 생성
+		
+		System.out.println("File: " + fp);
+		System.out.println("Dir1: " + dp1);
+		System.out.println("Dir2: " + dp2);
+	}
+```
+* 파일을 대상으로 하는 간단한 입력 및 출력
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+class SimpleBinWriteRead {
+	public static void main(String[] args) throws IOException {
+		Path fp = Paths.get("C:\\IT_Programs\\Empty\\simple.bin");
+		
+		//파일 생성, 파일이 존재하면 예외 발생
+		fp = Files.createFile(fp);
+		
+		byte buf1[] = {0x13, 0x14, 0x15}; //파일에 쓸 데이터
+		for(byte b : buf1) // 저장할 데이터의 출력을 위한 반복문
+			System.out.print(b + "\t");
+		System.out.println();
+		
+		//파일에 데이터 쓰기
+		Files.write(fp, buf1, StandardOpenOption.APPEND);//fp가 지시하는 파일에 배열 buf1의 데이터 전부가 저장됨!
+		
+		//파일로부터 데이터 읽기
+		byte buf2[] = Files.readAllBytes(fp);
+		
+		for(byte b : buf2) // 읽어 들인 데이터의 출력을 위한 반복문
+			System.out.print(b + "\t");
+		System.out.println();
+	}
+}
+```
+* - APPEND: 파일의 끝에 데이터를 추가
+* CREATE: 파일이 존재하지 않으면 생성함
+* CREATE_NEW: 새 파일 생성. 이미 파일 존재시 예외
+* TRUNCATE_EXISTING: 쓰기 위해 파일 여는데 파일이 존재하면 파일의 내용 덮어씀.
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+
+class SimpleTxtWriteRead {
+	public static void main(String[] args) throws IOException {
+		Path fp = Paths.get("C:\\IT_Programs\\Full\\simple.txt");
+		String st1 = "One Simple String";
+		String st2 = "Two Simple String";
+		List<String> lst1 = Arrays.asList(st1, st2);
+		// write 메소드의 두 번째 인자로 전달 가능
+		Files.write(fp, lst1); //파일에 문자열 저장
+		List<String> lst2 = Files.readAllLines(fp); //파일로부터 문자열 읽기
+		System.out.println(lst2);
+	}
+}
+```
+* 파일 및 디렉토리의 복사와 이동
+	- REPLACE_EXISTING: 이미 파일이 존재한다면 해당 파일을 대체함.
+	- COPY_ATTRIBUTES: 파일의 속성까지 복사함
+```java
+//src가 지시하는 파일을 dst가 지시하는 위치와 이름으로 복사
+Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
+
+//src가 지시하는 디렉토리를 dst가 지시하는 디렉토리로 이동
+Files.move(src, dst, StandardCopyOption.REPLACE_EXISTING);
+```
+### 33-2 NIO.2 기반의 I/O 스트림 생성
+* Byte Stream의 생성
+```
+Path fp = Paths.get("data.dat");
+InputStream in = Files.newInputStream(fp);
+```
+* 문자 스트림 생성
+```
+Path fp = Paths.get("String.txt");
+BufferedWriter bw = Files.newBufferedWriter(fp);//버퍼링 하는 문자 출력 스트림 생성
+```
+### 33-3 NIO 기반의 입출력
+* NIO의 채널(Channel)과 버퍼(Buffer)
+	- 파일을 대상으로 하는 채널의 데이터 출력 경로: 데이터 -> 버퍼-> 채널 -> 파일
+	- 파일을 대상으로 하는 채널의 데이터 입력 경로: 데이터 <- 버퍼 <- 채널 <- 파일
+* File Random Access
+- Position: 대상이 채널이건 버퍼 건 어느 위치까지 데이터를 썼는지, 어느 위치까지 데이터를 읽었는지 표시하기 위해 '포지션' 위치 정보 유지.
+```java
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+class FileRandomAccess {
+	public static void main(String[] args) {
+		Path fp = Paths.get("data.dat");
+		
+		//버퍼 생성, Non-direct 버퍼
+		ByteBuffer wb = ByteBuffer.allocate(1024);
+		//ByteBuffer.allocateDirect(1024); Direct 버퍼 생성 하면 VM 버퍼 거치지 않음.
+		//버퍼에 데이터 저장
+		wb.putInt(120);//int, 메소드 호출 후 포지션 4 
+		wb.putInt(240);// 메소드 호출 후 포지션 8
+		wb.putDouble(0.94); //실수 8 byte
+		wb.putDouble(0.75);
+		
+		//하나의 채널 생성 (fp가 지시하는 파일의 내용을 생성,읽기,쓰기 위한 채널 생성)
+		try(FileChannel fc = FileChannel.open(fp, 
+							StandardOpenOption.CREATE,
+							StandardOpenOption.READ,
+							StandardOpenOption.WRITE)) {
+			wb.flip();//메소드 호출 후 포지션 0
+			fc.write(wb);//버퍼에서 fc로 데이터 전송 
+			
+			//파일로부터 읽기
+			ByteBuffer rb = ByteBuffer.allocate(1024); //버퍼 생성
+			fc.position(0); // 채널의 포지션을 맨 앞으로 이동
+			fc.read(rb);
+			
+			//이하 버퍼로부터 데이터 읽기
+			rb.flip();
+			System.out.println(rb.getInt());
+			rb.position(Integer.BYTES * 2); //버퍼의 포지션 이동
+			System.out.println(rb.getDouble());
+			System.out.println(rb.getDouble());
+			
+			rb.position(Integer.BYTES); //버퍼의 포지션 이동
+			System.out.println(rb.getInt());
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+```
 
 ## Ch 34. Thread & Synchronization
 ### 34-1 쓰레드의 이해와 쓰레드의 생성
