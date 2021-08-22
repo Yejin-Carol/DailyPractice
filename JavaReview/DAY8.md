@@ -1,4 +1,434 @@
 #  Java Review - DAY 8
+
+## Ch 30. Stream 2
+### 30-1 스트림의 생성과 연결
+* 스트림 생성: 스트림 생성에 필요한 데이터 직접 전달
+	- List\<String> sl = Arrays.asList("Bts", "Army", "PTD");
+Stream.of(sl) // [Bts, Army, PTD] 출력
+	-  Stream.of 메소드에 컬렉션 인스턴스 전달하면 해당 인스턴스 하나로 이뤄진 스트림이 생성됨. Stream.of 메소드에 배열을 전달하면 그때는 하나의 배열로 이뤄진 스트림이 생성되는 것이 아니라, 배열에 저장된 요소로 이뤄진 스트림이 생성됨.
+* DoubleStream, IntStream, LongStream
+	- IntStream.of(7, 5, 3,) //7, 5, 3
+	- IntStream.range(5, 8) //5, 6, 7
+	- IntStream.rangeClosed(5,8) //5, 6, 7, 8
+
+* 병렬 스트림으로 변경
+ ```
+	String str = ss.parallel()//병렬 스트림 생성
+	               .reduce("", lc);
+ ```
+* 스트림 연결 
+```
+	Stream.concat(ss1, ss2)
+	      .forEach(s -> System.out.println(s));
+```
+### 30-2 스트림의 중간 연산
+* Mapping에 대한 추가 정리
+```
+[Stream<T>의 map 시리즈 메소드]
+<R> Stream<R> map(Function<T, R> mapper)
+IntStream mapToInt(ToIntFunction<T> mapper)
+LongStream mapToLong(ToLongFunction<T> mapper)
+DoubleStream mapToDouble(ToDoubleFunction<T> mapper)
+
+[Stream<T>의 flatMap 시리즈 메소드들]
+<R> Stream<R> flatMap(Function<? Stream<R>> mapper)
+-> Function<T, R>의 추상 메소드는 R apply(T t), 위 메소드 호출시 람다식이 구현해야할 메소드는 Stream<R> apply (T t)
+
+IntStream flatMapToInt(Function<T,IntStream> mapper)
+LongStream flatMapToLong(Function<T, LongStream> mapper)
+DoubleStream flatMapToDouble(Function<T, DoubleStream> mapper)
+```
+* - flatMap에 전달한 람다식에서는 '스트림을 생성하고 이를 반환'해야함. 반면 map에 전달할 람다식에서는 스트림을 구성할 데이터만 반환하면 됨.
+```java
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+public class FlatMapStream {
+	public static void main(String[] args) {
+		Stream<String> ss1 = Stream.of("MY_DREAM", "YOUR_LIFE");
+		
+		//아래 람다식에서 스트림 생성: 인자로 전달된 구분자 정보를 기준으로 문자열 나누고,
+		//이를 배열에 담아서 반환
+		Stream<String> ss2 = ss1.flatMap(s -> Arrays.stream(s.split("_")));
+		ss2.forEach(s -> System.out.print(s + "\t"));
+		System.out.println();
+	}
+}
+```
+
+```java
+import java.util.Arrays;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+class ReportCard {
+	private int kor;//국어점수
+	private int eng;//영어점수
+	private int math;//수학점수
+	
+	public ReportCard(int k, int e, int m) {
+		kor = k;
+		eng = e;
+		math = m;
+	}
+	public int getKor() { return kor; }
+	public int getEng() { return eng; }
+	public int getMath() { return math; }
+}
+
+class GradeAverage {
+	public static void main(String[] args) {
+		ReportCard[] cards = {
+				new ReportCard(70, 80, 90),
+				new ReportCard(90, 80, 70),
+				new ReportCard(80, 80, 80)
+		};
+		
+		//ReportCard 인스턴스로 이뤄진 스트림 생성
+		Stream<ReportCard> sr = Arrays.stream(cards);
+		
+		//학생들의 점수 정보로 이뤄진 스트림 생성
+		IntStream si = sr.flatMapToInt(
+			r -> IntStream.of(r.getKor(), r.getEng(), r.getMath()));
+	
+		//평균을 구하기 위한 최종 연산 average 진행
+		double avg = si.average().getAsDouble();
+		System.out.println("avg. " + avg);	
+	}
+}
+```
+OptionalDouble 
+```java
+Arrays.stream(cards)
+			  .flatMapToInt(r -> IntStream.of(r.getKor(), r.getEng(), r.getMath()))
+			  .average()
+			  .ifPresent(avg -> System.out.println("avg. " + avg));
+```
+* 정렬
+```
+Stream<T> sorted(Comparator<? super T> comparator)//Stream<T>의 메소드
+Stream<T> sorted() //Stream<T>의 메소드
+IntStream sorted() //IntStream의 메소드
+LongStream sorted() //LongStream의 메소드
+DoubleStream sorted() //DoubleStream의 메소드
+```java
+import java.util.stream.Stream;
+
+public class IntSortedStream {
+	public static void main(String[] args) {
+		Stream.of("Bts", "Army", "PTD", "Butter")
+		      .sorted()
+		      .forEach(s -> System.out.print(s + '\t'));
+		System.out.println();
+
+		Stream.of("Bts", "Army", "PTD", "Butter")
+		      .sorted((s1, s2) -> s1.length() - s2.length())
+		      .forEach(s -> System.out.print(s + '\t'));
+		System.out.println();
+	}
+}
+```
+* Looping
+	- 스트림을 이루는 모든 데이터 각각을 대상으로 특정 연산을 진행하는 행위
+```java
+import java.util.stream.IntStream;
+
+public class LazyOpStream {
+	public static void main(String[] args) {
+		//최종 연산이 생략된 스트림의 파이프라인
+		IntStream.of(1, 3, 5)
+				 .peek(d-> System.out.print(d + "\t"));
+		System.out.println();//최종 연산 없으므로 중간 연산 진행되지 않음
+		
+		//최종 연산이 존재하는 스트림의 파이프라인
+		IntStream.of(5, 3, 1)
+				 .peek(d -> System.out.print(d + "\t"))//중간 연산 진행
+				 .sum();// sum 반환 값 저장 혹은 출력하지 않음
+		System.out.println();
+	}			
+}
+```
+### 30-3 스트림의 최종 연산
+* sum(), count(), average(), min(), max()
+```java
+import java.util.stream.IntStream;
+
+public class OpIntStream {
+	public static void main(String[] args) {
+	
+		int sum = IntStream.of(1, 3, 5, 7, 9)
+						   .sum();
+		System.out.println("sum =" + sum);
+
+		long count = IntStream.of(1, 3, 5, 7, 9)
+				   .count();
+		System.out.println("count =" + count);
+		
+		IntStream.of(1, 3, 5, 7, 9)
+				 .average()
+				 .ifPresent(av -> System.out.println("avg = " + av));
+		
+		IntStream.of(1, 3, 5, 7, 9)
+				 .min()
+				 .ifPresent(mn -> System.out.println("min = " + mn));
+		
+		IntStream.of(1, 3, 5, 7, 9)
+		 	     .max()
+		 	     .ifPresent(mx -> System.out.println("max = " + mx));
+	}
+}
+```
+* forEach
+```
+void forEach(Consumer<? super T> action)
+void forEach(DoubleConsumer action)...
+```
+
+* allMatch, anyMatch, noneMAtch
+``` 
+boolean allMatch(IntPredicate predicate)...
+boolean anyMatch(DoublePredicate predicate)...
+```
+```java
+import java.util.stream.IntStream;
+
+public class MatchStream {
+	public static void main(String[] args) {
+		boolean b = IntStream.of(1, 2, 3, 4, 5)
+							.allMatch(n -> n%2 == 0);
+		System.out.println("모두 짝수이다. " + b);
+		
+		b = IntStream.of(1, 2, 3, 4, 5)
+				.anyMatch(n -> n%2 == 0);
+		System.out.println("짝수가 하나는 있다. " + b);
+
+		b = IntStream.of(1, 2, 3, 4, 5)
+				.noneMatch(n -> n%2 == 0);
+		System.out.println("짝수가 하나도 없다. " + b);
+	}
+}
+```
+* collect
+	- 한번 파이프라인에 흘려보낸 스트림은 되돌리거나 다른 파이프라인에 다시 흘려보낼 수 없다.
+	- 필요하다면 파이프라인을 통해서 가공되고 걸러진 데이터를 최종 연산 과정에서 별도로 저장해야함.
+	- Collect 메소드는 람다식을 기반으로 데이터 저장할 저장소를 생성함. 
+```java
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+class CollectStringStream {
+	public static void main(String[] args) {
+		String[] words = {"Bts", "Army", "PTD", "Butter"};
+		Stream<String> ss = Arrays.stream(words);
+		
+		List<String> ls = ss.filter(s -> s.length() < 5)
+							.collect(() -> new ArrayList<>(),
+									(c, s) -> c.add(s),
+									(lst1, lst2) -> lst1.addAll(lst2));
+		System.out.println(ls);
+	}
+}
+```
+* 병렬 스트림에서의 collect : 속도 느려지는 경우 있으므로 적합성 판단 후 진행
+```java
+List<String> ls = ss.parallel()
+							.filter(s -> s.length() < 5)
+							.collect(() -> new ArrayList<>(),
+									(c, s) -> c.add(s),
+									(lst1, lst2) -> lst1.addAll(lst2));
+```
+## Ch. 31 시각과 날짜의 처리
+### 31-1 시각과 날짜 관련 코드의 작성
+* 시간이 얼마나 걸렸지? : Instant 클래스
+	- 시각: 시간의 어느 한 시점
+		- java.time.Instant : 흐르는 시간 속 특정 시점
+		- Instant now = Instant.now(); //now 메소드 호출을 통한 Instant 인스턴스의 생성
+	- 시간: 어떤 시각에서 어떤 시각까지의 사이
+```java
+import java.util.List;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
+
+class HowLongParallel {
+	public static long fibonacci(long n) {
+		if(n == 1 || n == 2)
+			return 1;
+		return fibonacci(n-1) + fibonacci(n-2);
+	}
+	
+	public static void main(String[] args) {
+		List<Integer> nums = Arrays.asList(41, 42, 43, 44, 45, 45);
+		
+		Instant start = Instant.now(); //스톱워치 시작
+		nums.parallelStream() //병렬 스트림 생성
+		    .map(n -> fibonacci(n))
+		    .forEach(r -> System.out.println(r));
+		
+		Instant end = Instant.now(); //스톱워치 멈춤
+		System.out.println("Parallel Processing Time: " +
+			Duration.between(start, end).toMillis());
+	}
+}
+```
+* LocalData 클래스
+```java
+import java.time.LocalDate;
+
+public class LocalDateDemo1 {
+	public static void main(String[] args) {
+		// Today
+		LocalDate today = LocalDate.now();
+		System.out.println("Today: " + today);
+		
+		// This year's Christmas
+		LocalDate xmas = LocalDate.of(today.getYear(), 12, 25);
+		System.out.println("Xmas: " + xmas);
+
+		// This year's Christmas Eve
+		LocalDate eve = xmas.minusDays(1);
+		System.out.println("Xmas Eve: " + eve);
+	}
+}
+```
+* - LocalTime mt = now.plusHours(2); //시 정보를 2 증가
+	- mt = mt.plusMinutes(10); //분 정보를 10 증가
+	- plus Seconds
+	- Duration between = Duration.between(start, end);
+
+* LocalDateTime 클래스
+```
+LocalDateTime dt = LocalDateTime.now();
+LocalDateTime mt = dt.plusHours(22);
+mt = mt. plusMinutes(35) //22시간 35분 뒤 
+```
+* - plusYears(long years) ~ plusSeconds(long seconds)
+```java
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
+
+public class LocalDateTimeDemo2 {
+	public static void main(String[] args) {
+
+		LocalDateTime today = LocalDateTime.of(2021, 8, 22, 12, 00);
+		LocalDateTime flight1 = LocalDateTime.of(2021, 9, 10, 15, 00);
+		LocalDateTime flight2 =  LocalDateTime.of(2021, 9, 9, 17, 30);
+		
+		//빠른 항공편 선택
+		LocalDateTime myFlight;
+		if(flight1.isBefore(flight2))//flight1이 flight2보다 이전인가? 
+		//flight2.isAfter(flight1): flight2가 flight1보다 이후인가?
+			myFlight = flight1;
+		else
+			myFlight = flight2;
+		
+		//빠른 항공편의 비행 탑승까지 남은 날짜 계산
+		Period day = Period.between(today.toLocalDate(), myFlight.toLocalDate());
+		
+		//빠른 항공편의 비행 탑승까지 남은 시간 계산
+		Duration time = Duration.between(today.toLocalTime(), myFlight.toLocalTime());
+		
+		//비행 탑승까지 남은 날짜와 시간 출력
+		System.out.println(day);
+		System.out.println(time);	
+	}
+} 
+```
+* - Period: 날짜의 차
+	- Duration: 시각의 차
+```java
+		LocalDateTime dt3 = LocalDateTime.of(2021, Month.JANUARY, 12, 15, 30);
+		LocalDateTime dt4 = LocalDateTime.of(2021, Month.FEBRUARY, 13, 14, 29);
+
+		Duration drDate2 = Duration.between(dt3, dt4);
+		System.out.println(drDate2);//결과값 PT766H59M
+```
+### 31-2 시간대를 적용한 코드 작성 그리고 출력 포맷의 지정
+* 세계의 시간대
+	- UTC (Universal Time Coordinated), 한국 UTC + 9
+```java
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+public class ZoneDateTimeDemo1 {
+	public static void main(String[] args) {
+		ZonedDateTime here = ZonedDateTime.now();
+		System.out.println(here);
+		
+		//동일한 날짜와 시각의 파리
+		ZonedDateTime paris = ZonedDateTime.of(
+							here.toLocalDateTime(), ZoneId.of("Europe/Paris"));
+		System.out.println(paris);
+		
+		//이곳과 파리의 시차
+		Duration diff = Duration.between(here, paris);
+		System.out.println(diff);//PT7H
+	}
+}
+```
+```java
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+public class ZoneDateTimeDemo2 {
+	public static void main(String[] args) {
+		//departure in Seoul 
+		ZonedDateTime departure = ZonedDateTime.of(
+				LocalDateTime.of(2021,  8, 27, 00, 50), ZoneId.of("Asia/Seoul"));
+		System.out.println("Departure : " + departure);
+		
+		//arrival in Paris
+		ZonedDateTime arrival = ZonedDateTime.of(
+				LocalDateTime.of(2021, 8, 27, 06, 00), ZoneId.of("Europe/Paris"));
+		System.out.println("Arrival: " + arrival);
+		
+		//Journey duration
+		System.out.println(Duration.between(departure, arrival));
+	}
+}
+
+//결과값
+//Departure : 2021-08-27T00:50+09:00[Asia/Seoul]
+//Arrival: 2021-08-27T06:00+02:00[Europe/Paris]
+//PT12H10M
+```
+* 날짜와 시각 정보의 출력 포맷 지정
+```java
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class DateTimeFormatterDemo {
+	public static void main(String[] args) {
+		ZonedDateTime date = ZonedDateTime.of(
+				LocalDateTime.of(2021,  8, 22, 12, 45), ZoneId.of("Asia/Seoul"));
+		
+		//21-8-22
+		DateTimeFormatter fm1 = 
+				DateTimeFormatter.ofPattern("yy-M-d");
+		//2021-08-22, 12:45:0
+		DateTimeFormatter fm2 = 
+				DateTimeFormatter.ofPattern("yyyy-MM-d, H:m:s");
+		//2021-08-22, 12:45:00 Asia/Seoul
+		DateTimeFormatter fm3 = 
+				DateTimeFormatter.ofPattern("yyyy-MM-d, HH:mm:ss VV");
+		
+		System.out.println(date.format(fm1));
+		System.out.println(date.format(fm2));
+		System.out.println(date.format(fm3));
+	}
+}
+```
+
+
+
 ## Ch 34. Thread & Synchronization
 ### 34-1 쓰레드의 이해와 쓰레드의 생성
 * 쓰레드는 실행 중인 프로그램 내에서 '또 다른 실행의 흐름을 형성하는 주체'
