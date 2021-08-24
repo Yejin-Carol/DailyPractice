@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src=jQuery_3_x.js></script>
+</head>
+
+<body>
+    <h1 id=first>s</h1>
+    <h1 id=second>d</h1>
+    <h1 id=third>e</h1>
+    <h1 id="four">dfe</h1>
+    <h1 id="five">awef</h1>
+    <!--ID 숫자로 시작하면 안됨!-->
+    <h1 id="six">dsfe</h1>
+    <button id="btn_one">js</button>
+    <button id="btn_two">jq</button>
+    <script>
+        //jQ 이벤트 추가 방법
+        //이런식으로 계속 적으면 이벤트가 계속 추가됨
+        $('#btn_two').click(function () {
+            $('#first').css('color', 'blue')
+        })
+        $('#btn_two').click(function () {
+            $('#first').css('background', 'red')
+        })
+        $('#btn_two').click(function () {
+            $('#first').css('border', '1px solid black')
+        })
+
+        //메소드 채이닝(위의 코드를 아래와 같이 적을 수도 있다.)
+        $('#btn_two').click(function () {
+            $('#first').css('color', 'blue')
+        }).css('background', 'pink').css('border', '5px solid green')
+        $('#btn_two').click(function () {
+                $('#first').css('color', 'red')
+            })
+            .click(function () {
+                $('#first').css('background', 'yellow')
+            })
+            .click(function () {
+                $('#first').css('border', '5px solid green')
+            })
+
+
+        $('#btn_two').click(function () {
+            $('#third').css('color', 'orange').css('background', 'gold').css('border', '3px solid blue')
+        })
+
+        //js 이벤트 추가
+        //onclick = 한번에 하나의 이벤트 추가
+        document.querySelector('#btn_one').onclick =
+            function () {
+                document.querySelector('#four').style.color = 'blue'
+            }
+        let btn_one = document.querySelector('#btn_one')
+        let four = document.querySelector("#four")
+        btn_one.onclick = function () {
+            four.style.background = 'yellow' //위에거 지워짐
+        }
+        //addEventListner가 jQuery click처럼 동작(중첩가능) 
+        bnt_one.addEventListner('clikc', function () {
+            four.style.color = 'red'
+        })
+        //fucnction(){} 축약 = ()=>{}
+        btn_one.addEventListener('click', function () {
+            four.style.border = '3px blue solid'
+        })
+        btn_one.addEventListener('click', () => {
+            document.querySelector('#five').style.color = 'pink'
+        })
+    </script>
+
+</body>
+
+</html>

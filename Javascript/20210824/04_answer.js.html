@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src=jQuery_3_x.js></script>
+    <style>
+        /*h1:nth-child(2), :first-child, :last-child */
+        
+        .box
+        {
+            width:60px;
+            height:60px;
+            background-color: slateblue;
+            float:left;
+            margin: 15px;
+
+        }
+          
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="box border-box"></div>
+    <div class="box"></div>
+    <div class="box border-box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box border-box"></div>    
+    <script>
+        //querySelector:무조건 한 개만 선택
+        //querySelectorAll: 선택자에 해당하는 모든 태그 선택
+        //클래스명이 box이면서 border-box인 것 선택.
+        let list = document.querySelectorAll('.box.border-box')
+
+        for(let i =0; i< list.length; i++)
+        {
+            list[i].style.border = '4px solid gray'
+            list[i].style.background = 'pink'
+        }    
+
+
+    </script>
+</body>
+</html>

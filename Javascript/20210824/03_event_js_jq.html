@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jQuery_3_x.js"></script>
+</head>
+<body>
+    <h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi alias id eaque, odio vero placeat ut, voluptatem similique numquam odit officia rem quas beatae exercitationem tenetur at dolorum laboriosam unde!</h1>
+    <h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi alias id eaque, odio vero placeat ut, voluptatem similique numquam odit officia rem quas beatae exercitationem tenetur at dolorum laboriosam und
+        e!</h1>
+        <button id = "btn1">js버튼</button>
+        <button id = "btn2">jq 버튼</button>
+    <script>
+        //js 
+        let btn1 = document.getElementById('btn1')
+        btn1.onclick = function()//js onclick 통해서 버튼 추가, onclick은 이벤트가 하나만 클릭
+        {
+            document.getElementsByTagName('h1')[0].style.color = 'red'
+        }
+        //발전된 js(선택자부분)
+        let btn1_1 = document.querySelector('#btn1')
+        btn1_1.onclick = function()
+        {
+            document.querySelector('h1').style.background = 'yellow'//하나만 선택
+            document.querySelectorAll('h1')[0].style.color = 'pink'//선택자 해당하는 태그 모두 선택 
+        }
+        btn1_1.addEventListener('click', ()=>
+        {
+
+            document.querySelectorAll('h1')[0].style.color = 'red'
+        }
+        )
+        //jQ
+        //id가 btn2 
+        $('#btn2').click(function() {$('h1:first').css('color', 'blue') } ).click(function(){$('h1:nth-child(2)').css('color', 'green')})
+
+    </script>
+
+
+
+
+
+</body>
+</html>

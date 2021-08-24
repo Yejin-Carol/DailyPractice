@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        .redtext { color:red} /*클래스 이름이 redtext인 것의 스타일 */
+        .border {border : 1px solid crimson}
+    </style>
+</head>
+<body>
+    
+    <h1 style="color:blue">Good morning</h1>
+    <h1 id="first">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, ipsam sapiente aperiam eveniet expedita placeat ea aliquid, amet veniam ab natus debitis, modi laboriosam dignissimos eaque perferendis cumque nulla. Quia?</h1>
+    <h1 id="second">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad, ipsam sapiente aperiam eveniet expedita placeat ea aliquid, amet veniam ab natus debitis, modi laboriosam dignissimos eaque perferendis cumque nulla. Quia?</h1>
+
+    <script>
+        //자바스크립트 혹은 jQuery 이용해서 태그를 선택하고 스타일 지정
+        let firstTag = document.getElementById('first')
+        firstTag.setAttribute('class', 'redtext border')
+        firstTag.style.background = 'yellow' //스타일 직접 주는 방법도 있음
+        //<h1 id="first" class="redtext border">
+        //jQuery: js library
+        //js를 쉽게 쓰고자 만듬.
+        //리액트나 뷰 혹은 js 자체 기능 업그레이드로 인해 점점 안쓰이고 있으나 하지만 지금까지 우리가 쓰는 대부분 웹페이지는 jQuery
+
+            $('#second').addClass
+    </script>
+
+</body>
+</html>
