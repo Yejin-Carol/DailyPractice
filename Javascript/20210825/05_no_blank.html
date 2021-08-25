@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*선택자 삽입 및 스타일 지정시 '공백'에 대한 주의 필요함!*/
+        div:first-child{color:red} 
+        /* 첫번째 태그를 선택하는 건 맞는데 */
+        div :first-child{background: springgreen;}
+        div:first-child{border: solid black 3px;}
+    </style>
+</head>
+<body>
+    <div>
+        <p>Lorem, ipsum dolor.1</p>
+        <p>Lorem, ipsum dolor.2</p>
+        <p>Lorem, ipsum dolor.3</p>
+        <div>
+            <p>Lorem ipsum dolor sit amet.1-1</p>
+            <p>Lorem ipsum dolor sit amet.2-2</p>
+            <p>Lorem ipsum dolor sit amet.3-3</p>
+        </div>
+    </div>   
+
+    <div>
+        <div>
+            <h6>111Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem deserunt eius, veniam ipsa numquam, dolores consequatur possimus nobis, error magnam sapiente? Nobis esse aperiam dolorem sint modi rem, praesentium deleniti!</h6>
+            <h6>222Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem deserunt eius, veniam ipsa numquam, dolores consequatur possimus nobis, error magnam sapiente? Nobis esse aperiam dolorem sint modi rem, praesentium deleniti!</h6>
+        </div>
+        <p>01아무거나</p>
+        <p>02아무거나</p>
+        <p>03아무거나</p>
+    </div>   
+</body>
+</html>

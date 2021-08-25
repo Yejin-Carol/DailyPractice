@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*태그의 '타입'을 선택하는 선택자*/
+        input[type=text] {
+            background: yellow;
+        }
+    </style>
+    <style>
+        /*동위선택자: 선택자 h1+h2(h1옆의 h2가리킴)...h1~h2 (h1옆의 h2들을 가리킴)*/
+        input[type=checkbox]:checked+div { 
+                        
+            overflow: hidden;
+            height: 0px;/*height: 300px 체크시 사라짐*/ 
+
+        }
+        div 
+        {
+            
+            height: 300px;/*height: 300px 체크시 사라짐*/
+            transition-duration: 1s;
+            color: red
+            /*input height: 0px 체크시 사라짐*/
+            /*웹브라우저 오래되면 */
+            /* -ms-transition-duration:1s; /*ms web browser */
+           /* -webkit-transition-duration: 1s; /*크롬 사파리*/
+            /*-moz-transition-duration: 1s; /*파이어폭스*/
+          /*  ms, webkit, moz 이런걸 밴더프리픽스
+            일종의 테스트기능(베타기능) 써보는거... */
+
+        }
+    </style>
+</head>
+
+<body>
+    <!--둘 다 사실상 type이 텍스트인데-->
+    <!--css 입장에서는 type이 'text'라고 정의 되어 있지 않으면-->
+    <!--그거에 대해서는 스타일 적용하지 않음-->
+    <input type="text">
+    <input>
+    <!--사실상 type=text인 것 처럼 동작-->
+
+    <input type="checkbox">
+    <div>
+        <h1>Lorem.</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nihil dolore accusamus alias, nisi quo, ea
+            vitae ullam non deserunt consequatur amet cumque exercitationem repellendus in, voluptates voluptate totam
+            explicabo?</p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #opa
+        {
+            background: cyan;
+            opacity: 0.3; /*투명도, 0부터 1사이의 값을 갖고, 자식태그까지 같이 투명하게 해버림*/
+        }
+        #alpha
+        {
+            /*alpha값은 0부터 1사이의 값을 갖고, 자식태그까지 같이 투명하게 해버림*/
+            background: rgba(39,140,140,0.294);
+        }
+    </style>
+</head>
+<body>
+    <div id="opa">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos pariatur repellendus voluptatum at! Officiis beatae itaque similique reiciendis, voluptates, numquam quibusdam repudiandae consequatur corrupti debitis esse cum, corporis eius. Alias.</p>
+    </div>
+
+    <div id="alpha">
+        <p>Lorem, ipsum.</p>
+    </div>
+</body>
+</html>
