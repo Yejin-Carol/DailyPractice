@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 웹 페이지 표준화 css */
+        /* 웹 브라우저별로 공백, 폰트등 고유의 스타일이 조금씩 있음*/
+        /* 모든 웹 브라우저가 다 똑같이 나오게 하는 css들이 있음(html 책에도 있음) */
+        /* 초기화 코드 */
+        /* 에릭마이어의 reset css등이 있음 */
+        
+        /* 여백통일 */
+        *
+        {
+            margin:0;
+            padding:0;
+            background-image: url('BeachCleanUP.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            color: navy
+        }
+        /* 폰트통일 */
+        body
+        {
+            font-family:sans-serif;
+        }
+        /* li 태그 스타일 통일 */
+        li
+        {
+            list-style: none;
+        }
+        a {text-decoration:  none;}
+        img { border:0 }
+    </style>
+    <!-- header부분 -->
+    <style>
+        #main_header
+        {
+            /* 중앙정렬 */
+            width: 960px;
+            margin:0 auto;
+            /* 중앙정렬 */
+
+            height: 160px;
+            /* 왜 relative일까...? 생각해봅시다. */
+            position: relative;
+            /* 자손태그의 position을 absolute로 두면, */
+            /* 부모 태그의 position은 static이 아니어야지만, 부모 태그 안에서 */
+            /* 절대 위치를 잡습니다. */
+        }
+        /* title, gnb, lnb에 css 주기 */
+        #main_header>#title
+        {
+            position: absolute;
+            left:20px;
+            top:30px;
+        }
+        #main_header>#main_gnb
+        {
+            position:absolute;
+            right:0;
+            top:0;
+        }
+        #main_header>#main_lnb
+        {
+            position:absolute;
+            right:0;
+            bottom:10px;
+        }
+
+        #main_gnb>ul{overflow: hidden;}
+        #main_lnb>ul{overflow: hidden;}
+
+        /* 수평정렬 */
+        #main_gnb>ul>li{float:left}
+        #main_lnb>ul>li{float:left}
+
+        /* a 태그에 테두리선 긋고 hover시 색 바뀌게 하기 */
+        #main_gnb>ul>li>a
+        {
+            display: block;
+            padding: 2px 10px; /*여백 2 10*/
+            border: 1px solid navy; /*1px 실선 */
+        }
+        #main_lnb>ul>li>a
+        {
+            display: block;
+            padding: 10px 20px; /*여백 10 20 */
+            border: 1px solid navy; /*1px 실선 */
+        }
+        #main_gnb>ul>li>a:hover
+        {
+            background-color: navy;
+            color: white;
+        }
+        #main_lnb>ul>li>a:hover
+        {
+            background-color: navy;
+            color: white;
+        }
+
+        /* id가 main_gnb인 태그의 자손인 ul의 자손인 첫번째 태그인 li태그의 자손인 a */
+        #main_gnb>ul>li:first-child>a
+        {
+            border-radius: 10px 0 0 10px;
+        }
+        #main_gnb>ul>li:last-child>a
+        {
+            border-radius: 0 10px 10px 0;
+        }
+        #main_lnb>ul>li:first-child>a
+        {
+            border-radius: 10px 0 0 10px;
+        }
+        #main_lnb>ul>li:last-child>a
+        {
+            border-radius: 0 10px 10px 0;
+        }    
+        #title>h1
+        {
+            font-family: 'IBM Plex Sans KR', sans-serif;   
+        }
+        #title>h2
+        {
+            font-family: 'Montserrat', sans-serif;   
+        }
+    </style>
+     <style>
+        #content
+        {
+            width: 960px;
+            margin:0 auto;
+            overflow: hidden;
+        }
+        #content>#main_section
+        {
+            width: 750px;
+            float: left;
+
+        }
+        /* section과 aside 사이에 10px 여백 */
+        #content>#main_aside
+        {
+            width: 200px;
+            float: right;
+        }
+        /* 본문에 선 긋기 */
+        #main_section>article.main_article
+        {
+            margin-bottom: 10px; /*선 바깥쪽*/ 
+            padding: 20px; /*선 안쪽 여백*/
+            border:3px solid navy;            
+        }
+    </style>
+    <!-- 탭 컨트롤 -->
+    <style>
+        /* none : 완전히 사라지게 하는 거 */
+        /* visibility: hidden 이랑은 다른 거... 이건 영역은 잡히는 데 안 보이는 거  */
+        input:nth-of-type(1) { display:  none; }
+        input:nth-of-type(1)~div:nth-of-type(1) {display: none;}
+        input:nth-of-type(1):checked~div:nth-of-type(1) {display: block;}
+
+        
+        input:nth-of-type(2) { display:  none;}
+        input:nth-of-type(2)~div:nth-of-type(2) {display: none;}
+        input:nth-of-type(2):checked~div:nth-of-type(2) {display: block;}
+
+        section.buttons { overflow: hidden;}
+
+        section.buttons>label 
+        {
+            display: block;
+            float: left;
+            width: 100px;
+
+            /* height, line-height를 똑같이 하면 수직정렬 */
+            height: 30px;
+            line-height: 30px;
+
+            /* 가운데 정렬 */
+            text-align: center; 
+
+            /* content-box, 
+            border-box 어떤 걸로 하냐에 따라서 넓이가 다름 
+            content-box : 기본
+            */
+            /* 박스 사이즈 지정시 (=width랑 height값 지정시) */
+            /* border-box로 되어 있을 때의 width는 테두리까지를 고려한 값 */
+            /* content-box는 width 구하면 테두리 부분은 배제한 거 */
+            box-sizing: border-box;
+            border:1px solid navy;
+            background:navy;
+            color:white;
+        }
+        /* 내가 체크한 걸 흰색으로 바꿔라 */
+        input:nth-of-type(1):checked~section.buttons>label:nth-of-type(1)
+        {
+            background: white;
+            color:navy
+        }
+        input:nth-of-type(2):checked~section.buttons>label:nth-of-type(2)
+        {
+            background: white;
+            color:navy
+        }
+    </style>
+    <!-- item 파트 꾸미기 -->
+    <style>
+        .item
+        {
+            overflow: hidden;
+            padding: 10px;
+            border:1px solid navy;
+            border-top: none;
+        }
+        .thumbnail
+        {
+            float:left
+        }
+        .description
+        {
+            float:left;
+            margin-left:10px
+        }
+        
+        .description>strong
+        {
+            display:block; 
+            width:120px;
+            /* 글자 생략 3인방 */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
+    </style>
+    <!-- footer -->
+    <style>
+        #main_footer
+        {
+            width: 960px;
+            margin: 0 auto;
+
+            margin-bottom: 10px;
+
+            box-sizing:border-box;
+            padding:10px;
+            border:2px solid navy;
+
+            text-align: center;
+        }
+
+    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&family=Montserrat:wght@200&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!--윗부분-->
+    <header id="main_header">
+        <div id="title">
+            <h1>Beach Cleanup in Pohang</h1>
+            <h2>Beach Cleanup activities happening in Yeongildae beach!</h2>
+        </div>
+        <!--글로벌-->
+        <nav id="main_gnb">
+            <ul> 
+                <li><a href="#">beach</a></li>
+                <li><a href="#">clean</a></li>
+                <li><a href="#">up</a></li>
+                <li><a href="#">!</a></li>               
+            </ul>
+        </nav>
+        <nav id="main_lnb">
+            <ul> 
+                <li><a href="#">L</a></li>
+                <li><a href="#">O</a></li>
+                <li><a href="#">V</a></li>
+                <li><a href="#">E</a></li>               
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- 내용물 -->
+    <div id="content">
+        <section id="main_section">
+            <article class="main_article">
+                <h1>What is beach clean up?</h1>
+                <p>Beach cleanups are volunteer activities that take place on a regular basis along coastlines around the world. Environmental groups, civic organizations and individual beachgoers collect beach trash to make the beach a nicer, safer place and also to improve the coastal and ocean ecosystem.</p>
+            </article>
+            <article class="main_article">
+                <h1>How long does a beach clean up take?</h1>
+                <p>
+                    The time needed for a Clean Up varies greatly and is dependent on the size of the site, number of volunteers and amount of rubbish. On average however, most events last for around two hours.</p>
+            </article>
+            <article class="main_article">
+                <h1>What is needed for a beach clean up?</h1>
+                <p>Depending on your location, you'll need supplies such as trash bags, a first aid kit, hand sanitizer, wipes, and large coolers of water. You should also provide (or ask volunteers to bring) items such as reusable work/garden gloves, reusable water bottles, sunscreen, and bug spray. Plan how to handle the recyclables.</p>
+            </article>
+        </section>
+         <aside id="main_aside">
+            <input type="radio" name="tab" id="first" checked><!--C#의 그룹박스처럼 name이름 줘야함-->
+            <input type="radio" name="tab" id="second">
+            <section class="buttons">
+                <label for="first">First</label>
+                <label for="second">Second</label>
+            </section>
+            <div class="tab_item">
+                <ul>
+                    <li class="item">
+                        <a href="#">
+                            <div class="thumbnail">
+                                <img src="https://picsum.photos/id/598/45/45" alt="">
+                            </div>
+                            <div clss="description">
+                                <strong>안녕하세요</strong>
+                                <p>2021-08-31</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#">
+                            <div class="thumbnail">
+                                <img src="https://picsum.photos/id/598/45/45" alt="">
+                            </div>
+                            <div clss="description">
+                                <strong>즐거운 하루 되세요</strong>
+                                <p>2021-08-31</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#">
+                            <div class="thumbnail">
+                                <img src="https://picsum.photos/id/598/45/45" alt="">
+                            </div>
+                            <div clss="description">
+                                <strong>감사합니다.</strong>
+                                <p>2021-08-31</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>             
+            </div>
+            <div class="tab_item">
+                <ul>
+                    <li class="item">
+                        <a href="#">
+                            <div class="thumbnail">
+                                <img src="https://picsum.photos/id/177/45/45" alt="">
+                            </div>
+                            <div clss="description">
+                                <strong>두번째 페이지</strong>
+                                <p>2021-08-31</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#">
+                            <div class="thumbnail">
+                                <img src="https://picsum.photos/id/177/45/45" alt="">
+                            </div>
+                            <div clss="description">
+                                <strong>HTML5 Example</strong>
+                                <p>2021-08-31</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="#">
+                            <div class="thumbnail">
+                                <img src="https://picsum.photos/id/177/45/45" alt="">
+                            </div>
+                            <div clss="description">
+                                <strong>HTML5 Example</strong>
+                                <p>2021-08-31</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <!--footer 아랫부분(저작권이나 연락처 등 표시)-->
+    <footer id="main_footer">
+        <h3>Copyright by Carol</h3>
+        <address>경북 포항시 </address>
+    </footer>
+
+</body>
+</html>
