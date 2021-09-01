@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container
+        {
+            width:960px;
+            margin:0 auto;
+            display: grid;
+
+            grid-template-columns: 200px 200px 200px;
+            grid-template-rows: 200px 200px 200px;
+            gap:10px;
+        }
+        .container>div
+        {
+            background-color: violet;
+        }
+        .header
+        {
+            grid-row-start:1;
+            grid-row-end:2;
+             /* grid-column-start:1;
+            grid-column-end: 4; */
+            /* 4분의1(0.25)가 아님!!! */
+            /* 1번부터 4번까지 차지하겠다라는 뜻 */
+            grid-column: 1/4;
+        }
+        .aside{
+            grid-row:2/3;
+            grid-column:1/2;
+        }
+        .section{
+            grid-row:2/3;
+            grid-column:2/4;
+        }
+        .footer{
+        grid-row:3/4;
+        grid-column:1/4;    
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">header</div>
+        <div class="aside">aside</div>
+        <div class="section">section</div>
+        <div class="footer">footer</div>
+    </div>
+</body>
+</html>

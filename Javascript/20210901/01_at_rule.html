@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--스타일 주는 법 1-->
+    <link rel="stylsheet" href="01_at_rule.css">
+    <!--스타일 주는 법 2 : style 태그 이용해서 줌(생략)-->
+    <!--스타일 주는 법 3 : at rule-->
+    <script></script>
+    <style>
+        @import url(01_at_rule_02.css);
+        @import url(01_bold.css);
+    </style>
+</head>
+<body>
+    <h1>@</h1>
+    <p>Chapter 11</p>
+    <p>@-rule</p>
+    <!--&nbsp; 한 칸 띄어쓰기, spcae bar로 띄는 건 한 칸만 허용-->
+    <!--&#10; xml 문서에서 쓰임-->
+    <!--<br> 태그쓰면 한 줄 띄어짐. p태그 같은 태그 안에 넣을 수 있음-->
+    <b>기능상 차이는 별로 없으나 하나의 
+        <br>올라 &nbsp; &nbsp;
+        style태그 안에 여러개의 import 넣는 것이 가능 
+    </b>
+</body>
+</html>
