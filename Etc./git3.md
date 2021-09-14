@@ -1,5 +1,7 @@
 
 ## 깃허브로 백업하기
+### [동준쌤이랑 수업했던 것 정리 참고](https://blog.naver.com/felizcarol/222438098844)
+
 * Local Repository -> PUSH -> Remote Repository
 *  Remote Repository -> Clone -> Local Repository
 * Remote Repository -> PULL -> Local Repository
