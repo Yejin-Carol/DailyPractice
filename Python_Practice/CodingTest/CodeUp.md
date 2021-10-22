@@ -73,4 +73,31 @@ print(chr(a+1))
 - 문제 6040
   - python언어에서는 나눈 몫을 계산하는 연산자(//, floor division)를 제공한다.
   - a//b 와 같이 작성하면, a를 b로 나눈 몫(quotient)을 계산
-  
+
+---
+### DAY3 (42~)
+- 문제 6043
+  - 실수 2개(f1, f2)를 입력받아 f1 을 f2 로 나눈 값 출력
+  - 소숫점 넷째자리에서 반올림하여 무조건 소숫점 셋째 자리까지 출력
+  - 두 줄 코드로 끝내려고 했는데 생각보다 잘 되지 않았고. .2f처럼 .3f 똑같이 하면 안됐음.
+```python
+f1, f2 = input().split()
+d = float(f1)/float(f2)
+print(f'{d:.3f}')
+```
+- 문제 6046/47
+  - 시프트(<<, >>) 2의 거듭제곱
+- 문제 6052/53/56
+  - bool(): 입력값 0이면 False, 0 아니면 True
+```python
+a = bool(int(input()))
+print(not a) #문제 53 bool 값 반대 
+b, c = input().split()
+d = bool(int(b))
+e = bool(int(c))
+print((c and (not d)) or ((not c) and d))#문제 56 XOR
+#(exclusive or, 배타적 논리합, 참 거짓 서로 다를때만 True로 계산)
+```
+- 문제 6059~62
+  - 비트 연산자 (~, &(and: 둘 다 1인 자리만 1로)6, |(or: 둘 중 하나가 1인 거는 1로), ^(xor: 둘 다 1인 것 0 즉 False) 
+
