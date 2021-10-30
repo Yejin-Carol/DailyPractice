@@ -101,3 +101,14 @@ print((c and (not d)) or ((not c) and d))#문제 56 XOR
 - 문제 6059~62
   - 비트 연산자 (~, &(and: 둘 다 1인 자리만 1로)6, |(or: 둘 중 하나가 1인 거는 1로), ^(xor: 둘 다 1인 것 0 즉 False) 
 
+### DAY3 (63~70)
+- 문제 6064
+  - 3 숫자 중 작은 값
+```python
+a, b, c = input().split()
+a = int(a) 
+b = int(b)
+c = int(c)
+d = (a if a<b else b) if ((a if a<b else b)<c) else c
+print(int(d))
+```
