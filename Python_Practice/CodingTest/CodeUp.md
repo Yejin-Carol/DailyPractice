@@ -101,7 +101,7 @@ print((c and (not d)) or ((not c) and d))#문제 56 XOR
 - 문제 6059~62
   - 비트 연산자 (~, &(and: 둘 다 1인 자리만 1로)6, |(or: 둘 중 하나가 1인 거는 1로), ^(xor: 둘 다 1인 것 0 즉 False) 
 
-### DAY3 (63~70)
+### DAY3 (63~95)
 - 문제 6064
   - 3 숫자 중 작은 값
 ```python
@@ -112,3 +112,39 @@ c = int(c)
 d = (a if a<b else b) if ((a if a<b else b)<c) else c
 print(int(d))
 ```
+- 문제 6094
+  - 출석 번호를 n번 무작위로 불렀을 때, 가장 빠른 번호를 출력
+
+```python
+n = int(input()) 
+a = input().split() 
+for i in range(n) : 
+	a[i] = int(a[i]) 
+	
+min = a[0] 
+for i in range(0, n) : 
+	if a[i] < min : 
+		min = a[i] 
+print(min)
+```
+- 문제 6095
+  - 바둑판 흰 돌 놓기
+```python
+d=[]                   #대괄호 [ ] 를 이용해 아무것도 없는 빈 리스트 만들기
+for i in range(20) :
+  d.append([])         #리스트 안에 다른 리스트 추가해 넣기
+  for j in range(20) : 
+    d[i].append(0)    #리스트 안에 들어있는 리스트 안에 0 추가해 넣기
+
+n = int(input())
+for i in range(n) :
+  x, y = input().split()
+  d[int(x)][int(y)] = 1
+
+for i in range(1, 20) :
+  for j in range(1, 20) : 
+    print(d[i][j], end=' ')    #공백을 두고 한 줄로 출력
+  print()     
+```
+- 문제 6096
+  - 바둑알 십자 뒤집기
