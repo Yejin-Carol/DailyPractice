@@ -148,3 +148,89 @@ for i in range(1, 20) :
 ```
 - 문제 6096
   - 바둑알 십자 뒤집기
+```python
+d=[]                        #대괄호 [ ] 를 이용해 아무것도 없는 빈 리스트 만들기
+for i in range(20) :
+  d.append([])         #리스트 안에 다른 리스트 추가해 넣기
+  for j in range(20) : 
+    d[i].append(0)   
+
+for i in range(19) :
+	d[i] = list(map(int, input().split()))
+
+n = int(input())
+for i in range(n) :
+  x, y = map(int, input().split())
+  for j in range(19) :
+    if d[j][y-1] == 0 :
+      d[j][y-1] = 1
+    else :
+      d[j][y-1] = 0
+
+    if d[x-1][j] == 0 :
+      d[x-1][j] = 1
+    else :
+      d[x-1][j] = 0
+
+for i in range(19) :
+  for j in range(19) :
+    print(d[i][j], end = ' ')
+  print()
+```
+- 문제 6097
+  - 설탕과자 뽑기
+```python
+t().split()) #가로, 세로
+n = int(input()) #막대수 입력받기
+
+sugar = []
+
+for i in range(h+1): #판 생성
+  sugar.append([])
+  for j in range(w+1):
+    sugar[i].append(0)  
+
+for i in range(n) :
+  l, d, x, y = map(int, input().split()) #막대 정보 입력
+  for i in range(l) :
+    if d == 0 : # 가로 막대
+      sugar[x][y+i] = 1
+    else :# 세로 막대
+      sugar[x+i][y] = 1
+
+for i in range(1, h+1) :
+  for j in range(1, w+1) : 
+    print(sugar[i][j], end=' ')    #공백을 두고 한 줄로 출력
+  print() #줄바꿈    
+```
+- 문제 6098
+  - 성실한 개미 2차 배열 문제
+```python
+da = [] #da=diligent ant
+x = 1
+y = 1
+
+# 2차배열 input
+for i in range(10):
+    temp = list(map(int,input().split()))
+    da.append(temp)
+    
+while True:
+    if da[x][y] == 2: #먹이를 발견했을때
+        da[x][y] = 9
+        break
+    elif da[x+1][y] == 1 and da[x][y+1] == 1:
+        da[x][y] = 9
+        break
+    da[x][y] = 9
+    if da[x][y+1] == 1: # 오른쪽이 벽이면 아래로 1칸
+        x += 1
+    elif da[x+1][y] == 1: # 아래쪽이 벽이면 오른쪽으로 1칸
+        y += 1
+    else: y += 1 # 주변에 벽이 없으면 오른쪽으로 1칸
+
+for i in da:
+    for j in i:
+        print(j,end=' ')
+    print()
+ ```
