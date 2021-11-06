@@ -77,5 +77,123 @@ class Solution {
     }
 }
 ```
- 
- 
+3. Roman to Integer 
+* Python
+```python
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        roman_table = {"I":   1,
+		       "V":   5,
+		       "X":  10,
+		       "L":  50,
+		       "C": 100,
+		       "D": 500,
+		       "M":1000	  
+		                }
+        num = 0
+        last = "I" 
+
+        for numeral in s[::-1]: #작은 수 -> 큰 수로 보기 위해 뒤집기 
+            if roman_table[numeral] < roman_table[last]: #IV 인 경우, last가 크므로
+                num -= roman_table[numeral] # num에 더해주기
+            else: #그렇지 않은 경우
+                num += roman_table[numeral] # num에 빼주기
+            last = numeral
+        
+        return num
+ ```
+ * Java (Map으로 하는 방법도 있었음)
+ 	* [출처](https://github.com/cherryljr/LeetCode/blob/master/Roman%20to%20Integer.java)
+```Java
+class Solution {
+	 public int romanToInt(String s) {
+	    int nums[] = new int[s.length()];
+	    for(int i = 0; i < s.length(); i++){
+	        switch (s.charAt(i)) {
+	            case 'M':
+	                nums[i] = 1000;
+	                break;
+	            case 'D':
+	                nums[i] = 500;
+	                break;
+	            case 'C':
+	                nums[i] = 100;
+	                break;
+	            case 'L':
+	                nums[i] = 50;
+	                break;
+	            case 'X' :
+	                nums[i] = 10;
+	                break;
+	            case 'V':
+	                nums[i] = 5;
+	                break;
+	            case 'I':
+	                nums[i] = 1;
+	                break;
+	        }
+	    } 
+	    
+	    int sum = 0;
+	    for(int i=0; i<nums.length-1; i++){
+	        if(nums[i] < nums[i+1])
+	            sum -= nums[i];
+	        else
+	            sum += nums[i];
+	    }
+         
+	    return sum + nums[nums.length-1];
+	}
+}
+```
+4. Longest Common Prefix
+* Python
+```python
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+    
+        if len(strs) == 0:
+            return("")
+        if len(strs) == 1:
+            return(strs[0])
+        
+        pref = strs[0]
+        plen = len(pref)
+        
+        for s in strs[1:]: #strs[1:]부터 loop
+            
+            while pref != s[0:plen]: 
+                pref = pref[0:(plen-1)] #pref 줄이기
+                plen -= 1 #len 줄이기
+                
+                if plen == 0:
+                    return("") #공통된 pref 없을때 공백
+
+        return(pref)
+``` 
+* Java (참고)
+```java
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        String longestCommonPrefix = "";
+        if(strs == null || strs.length ==0) {
+            return longestCommonPrefix;
+        }
+        
+        int index = 0; 
+        for(char c: strs[0].toCharArray()) {
+            for(int i = 1; i<strs.length; i++) {
+                if(index >= strs[i].length() || c != strs[i].charAt(index)) {
+                    return longestCommonPrefix;
+                }
+            }
+            
+            longestCommonPrefix += c;
+            index++;
+        }
+        
+        return longestCommonPrefix;
+    }
+}
+```
+
