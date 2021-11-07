@@ -196,4 +196,68 @@ class Solution {
     }
 }
 ```
-
+5. Valid Parentheses
+* 내가 제출한 답 (Python)
+```python
+class Solution:
+    def isValid(self, s: str) -> bool:
+        
+        opens = []
+        for symbol in s :
+            if symbol == '(' or symbol == '[' or symbol == '{':
+                opens.append(symbol)
+            else : 
+                if len(opens) == 0:
+                    return False
+                elif symbol == ')':
+                    if opens.pop() != '(':
+                        return False
+                elif symbol == ']':
+                    if opens.pop() != '[':
+                        return False
+                elif symbol == '}':
+                    if opens.pop() != '{':
+                        return False
+        
+        return len(opens) == 0
+```
+* DataDaft (Stack & Map 까지!)
+```python
+ # Close the last seen opening symbol w/ stack
+        close_map = {"(":")", "{":"}", "[":"]"}
+        opens = []
+        
+        for symbol in s:
+            if symbol in close_map.keys():
+                opens.append(symbol)
+            elif opens == [] or symbol != close_map[opens.pop()]:
+                return False
+                
+        return opens == []
+```
+* Java 모범 답안(https://all-dev-kang.tistory.com/entry/LeetCode-%EC%9E%90%EB%B0%94-20-Valid-Parentheses)
+```java
+class Solution {
+    static Map<Character, Character> mappings = new HashMap<>();
+    static {
+        mappings.put('(', ')');
+        mappings.put('[', ']');
+        mappings.put('{', '}');
+    }
+    
+    public boolean isValid(String s) {        
+        Stack<Character> parenthesis = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (mappings.containsKey(c)) {
+                parenthesis.push(mappings.get(c));
+            } else if (mappings.containsValue(c)) {
+                if (parenthesis.isEmpty() || parenthesis.pop() != c) {
+                    return false;
+                }
+            }
+        }
+        return parenthesis.isEmpty();
+    }
+}
+```
