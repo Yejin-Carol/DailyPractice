@@ -318,7 +318,61 @@ class Solution:
         return temp_node.next
 ```
 
-
-
-
+7.  Remove Duplicates from Sorted Array (Easy!)
+* Python
+```python
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        j = 1
+	
+	for i in range(1, len(nums)):
+	    if nums[i] != nums[i - 1]:
+	     	nums[j] = nums[i]
+		j += 1
+	return j
+```
+* Java
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int j = 1;
+        
+        for (int i = 0; i < nums.length-1; i ++) {
+            if(nums[i] != nums[i+1]) {
+                nums[j++] = nums[i+1];
+            } 
+        }
+        return j;
+    }
+}
+```
+8. Remove Element
+* Python
+```python
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        j = 0
+        for i in range(len(nums)):
+            if nums[i] != val:
+                nums[j] = nums[i]
+                j +=1
+        return j
+```
+* Java
+```java
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        if(nums.length == 0) return 0;
+        
+        int j = 0;
+        for (int i=0; i<nums.length; i++) {
+            if(nums[i] !=val){
+                nums[j] = nums[i];
+                j++;
+            }
+        }
+        return j;
+    }
+}
+```
 
