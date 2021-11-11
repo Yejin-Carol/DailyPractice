@@ -1,4 +1,4 @@
-# LeetCode Top 100 Liked Questions
+# LeetCode 
 ## 난이도 Easy 
 
 1. Two Sum 
@@ -39,8 +39,9 @@ class Solution {
     }
 }
 ```
-
-2. Palindrome Number (대칭수, string/int 변환 없이 풀어야함!)
+---
+### Palindrome 관련 문제 
+9. Palindrome Number (대칭수, string/int 변환 없이 풀어야함!)
 * Python: 원래 간단한게 reverse = int(str(x)[::-1])로 할 수 있지만 문제에서 Follow up: Could you solve it without converting the integer to a string?
 였으므로 없이 풀어야함. 
 ```python
@@ -77,6 +78,127 @@ class Solution {
     }
 }
 ```
+125. Valid Palindrome (회문)
+* python: 소문자 & 정규식, 슬라이싱 사용하면 Deque보다 더 빠른 파이썬 최적화된 성능
+```python
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        s= s.lower()
+        s= re.sub('[^a-z0-9]', '', s)
+        
+        return s == s[::-1]
+```
+* Java 참고(https://sowon-dev.github.io/2021/01/09/210110replacevsreplaceall/)
+   - char 포인터가 더 좋다고 한다.
+```java
+public static boolean isPalindrome(String s) {
+    String s1 = s.toLowerCase().replaceAll("[^a-zA-Z0-9]", "");
+    System.out.println(s1);
+
+    //반으로 나눈뒤 글자 일치 여부 확인
+    for(int i=0; i<s1.length()/2; i++){
+      if(s1.charAt(i) != s1.charAt(s1.length()-i-1)){
+        return false;
+      }
+    }
+    return true;
+}
+```
+234. Palindrome Linked List
+* Python: Deque, Runner (다중 할당)
+1) Deque (816ms)
+```python
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        q: Deque = collections.deque()
+        if not head:
+            return True
+        
+        node = head
+        
+        while node is not None:
+            q.append(node.val)
+            node = node.next
+            
+        
+        while len(q) > 1:
+            if q.popleft() != q.pop():
+                return False
+        
+        return True
+```
+2) Runner (변수 참조 하는것!, 620ms)
+```python
+        rev = None
+        slow = fast = head
+        
+        while fast and fast.next:
+            fast = fast.next.next
+            rev, rev.next, slow = slow, rev, slow.next
+        if fast:
+            slow = slow.next
+        
+        while rev and rev.val == slow.val:
+            slow, rev = slow.next, rev.next
+        return not rev
+```
+
+* Java (참고:https://bcp0109.tistory.com/270) 깔끔한 풀이 (4ms!)
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+         ListNode fast = head, slow = head;
+
+        // slow 를 중간 지점까지 이동
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        // 전체 길이가 홀수면 한칸 더 이동 (가운데 값은 비교할 필요 없음)
+        if (fast != null) slow = slow.next;
+
+        // 중간부터 마지막까지 노드 순서 뒤집기
+        ListNode tail = reverse(slow);
+
+        while (tail != null) {
+            if (head.val != tail.val) {
+                return false;
+            }
+
+            head = head.next;
+            tail = tail.next;
+        }
+
+        return true;
+    }
+
+    private ListNode reverse(ListNode node) {
+        ListNode tail = null;
+
+        while (node != null) {
+            ListNode next = node.next;
+            node.next = tail;
+            tail = node;
+            node = next;
+        }
+
+        return tail;
+    }
+}
+```
+---
+
 3. Roman to Integer 
 * Python
 ```python
@@ -409,3 +531,5 @@ if len(needle) == 0:
     }
 
 ```
+
+* References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
