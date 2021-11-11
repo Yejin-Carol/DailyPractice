@@ -531,5 +531,50 @@ if len(needle) == 0:
     }
 
 ```
+344. Reverse String
+* Python: [::-1] 슬라이싱 바로 적용 안됨 (플랫폼마다 상이) 
+	- s[:] : [::-1] 적으면 해결됨
+    - 리스트에만 제공되는 s.reverse()
+    - 혹은 투 포인터 스왑
+```python
+    left, right = 0, len(s) -1
+    while left < right:
+        s[left], s[right] = s[right], s[left]
+        left += 1
+        right -= 1
+```
+* Java (출처:https://medium.com/@justcode/leetcode-344-reverse-string-a4de5957d622)
+    - StringBuilder/StringBuffer 이용
+    - 투 포인터 스왑
+```java
+public class Solution {
+    public String reverseString(String s) {
+        char[] c = s.toCharArray();
+        int left = 0, right = c.length - 1;
+        while (left < right) {
+            char tmp = c[left];
+            c[left++] = c[right];
+            c[right--] = tmp;
+        }
+        return new String(chars);
+    }
+}
+```
+937. Reorder Data in Log Files 
+* Python: 람다;; 다시 공부! (책 소스)
+```python
+class Solution:
+    def reorderLogFiles(self, logs: List[str]) -> List[str]:
+        letters, digits = [], []
+        for log in logs:
+            if log.split()[1].isdigit():
+                digits.append(log)
+            else:
+                letters.append(log)
+        
+        letters.sort(key=lambda x: (x.split()[1:], x.split()[0]))
+        return letters + digits
+```
+* Java 코드가 길어짐...(생략)
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
