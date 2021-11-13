@@ -577,4 +577,53 @@ class Solution:
 ```
 * Java 코드가 길어짐...(생략)
 
+819. Most Common Word
+* Java: 정규식 in regex, \W means word(alphanumeric and underscore) \s means whitespace(spaces tabs, line breaks). and the '+' means we match more than one of the pattern we have. 참고 (https://leetcode.com/problems/most-common-word/discuss/123854/)
+```java
+ // split paragraph 
+        String[] words = paragraph.toLowerCase().split("\\W+");
+        
+        // add banned words to set
+        Set<String> set = new HashSet<>();
+        for(String word : banned){
+            set.add(word);
+        }
+        
+        // add paragraph words to hash map
+        Map<String, Integer> map = new HashMap<>();
+        for(String word : words){
+            if(!set.contains(word)){
+                map.put(word, map.getOrDefault(word, 0) + 1);
+            }
+        }
+            
+        // get the most frequent word
+        int max = 0; // max frequency
+        String res = "";
+        for(String str : map.keySet()){
+            if(map.get(str) > max){
+                max = map.get(str);
+                res = str;
+            }
+        }
+        
+        return res;
+    }
+```
+
+* Python (책 참고)
+    - 전처리(Preprocessing): [^\w] \w는 Word Character가  ^ (not)인 것 공백으로 치환
+```python 
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        words = [word for word in re.sub(r'[^\w]', ' ', paragraph)
+                 .lower().split()
+                        if word not in banned]
+        
+        #Returns a list of tuples => ('word',2)            
+        counts = collections.Counter(words)
+        #[('word', 2)] => ('word', 2) => 'word'
+        return counts.most_common(1)[0][0]
+```
+
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
