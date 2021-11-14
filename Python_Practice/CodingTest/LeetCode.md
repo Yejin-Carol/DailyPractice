@@ -41,6 +41,34 @@ class Solution {
 ```
 ---
 ### Palindrome 관련 문제 
+21-11-14 추가
+5. Longest Palindrome (Medium)
+최장 공통 부분 문자열 (Longest Common String), Dynamic Programming Algorithm (문제를 각각의 작은 문제로 나누어 해결한 결과를 저장해뒀다가 나중에 큰 문제의 결과와 합하여 풀이하는 알고리즘, 예)피보나치 수열)의 일종
+* Python (교재 내용)
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        # 투 포인터 확장
+        def expand(left: int, right: int) -> str:
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return s[left + 1:right]
+        
+        # 해당 사항이 없을 때 빠르게 리턴
+        if len(s) < 2 or s == s[::-1]:
+            return s
+        result = ''
+        # 슬라이딩 윈도우 우측으로 이동
+        for i in range(len(s) - 1):
+            result = max(result,
+                            expand(i, i + 1),
+                            expand(i, i + 2),
+                            key = len)
+        return result
+```
+	
+
 9. Palindrome Number (대칭수, string/int 변환 없이 풀어야함!)
 * Python: 원래 간단한게 reverse = int(str(x)[::-1])로 할 수 있지만 문제에서 Follow up: Could you solve it without converting the integer to a string?
 였으므로 없이 풀어야함. 
@@ -531,6 +559,43 @@ if len(needle) == 0:
     }
 
 ```
+2021-11-14
+49. Group Anagrams (언어유희) 
+* Python: sorted(), join(), dictionry
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagrams = collections.defaultdict(list)
+        
+        for word in strs:
+            anagrams["".join(sorted(word))].append(word)
+        return list(anagrams.values())
+```
+* Java (https://studyalgorithms.com/string/leetcode-group-anagrams-solution/) 자바 풀이 점점... 
+```java
+if (strs == null || strs.length == 0)
+      return new ArrayList<>();
+
+    Map<String, List<String>> stringAnagramsMap = new HashMap<>();
+    for (String s : strs) {
+      char[] arr = s.toCharArray();
+      Arrays.sort(arr);
+      String key = String.valueOf(arr);
+
+      if (!stringAnagramsMap.containsKey(key))
+        stringAnagramsMap.put(key, new ArrayList<>());
+
+      stringAnagramsMap.get(key).add(s);
+    }
+
+    List<List<String>> resultList = new ArrayList<>();
+    for (Map.Entry<String, List<String>> stringAnagrams : stringAnagramsMap.entrySet()) {
+      resultList.add(stringAnagrams.getValue());
+    }
+    return resultList;
+  }
+```
+
 344. Reverse String
 * Python: [::-1] 슬라이싱 바로 적용 안됨 (플랫폼마다 상이) 
 	- s[:] : [::-1] 적으면 해결됨
