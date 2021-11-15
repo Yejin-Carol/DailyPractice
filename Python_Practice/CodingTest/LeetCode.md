@@ -755,7 +755,65 @@ class Solution:
         return counts.most_common(1)[0][0]
 ```
 
+2021-11-16
 
+238. Product of Array Except Self (Medium)
+* 문제 조건: You must write an algorithm that runs in O(n) time and without using the division operation. 나눗셈 없이 O(n)
+* Python (교재 참고)
+```python
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        out = []
+        p = 1
+        for i in range(0, len(nums)):
+            out.append(p)
+            p = p * nums[i]
+        p = 1
+        for i in range(len(nums) -1, 0 - 1, -1):
+            out[i] = out[i] * p
+            p = p * nums[i]
+        return out
+```
+
+561. Array Partition I (Easy)
+* Java로 쉽게 해결했지만 좋은 방법은 아님.
+```java
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        
+        int sum = 0;
+        Arrays.sort(nums);
+        for (int i=0; i <nums.length; i=i+2){
+            sum += nums[i];
+        }
+        return sum;
+    }
+}
+```
+* Java2 better (https://sanghoo.tistory.com/23)
+    - Arrays.sort 없이 풀이
+
+* Python1
+오름/내림 차순 상관없이 두개씩 pair 배열 생성한 뒤 min으로 구하기
+```python
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        sum = 0
+        pair = []
+        nums.sort()
+        
+        for n in nums:
+            pair.append(n)
+            if len(pair) == 2:
+                sum += min(pair)
+                pair = []
+                
+        return sum
+```
+* Python2 간단하게 슬라이싱 활용
+```python
+return sum(sorted(nums)[::2])
+```
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
