@@ -1,6 +1,9 @@
 # LeetCode 
 ## 난이도 Easy 
 
+- 선형(Linear) 자료구조: array, stack, queue, linked list
+    - 동적 배열 원리: 미리 초깃값 작게 잡아 배열 생성, 데이터 추가되면서 꽉 채워지면, 늘려주고 모두 복사하는 식
+   
 1. Two Sum 
 * 내가 제출한 답 (python3)
 ```python
@@ -39,6 +42,67 @@ class Solution {
     }
 }
 ```
+2021-11-15 추가
+
+15. 3Sum (풀이 교재 참고)
+* Python 풀이 1) Brute-Force: 배열을 2번 반복하면서 모든 조합을 더해서 일일히 확인해보는 무차별 대입 방식 (타임아웃)
+* Python 풀이 2) Two Pointers로 합 계산, sum=0이면 정답
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        results = []
+        nums.sort() # 작은수부터 큰수로 정렬
+        
+        for i in range(len(nums) -2):
+            if i > 0 and nums[i] == nums[i -1]: # 중복된 값 건너뛰기
+                continue
+            left, right = i + 1, len(nums) -1 # 범위 좁혀가기
+            while left < right:
+                sum = nums[i] + nums[left] + nums[right] 
+                if sum < 0:
+                    left += 1
+                elif sum > 0:
+                    right -= 1
+                else: #sum = 0이면 정답
+                    results.append([nums[i], nums[left], nums[right]])
+                    
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right -1]:
+                        right -= 1
+                    left += 1
+                    right -= 1
+        
+        return results
+```
+
+
+42. Trapping Rain Water, 빗물 트래핑 (Hard, 교재 참고)
+* Two Pointers나 Stack을 가능 
+```Python
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        stack = []
+        volume = 0
+        
+        for i in range(len(height)):
+            while stack and height[i] > height[stack[-1]]:
+                top = stack.pop()
+                
+                if not len(stack):
+                    break
+                
+                distance = i - stack[-1] -1
+                waters = min(height[i], height[stack[-1]]) - height[top]
+                
+                volumne += distance * waters
+                
+            stack.append(i)
+        return volume
+```
+스택 풀이법 참고. (투포인터) 어려움!
+
+
 ---
 ### Palindrome 관련 문제 
 21-11-14 추가
@@ -690,5 +754,8 @@ class Solution:
         #[('word', 2)] => ('word', 2) => 'word'
         return counts.most_common(1)[0][0]
 ```
+
+
+
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
