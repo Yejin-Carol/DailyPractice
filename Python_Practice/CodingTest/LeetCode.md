@@ -131,7 +131,6 @@ class Solution:
                             key = len)
         return result
 ```
-	
 
 9. Palindrome Number (대칭수, string/int 변환 없이 풀어야함!)
 * Python: 원래 간단한게 reverse = int(str(x)[::-1])로 할 수 있지만 문제에서 Follow up: Could you solve it without converting the integer to a string?
@@ -288,6 +287,60 @@ class Solution {
         return tail;
     }
 }
+```
+2021-11-18
+* Linked List: ADT (Abstract Data Type) 구현의 기반. 배열과는 달리 특정 인덱스 접근 위해 전체 순서대로 읽어야 하므로 상수 시간 접근 안됨. 탐색 O(n), 시작/끝 아이템 추가, 삭제, 추출 작업 O(1) 가능함. 
+206. Reverse Linked List
+1) Python 재귀 (recursive)
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not node:
+            return prev #뒤집힌 연결 리스트 첫 번째 노드
+        next, node.next = node.next, prev
+        return reverse(next, node) #백트래킹 
+    
+    return reverse(head)
+```
+2) Python 반복 (iterative)
+```python
+node, prev = head, None
+        
+        while node:
+            next, node.next = node.next, prev
+            prev, node = node, next
+        
+        return prev
+```
+* 자바 참고(https://bcp0109.tistory.com/142)
+3) Java 재귀 
+```java
+public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        
+        ListNode node = reverseList(head.next);
+        
+        head.next.next = head;
+        head.next = null;
+        
+        return node;
+    }
+```
+4) Java 반복
+```java
+public ListNode reverseList(ListNode head) {
+        ListNode node = null;
+
+        while (head != null) {
+            ListNode temp = head;
+            head = head.next;
+            temp.next = node;
+            node = temp;
+        }
+
+        return node;
+    }
 ```
 ---
 
