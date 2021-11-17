@@ -814,6 +814,67 @@ class Solution:
 ```python
 return sum(sorted(nums)[::2])
 ```
+2021-11-17
+121. Best Time to Buy and Sell Stock (Easy)
+* Python
+1) Brute-Force (Timeout)
+2) Kadane's Algorithm Max, Min (Descriptive Statistics): 
+profit = -sys.maxsize 초깃값 = 최솟값 설정
+min_price = sys.maxsize 초깃값 = 최대값 설정
 
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        profit = 0
+        min_price = sys.maxsize
+        
+        for price in prices:
+            min_price = min(min_price, price)
+            profit = max(profit, price - min_price)
+        
+        return profit
+```
+
+* Java: max, min, profit 변수 3개로 
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length == 0) {
+            return 0;}
+        
+        int min = prices[0];
+        int max = Integer.MIN_VALUE;
+        
+        for(int i = 0; i < prices.length; i++){
+            int profit = prices[i] - min;
+            if(profit > max) max = profit;
+            if(prices[i] < min) min = prices[i];
+        }
+        
+        return max;
+        
+    }
+}
+```
+53. Maximum Subarray (Easy) - 교재 참고 ㅠ
+* Python
+1) Memoization: s an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. (wikipedia). 동적 프로그래밍 하향식 방법. 
+```python
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+         for i in range(1, len(nums)):
+            nums[i] += nums[i-1] if nums[i-1] > 0 else 0
+         return max(nums)
+``` 
+2) Kadane's Algorithm (O(n))
+``` python
+         best_sum = -sys.maxsize
+         current_sum = 0
+         for num in nums:
+             current_sum = max(num, current_sum + num)
+             best_sum = max(best_sum, current_sum)
+         
+         return best_sum
+```
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
