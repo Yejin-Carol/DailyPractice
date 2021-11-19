@@ -342,6 +342,55 @@ public ListNode reverseList(ListNode head) {
         return node;
     }
 ```
+2021-11-19
+
+24. Swap Nodes in Pairs
+
+* Python (그림 참고: https://velog.io/@eunseokim/17.-Add-Two-Numbers)
+* 반복문
+```Python
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        root = prev = ListNode(None) # 0이라고 가정
+        prev.next = head # head = 1
+        while head and head.next: # 0, 1->2->3->4 라고 가정
+            
+            b = head.next # b= 2
+            head.next = b.next # 1 -> 3 을 가르킨다?
+            b.next = head # 2 다음이 1임. 즉 역순! 2 -> 1 -> 3
+            
+            prev.next = b # 0 -> 2
+                
+            head = head.next # 3
+            prev = prev.next.next # 1, head.next 없을 때까지 반복 
+        return root.next
+    }
+}
+```
+* 재귀 swap
+```python
+if head and head.next:
+            p = head.next
+            #스왑된 값 리턴
+            head.next = self.swapPairs(p.next)
+            p.next = head
+            return p
+        return head
+```
+* Java 재귀 swap (반복은 복잡 ㅠ)
+```Java
+ public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null) return head;
+        
+        ListNode second = head.next;
+        ListNode third = head.next.next;
+        
+        second.next = head;
+        head.next = swapPairs(third); 
+        
+        return second;
+    }
+```
 ---
 
 3. Roman to Integer 
