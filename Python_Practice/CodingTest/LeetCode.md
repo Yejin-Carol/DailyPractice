@@ -391,6 +391,80 @@ if head and head.next:
         return second;
     }
 ```
+2021-11-21
+
+328. Odd Even Linked List
+* Python (교재)
+```python
+class Solution:
+    def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None:
+            return None
+        
+        odd = head #the first node = odd
+        even = head.next #the second node = even
+        even_head = head.next
+        
+        while even and even.next:
+            odd.next, even.next = odd.next.next, even.next.next
+            odd, even = odd.next, even.next
+            
+        odd.next = even_head #last part of odd node is connected to even
+        return head
+```
+
+* Java: 뭔가 길어졌지만 주석에 대한 설명이 명확한 코드.
+나도 이렇게 작성하고 싶다 ㅠㅠ
+ (참고: https://webrewrite.com/odd-even-linked-list/)
+```java
+ public ListNode oddEvenList(ListNode head) {
+ 
+      //Temp pointer points to head
+      ListNode temp = head;
+ 
+      //Head pointer for a new list
+      ListNode result = new ListNode();
+ 
+      /*OddEvenNode pointer points to head initially
+       * We use this pointer as an iterator.
+       */
+       ListNode oddEvenNode = result;
+       int count = 1;
+ 
+       //Put the odd nodes first
+       while(temp != null) {
+ 
+          if(count % 2 == 1) {
+             oddEvenNode.next = new ListNode(temp.val);
+             oddEvenNode = oddEvenNode.next;
+           }            
+ 
+           temp = temp.next;
+           count++;
+       }
+ 
+        //Reintialize the values
+        temp = head;
+        count = 1;
+ 
+       //put the even nodes
+       while(temp != null) {
+ 
+          if(count % 2 == 0) {
+             oddEvenNode.next = new ListNode(temp.val);
+             oddEvenNode = oddEvenNode.next;
+           }
+ 
+           temp = temp.next;
+           count++;
+        }
+ 
+        oddEvenNode.next = null;
+        return result.next;
+
+    }
+```
+
 ---
 
 3. Roman to Integer 
