@@ -464,6 +464,64 @@ class Solution:
 
     }
 ```
+2021-11-22
+
+92. Reverse Linked List II (Medium)
+* Java (Discussion에 있는 답안)
+```java
+public ListNode reverseBetween(ListNode head, int left, int right) {
+			int count = 1;
+			ListNode curr = head;
+			List<Integer> list = new ArrayList<>();
+			while(curr != null){
+				if(count >= left && count <= right){
+					list.add(curr.val);
+				}
+				curr = curr.next;
+				count++;
+			}
+
+			int size = list.size();
+			int lastPos = size - 1;
+			count = 1;
+			curr = head;
+			while(curr != null){
+				if((count >= left && count <= right)){
+					curr.val = list.get(lastPos);
+					lastPos = lastPos - 1;
+			}
+				count++;
+				curr = curr.next;
+		}
+
+		return head;
+	}
+```
+
+* Python (교재..)
+```python
+     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        #1) Exception
+        if not head or left == right:
+            return head
+        
+        root = start = ListNode(None)
+        root.next = head
+        
+        # start, end 
+        for _ in range (left - 1):
+            start = start.next
+        end = start.next
+        
+        # reverse
+        for _ in range (right - left):
+            tmp, start.next, end.next = start.next, end.next, end.next.next
+            start.next.next = tmp
+        return root.next
+```
+
+
+
 
 ---
 
