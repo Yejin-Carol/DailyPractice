@@ -683,6 +683,76 @@ class Solution:
                 
         return opens == []
 ```
+2021-11-23
+* Python (교재)
+```python
+def isValid(self, s: str) -> bool:
+    table = {"(":")", "{":"}", "[":"]"}
+    stack = []
+           
+    for char in s:
+		if char not in table:
+			stack.append(char)
+		elif not stack or table[char] != stack.pop():
+			return False
+	return len(stack) == 0
+```
+316. Remove Duplicate Letters (Medium)
+ * 재귀 & 분리 Python
+Input: s = "cbacdcbc", 
+Output: "acdb" 알파벳 순 ... 흠.. 어렵다.
+```python
+def removeDuplicateLetters(self, s: str) -> str:
+	for char in sorted(set(s)):
+		suffix = s[s.index(char):]
+		if set(s) == set(suffix):
+			return char + self.removeDuplicateLetter(suffix.replace(char, ''))
+	return ''
+```
+* 스택 풀이
+```python
+def removeDuplicateLetters(self, s: str) -> str:
+        counter = collections.Counter(s)
+        seen = set()
+        stack  = []
+
+        for char in s:
+            counter[char] -= 1
+            if char in seen:
+                continue
+
+            while stack and char < stack[-1] and counter[stack[-1]] > 0:
+                seen.remove(stack.pop())
+            stack.append(char)
+            seen.add(char)
+       
+        return ''.join(stack)
+```
+* Java
+```java
+public String removeDuplicateLetter(String s) {
+	int[] lastIndex = new int[26]
+	for(int i=0; i< s.length(); i++)
+		lastIndex[s.charAt(i) - 'a'] = i;
+	boolean[] seen = new boolean[26];
+	Stack<Integer> st = new Stack();
+	for(int i=0; i<s.length(); i++) {
+		int c = s.charAt(i) - 'a';
+		if(seen[c]) continue;
+		while(!st.isEmpty() && st.peek() > c&&i<lastIndex[st.peek()])
+			seen[st.pop()] = false;
+		st.push(c);
+		seen[c] = true;
+	}
+	StringBuilder sb = new StringBuilder();
+	while(!st.isEmpty() sb.append((char)(st.pop() + 'a'));
+	return sb.reverse().toString();
+	}
+}
+```
+
+
+
 * Java 모범 답안(https://all-dev-kang.tistory.com/entry/LeetCode-%EC%9E%90%EB%B0%94-20-Valid-Parentheses)
 ```java
 class Solution {
