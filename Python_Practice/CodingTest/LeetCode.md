@@ -1,4 +1,4 @@
-# LeetCode 
+# LeetCode (하루 한 문제!)
 ## 난이도 Easy 
 
 - 선형(Linear) 자료구조: array, stack, queue, linked list
@@ -1179,6 +1179,45 @@ class Solution:
              best_sum = max(best_sum, current_sum)
          
          return best_sum
+```
+2021-11-24
+
+739. Daily Temperatures
+스택을 이용한 문제 풀이
+
+* Java
+
+```java
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        int len = T.length;
+		//int[] res에는 stack에 이미 담긴 숫자와 비교 구하는 값
+        int[] res = new int[len], stack = new int[71];
+        int index = -1;
+        for (int i = len - 1; i >= 0; i--) {
+            while (index >= 0 && T[stack[index]] <= T[i]) {
+                index--;
+            }
+            if(index >= 0) res[i] = stack[index] - i;
+            stack[++index] = i;
+        }
+        return res;
+    }
+}
+```
+* Python 더 간결함.
+```Python
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        result = [0] * len(temperatures)
+        stack = []
+        for i, cur in enumerate(temperatures):
+            # cur = current temperature
+            while stack and cur > temperatures[stack[-1]]:
+                last = stack.pop()
+                result[last] = i - last
+            stack.append(i)
+        
+        return result
 ```
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
