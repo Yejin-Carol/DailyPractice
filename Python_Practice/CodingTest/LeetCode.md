@@ -1219,5 +1219,41 @@ class Solution {
         
         return result
 ```
+2021-11-25
+
+225. Implement Stack using Queues (Easy)
+* Python: 문제의 친절한 설명 deque 사용!
+```python
+class MyStack:
+
+    def __init__(self):
+        self.q = collections.deque()
+
+    def push(self, x: int) -> None:
+        self.q.append(x)
+        #Pushes element x to the top of the stack
+        for _ in range(len(self.q) -1):
+            self.q.append(self.q.popleft())
+
+    def pop(self) -> int:
+        #Removes the element on the top of the stack and returns it
+        return self.q.popleft()
+
+    def top(self) -> int:
+        return self.q[0]
+
+    def empty(self) -> bool:
+        return len(self.q) == 0
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
+```
+* Java (참고: https://www.baeldung.com/cs/stack-two-queues)
+
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
