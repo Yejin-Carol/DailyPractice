@@ -1255,5 +1255,36 @@ class MyStack:
 ```
 * Java (참고: https://www.baeldung.com/cs/stack-two-queues)
 
+2021-11-26
+
+232. Implement Queue using Stacks
+
+* Python (225번과 비교 하기)
+
+```python
+class MyQueue:
+
+    def __init__(self):
+        self.input = []
+        self.output = []
+
+    def push(self, x: int) -> None:
+        self.input.append(x)
+
+    def pop(self) -> int:
+        self.peek()
+        return self.output.pop()
+
+    def peek(self) -> int:
+        if not self.output:
+            while self.input:
+                self.output.append(self.input.pop())
+        return self.output[-1]
+    def empty(self) -> bool:
+        return self.input == [] and self.output == []
+
+```
+
+
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
