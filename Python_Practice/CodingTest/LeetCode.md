@@ -1284,7 +1284,117 @@ class MyQueue:
         return self.input == [] and self.output == []
 
 ```
+2021-11-27
 
+622. Design Circular Queue
+* 원형/환형 큐 (FIFO)
+
+* Python: 문제 제약사항 따르기!
+    * 참고 https://velog.io/@minjung-s/circular-queue
+
+```python
+class MyCircularQueue:
+
+    def __init__(self, k: int):
+        self.q = [None] * k
+        self.maxlen = k
+        self.p1 = 0
+        self.p2 = 0
+
+    def enQueue(self, value: int) -> bool:
+        if self.q[self.p2] is None:
+            self.q[self.p2] = value
+            self.p2 = (self.p2 + 1) % self.maxlen
+            return True
+        else:
+            return False
+
+    def deQueue(self) -> bool:
+        if self.q[self.p1] is None:
+            return False
+        else:
+            self.q[self.p1] = None
+            self.p1 = (self.p1 + 1) % self.maxlen
+            return True
+        
+    def Front(self) -> int:
+        return -1 if self.q[self.p2 - 1] is None else self.q[self.p1]
+
+    def Rear(self) -> int:
+        return -1 if self.q[self.p2 - 1] is None else self.q[self.p2 - 1]
+
+    def isEmpty(self) -> bool:
+        return self.p1 == self.p2 and self.q[self.p1] is None
+
+    def isFull(self) -> bool:
+        return self.p1 == self.p2 and self.q[self.p1] is not None
+```
+
+* Java
+```java
+class MyCircularQueue {
+    
+    private int[] data;
+    private int head;
+    private int tail;
+    private int size;
+
+    public MyCircularQueue(int k) {
+        data = new int[k];
+        head = -1;
+        tail = -1;
+        size = k;             
+    }
+    
+    public boolean enQueue(int value) {
+        if (isFull() == true) {
+            return false;
+        }
+        if (isEmpty() == true) {
+            head=0;
+        }
+        tail = (tail + 1) % size;
+        data[tail] = value;
+        return true;
+    }
+    
+    public boolean deQueue() {
+        if (isEmpty() == true) {
+            return false;
+        }
+        if (head == tail) {
+            head = -1;
+            tail = -1;
+            return true;
+        }
+        head = (head + 1) % size;
+        return true;
+    }
+    
+    public int Front() {
+        if(isEmpty() ==true) {
+            return -1;
+        }
+        return data[head];
+    }
+    
+    public int Rear() {
+        if(isEmpty() == true) {
+            return -1;
+        }
+        return data[tail];
+    }
+    
+    public boolean isEmpty() {
+        return head == -1;        
+    }
+    
+    public boolean isFull() {
+        return ((tail + 1) % size) == head;
+        
+    }
+}
+```
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
