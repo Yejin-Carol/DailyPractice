@@ -1559,6 +1559,178 @@ class MyCircularDeque {
     }
 }
 ```
+2021-11-29
+641. Design Circular Deque (실제 난이도는 높지 않다고 함;;)
+```python
+class MyCircularDeque {
+    
+    private int[] deque;
+    private int head = -1;
+    private int tail = -1;
+    private int size;
+    
+    public MyCircularDeque(int k) {
+        size = k;
+        deque = new int[k];
+    }
+    
+    public boolean insertFront(int value) {
+        if(isFull()){
+            return false;
+        }
+        if(isEmpty()){
+            head = 0;
+            tail = size-1;
+        }
+        
+        head = (head -1 + size) % size;
+        deque[head] = value;
+        return true;
+        
+    }
+    
+    public boolean insertLast(int value) {
+        if(isFull()){
+            return false;
+        }
+        if(isEmpty()){
+            head = 0;
+            tail = size-1;
+        }
+        
+        tail = (tail + 1 + size) % size;
+        deque[tail] = value;
+        return true;
+    }
+    
+    public boolean deleteFront() {
+        if(isEmpty()){
+            return false;
+        }
+        if(head == tail){
+            head = -1;
+            tail = -1;
+        } else {
+            head = (head + 1 + size) % size;
+        }
+        return true;
+        
+    }
+    
+    public boolean deleteLast() {
+        if(isEmpty()){
+            return false;
+        }
+        if(head == tail){
+            head = -1;
+            tail = -1;
+        } else {
+            tail = (tail - 1 + size) % size;
+        }
+        return true;
+    }
+    
+    public int getFront() {
+        if(isEmpty()) return -1;
+        return deque[head];
+    }
+    
+    public int getRear() {
+        if(isEmpty()) return -1;
+        return deque[tail];
+        
+    }
+    
+    public boolean isEmpty() {
+        return head == -1 && tail == -1;
+        
+    }
+    
+    public boolean isFull() {
+        return (tail + 1 + size) % size == head;
+        
+    }
+}
+```
+
+
+
+2021-11-30
+
+Hash Table
+* Hash: 임의 크기 데이터를 고정 크기 값으로 매핑하는 데 사용할 수 있는 함수. 연산 분할 상환 분석에 따른 시간 복잡도 O(1) (데이터 양에 관계 없이 빠른 성능 기대할 수 있다는 장점이 있음.) 
+    - 생일문제, 비둘기집 원리: 충돌 최소화 필요
+    - Load Factor: n/k 해시테이블에 저장된 데이터 개수 n을 버킷의 개수 k로 나눈 것.
+* Hashing: 해시 테이블을 인덱싱하기 위해 해시 함수 사용. 
+* 개별 체이닝(Seperate Chaining): 해시 테이블의 원조로 충돌 시 연결 리스트로 연결하는 방식
+* Open Addressing 
+
+706 Design HashMap
+* Python
+```python
+#ListNode 클래스 정의!
+class ListNode:
+    def __init__(self, key=None, value=None):
+        self.key = key
+        self.value = value
+        self.next = None
+
+class MyHashMap:
+    #초기화
+    def __init__(self):
+        self.size = 1000 #기본 사이즈 1000개 정도 설정
+        self.table = collections.defaultdict(ListNode)
+    #삽입    
+    def put(self, key: int, value: int) -> None:
+        index = key % self.size
+        #index 노드 없다면 삽입 후 종료
+        if self.table[index].value is None: 
+            self.table[index] = ListNode(key, value) #index는 해싱한 결과로 해시 테이블의 인덱스가 됨
+            return
+        
+        #index 노드 있다면 연결 리스트 처리
+        p = self.table[index]
+        while p:
+            if p.key == key:
+                p.value = value
+                return
+            if p.next is None:
+                break
+                p = p.next
+            p.next = ListNode(key, value)
+    
+    #조회        
+    def get(self, key: int) -> int:
+        index = key % self.size
+        if self.table[index].value is None:
+            return -1
+        
+        #노드 있을시 일치하는 키 탐색
+        p = self.table[index]
+        while p:
+            if p.key == key:
+                return p.value
+            p = p.next
+        return -1
+    #삭제
+    def remove(self, key: int) -> None:
+        index = key % self.size
+        if self.table[index].value is None:
+            self.table[index] = ListNode(key, value)
+            return
+        #인덱스의 첫 번째 노드시 삭제 처리 
+        p = self.table[index]
+        if p.key == key:
+            self.table[index] = ListNode() if p.next is None else p.next
+            return
+        #연결 리스트 노드 삭제
+        prev = p
+        while p:
+            if p.key == key:
+                prev.next = p.next
+                return
+            pre, p = p, p.next
+```
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
