@@ -1731,6 +1731,83 @@ class MyHashMap:
                 return
             pre, p = p, p.next
 ```
+2021-12-01
+
+771. Jewels and Stones (Easy))
+> J = "aA", S= "aAAbbbb"
+
+* Python 다양한 풀이 1. Hash Table 사용
+```python
+class Solution:
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        freqs = {}
+        count = 0
+
+        #Stone = S
+        for char in S:
+            if char not in freqs:
+                freqs[char] = 1
+            else:
+                freqs[char] += 1
+        #Jewels = J
+        for char in J:
+            if char in freqs:
+                count += freqs[char]
+        
+        return count
+```
+2. defaultdict 이용
+```pyton
+class Solution:
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        freqs = collections.defaultdict(int)
+        count = 0
+        
+        for char in stones:
+            freqs[char] += 1
+        
+        for char in jewels:
+            count += freqs[char]
+        
+        return count
+```
+3. Counter로 계산
+```python
+freqs = collections.Counter(stones)
+        count = 0
+        
+        for char in jewels:
+            count += freqs[char]
+            
+        return count
+```
+4. 파이썬다운 방식 
+```python
+class Solution:
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        return sum(s in jewels for s in stones)
+```
+
+* Java: Time/Space complexity O(n)
+```java
+class Solution {
+    public int numJewelsInStones(String jewels, String stones) {
+        
+        Set<Character> jewelSet = new HashSet<>();
+        for(char j : jewels.toCharArray()){
+            jewelSet.add(j);
+        }
+        
+        int count = 0;
+        for(char s: stones.toCharArray()){
+            if(jewelSet.contains(s)) count++;
+        }
+        return count;
+    }
+}
+```
+
+
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
