@@ -1807,7 +1807,85 @@ class Solution {
 }
 ```
 
+2021-12-02
 
+3. Longest Substring Without Repeating Characters (Medium)
+
+- 점점 내 답은 줄어들고 교재 참고한 답은 늘어나는 중;;
+- Sliding Window와 Two Pointers로 사이즈 조절.
+
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        used = {}
+        max_length = start = 0
+        for index, char in enumerate(s):
+            if char in used and start <= used[char]:
+                start = used[char] + 1
+            else:
+                max_length = max(max_length, index - start + 1)
+
+            used[char] = index
+
+        return max_length
+```
+
+- Java (참고: https://redquark.org/leetcode/0003-longest-substring-without-repeating-characters/)
+
+```java
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.equals("")) {
+            return 0;
+        }
+        //Starting window index
+        int start = 0;
+        //Ending window index
+        int end = 0;
+        int maxLength = 0;
+        //This set will store the unique characters
+        Set<Character> uniqueCharacters = new HashSet<>();
+
+        while (end < s.length()) {
+            if (uniqueCharacters.add(s.charAt(end))) {
+                end++;
+                maxLength = Math.max(maxLength, uniqueCharacters.size());
+            } else {
+                uniqueCharacters.remove(s.charAt(start));
+                start++;
+            }
+        }
+        return maxLength;
+        }
+}
+```
+
+- Python도 똑같이 set()으로 사용
+
+````python
+def lengthOfLongestSubstring(s: str) -> int:
+    # Base condition
+    if s == "":
+        return 0
+    # Starting index of window
+    start = 0
+    # Ending index of window
+    end = 0
+    # Maximum length of substring without repeating characters
+    maxLength = 0
+    # Set to store unique characters
+    unique_characters = set()
+    # Loop for each character in the string
+    while end < len(s):
+        if s[end] not in unique_characters:
+            unique_characters.add(s[end])
+            end += 1
+            maxLength = max(maxLength, len(unique_characters))
+        else:
+            unique_characters.remove(s[start])
+            start += 1
+    return maxLength
+```
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
