@@ -1886,6 +1886,7 @@ def lengthOfLongestSubstring(s: str) -> int:
             start += 1
     return maxLength
 ```
+
 2021-12-02
 
 347. Top K Frequent Elements (Medium)
