@@ -1862,7 +1862,7 @@ class Solution {
 
 - Python도 똑같이 set()으로 사용
 
-````python
+```python
 def lengthOfLongestSubstring(s: str) -> int:
     # Base condition
     if s == "":
