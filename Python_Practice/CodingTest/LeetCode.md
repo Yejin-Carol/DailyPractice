@@ -1886,6 +1886,97 @@ def lengthOfLongestSubstring(s: str) -> int:
             start += 1
     return maxLength
 ```
+2021-12-02
+
+347. Top K Frequent Elements (Medium)
+* Python
+1. Counter와 heapq 사용 (Q23 Merge k Sorted Lists에서 이미 언급. Priority Queue와 달리 Thread-Safe 보장 안되나 큰 의미 없음. 실무에서도 heapq 사용)
+
+1) 교재 코드의 경우 음수로 삽입해서 출력하는 거 이해가 가지 않는다. 
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+        freqs = collections.Counter(nums)
+        freqs_heap = []
+        
+        #힙에 음수로 삽입
+        for f in freqs:
+            heapq.heappush(freqs_heap, (-freqs[f], f))
+        
+        topk = list()
+        
+        #최소 힙(Min Heap)이므로 가장 적은 음수 순으로 추출
+        for _ in range(k):
+            topk.append(heapq.heappop(freqs_heap)[1])
+            
+        return topk
+```
+2) heapify() 방식이 더 쉽게 이해됐다. 참고 (https://tsoo1014.tistory.com/13)
+
+
+```python
+        d = dict()
+        result = []
+        heapq.heapify(result)
+        for i in range(len(nums)):
+            if nums[i] not in d:
+                d[nums[i]] = 1
+            else:
+                d[nums[i]] += 1
+        return heapq.nlargest(k, d, key = d.get)
+```
+3) Python씩 한줄 코드
+```python
+def topKFrequent(self, nums, k):
+        return list(zip(*collections.Counter(nums).most_common(k)))[0]
+```
+
+
+* Java 풀이 (참고: https://bcp0109.tistory.com/279)
+1) Bucket Sort 감탄~
+```java
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num: nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        
+        List<Integer>[] bucket = new List[nums.length + 1];
+        for (Integer key : map.keySet()) {
+            int count = map.get(key);
+            
+            if(bucket[count] == null) {
+                bucket[count] = new ArrayList<>();
+            }
+            
+            bucket[count].add(key);
+        }
+        
+        List<Integer> list = new ArrayList<>();
+        for(int i = bucket.length -1; i >=0 && list.size() <k; i--) {
+            if (bucket[i] == null) continue;
+            list.addAll(bucket[i]);
+        }
+        
+        //list to array
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = list.get(i);
+        }
+        
+        return result;
+        
+        
+    }
+}
+```
+2) Use Priority Queue
+* priorityQueue.poll();       // priorityQueue에 첫번째 값을 반환하고 제거 비어있다면 null
+* priorityQueue.remove();     // priorityQueue에 첫번째 값 제거
+* priorityQueue.clear();      // priorityQueue에 초기화
+
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
