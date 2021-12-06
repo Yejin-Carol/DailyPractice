@@ -1978,6 +1978,79 @@ class Solution {
 * priorityQueue.remove();     // priorityQueue에 첫번째 값 제거
 * priorityQueue.clear();      // priorityQueue에 초기화
 
+2021-12-05 & 6
+
+- 비선형구조
+  - 그래프: 객체의 일부 쌍들이 연관되어 있는 객체 집합 구조
+  - Seven Bridges of Königsberg
+    - Leonhard Euler-graph theory: 간선 기준 (모든 정점이 짝수 개의 차우를 갖는다면 모든 다리 한 번씩만 건너서 도달하는 것 성립), 한 붓 그리기 문제
+    - Hamiltonian Path: 정점 기준. 최적 알고리즘이 없는 대표적인 NP-완전(NP 문제 중 NP-난해인 문제), TSP: The Traveling Salesperson Problem, 외판원. 팩토리얼 시간 복잡도: 지수시간 보다 더 나쁜 것.
+  - 그래프 순회 (Graph Traversales)
+    - 깊이 우선 탐색 (DFS: Depth First Search): 스택으로 구현, 코테에서는 재귀 구현 선호.
+    - 너비 우선 탐색 (BFS: Breadth-First Search): 반복 구조로 구현할 떄 Queue 이용. 
+  - 그래프 표현 방법
+    - 인접 행렬(Adjacency Matrix)과 인접 리스트(Adjacency List)
+  - Backtracking: 해결책에 대한 후보를 구축해 나아가다 가능성이 없다고 판단되는 즉시 후보를 포기(Backtrack)해 정답을 찾아가는 범용적인 알고리즘으로 제약 충족 문제에 특히 유용. 제약 충족 문제(CSP: Constraint Satisfaction Problems)
+
+200. Number of islands (DFS 설명 참고  https://www.youtube.com/watch?v=__98uL6wst8) - Medium
+* Python: 동서남북 (네 방향 각각 DFS 재귀를 이용해 탐색 끝나면 1이 증가하는 형태)
+```python
+    def numIslands(self, grid: List[List[str]]) -> int:
+        def dfs(x, y):
+            # if no longer a land, return 
+            if x < 0 or x >= len(grid) or y < 0 or y >= len(grid[0]) or grid[x][y] != '1':
+                    return
+                        
+            grid[x][y] = '0'
+            
+            dfs(x+1, y) #east
+            dfs(x-1, y ) #west
+            dfs(x, y+1) #north
+            dfs(x, y-1) #south         
+        
+        count = 0
+        for x in range(len(grid)):
+            for y in range(len(grid[0])):
+                if grid[x][y] == '1':
+                    dfs(x, y)
+                    count += 1 # after visiting all the lands, += 1
+        return count
+```
+* Java (O(n*m))
+```java
+    public int numIslands(char[][] grid) {
+    
+        int count = 0;
+        
+        for(int i = 0; i < grid.length; i++) {
+            for(int j = 0; j <grid[0].length; j++) {
+                
+                if(grid[i][j] == '1') {
+                    //Search all connected lands='1'
+                    countIslandHelper(grid, i, j);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public static void countIslandHelper(char[][]grid, int i, int j) {
+        
+        if(i < 0 || j < 0 || i >=grid.length || j >=grid[0].length || grid[i][j] != '1') {
+            return;
+        }
+        //Mark '2' if visited
+        grid[i][j] = '2';
+        
+        //Move 4 directions
+        countIslandHelper(grid, i+1, j);//east
+        countIslandHelper(grid, i-1, j);//west
+        countIslandHelper(grid, i, j+1);//north
+        countIslandHelper(grid, i, j-1);//south
+        
+    }
+}
+```
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
