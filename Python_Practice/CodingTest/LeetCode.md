@@ -2124,4 +2124,39 @@ class Solution {
     }
 }
 ```
+2021-12-08
+46. Permutations
+* Python: 순열 계산법은 알지만 직접 계산하려면; 백지상태...교재
+1. DFS
+```python
+  def permute(self, nums: List[int]) -> List[List[int]]:
+        results = []
+        prev_elements = []
+        
+        def dfs(elements):
+            #리프 노드일 때 결과 추가
+            if len(elements) == 0:
+                results.append(prev_elements[:])
+                
+            #순열 생성 재귀 호출
+            for e in elements:
+                next_elements = elements[:]
+                next_elements.remove(e)
+                
+                prev_elements.append(e)
+                dfs(next_elements)
+                prev_elements.pop()
+        
+        dfs(nums)
+        return results
+```
+2. itertools 강조 (구현의 효율성, 성능 위해 사용). permutations() 함수로 한줄로 끝.
+```python
+   def permute(self, nums: List[int]) -> List[List[int]]:
+        return list(itertools.permutations(nums))
+```
+* Java 참고 https://bcp0109.tistory.com/236
+    - Swap 참고
+
+
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
