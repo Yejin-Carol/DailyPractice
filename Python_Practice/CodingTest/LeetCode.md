@@ -2158,5 +2158,40 @@ class Solution {
 * Java 참고 https://bcp0109.tistory.com/236
     - Swap 참고
 
+2021-12-18
+
+77. Combinations
+
+- 순열: n!/(n-r)!
+- 조합: n!/r!(n-r)!: 순열과 달리 순서에 상관하지 않는 경우
+  (순열에서는 자기 자신을 제외한 모든 요소 next_elements로 처리, 조합은 자신뿐만 아니라 앞의 모든 요소 배제후 next_elements 구성. 문제에서 elements 해당.)
+
+```python
+def combine(self, n: int, k: int) -> List[List[int]]:
+        results = []
+
+        def dfs(elements, start: int, k: int):
+            if k == 0:
+                results.append(elements[:])
+                return
+
+            # 자신 이전의 모든 값을 고정하여 재귀 호출
+            for i in range(start, n+1):
+                elements.append(i)
+                dfs(elements, i+1, k-1)
+                elements.pop()
+
+        dfs([], 1, k)
+        return results
+```
+
+- 한줄 풀이
+
+```python
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        return list(itertools.combinations(range(1, n+1), k))
+```
+
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
