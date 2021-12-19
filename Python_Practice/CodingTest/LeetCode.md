@@ -2193,5 +2193,60 @@ class Solution:
         return list(itertools.combinations(range(1, n+1), k))
 ```
 
+2021-12-19
 
+39. Combination Sum
+* Python 
+
+```python
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        result = []
+        # csum = candidates_sum 
+        def dfs(csum, index, path):
+            # 종료 조건 
+            if csum < 0: # 목표값을 초과한 경우 탐색 종료
+                return
+            if csum == 0: # csum 초기값 target이며 target과 일치하는 값
+                result.append(path)
+                return
+            
+            # 하위 원소까지 나열 재귀 호출
+            for i in range(index, len(candidates)):
+                dfs(csum - candidates[i], i, path + [candidates[i]])
+                
+        dfs(target, 0, [])
+        return result
+```
+* Java (https://bcp0109.tistory.com/127)
+```java
+class Solution {
+    List<List<Integer>> result = new ArrayList<List<Integer>>();   
+    
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        for (int i = 0; i < candidates.length;  i++) {
+            List<Integer> temp = new ArrayList<Integer>();
+            temp.add(candidates[i]);
+            backtracking(candidates, i, 1, target - candidates[i], temp);
+        }
+        return result;
+    }
+     
+    public void backtracking(int[] candidates, int index, int tempSize, int target, List<Integer> temp) {
+    if(target == 0) {
+        result.add(new ArrayList(temp));
+        return;
+    }        
+        
+    for (int i = index; i < candidates.length; i++) {
+        if (candidates[i] <= target) {
+            temp.add(candidates[i]);
+            backtracking(candidates, i, tempSize + 1, target - candidates[i], temp);
+            temp.remove(tempSize);
+        }
+    }
+        
+    }
+    }
+```
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
