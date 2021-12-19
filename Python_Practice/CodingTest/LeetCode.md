@@ -2249,4 +2249,57 @@ class Solution {
     }
     }
 ```
+2021-12-20
+
+39. Subsets (Medium)
+* Python: 트리의 모든 DFS 결과. 즉 path를 만들어 나가면서 index를 1씩 증가하는 형태로 깊이 탐색. 별도의 종료 조건 없이 탐색이 끝나면 저절로 함수가 종료되게 함. 
+
+```python
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        
+        def dfs(index, path):
+            result.append(path)
+            
+            for i in range(index, len(nums)):
+                dfs(i + 1, path + [nums[i]])
+        
+        dfs(0, [])        
+        return result
+```
+* Java (https://www.youtube.com/watch?v=LdtQAYdYLcE)
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> subsets = new ArrayList<>();
+        dfs(0, nums, new ArrayList<Integer>(), subsets);
+        
+        return subsets;
+    }
+    
+    public void dfs(int index, int[] nums, List<Integer> list, List<List<Integer>> subsets) {
+        subsets.add(new ArrayList<>(list));
+        
+        for (int i = index; i < nums.length; i++) {
+            list.add(nums[i]);
+            dfs(i + 1, nums, list, subsets);
+            list.remove(list.size() - 1);
+        }
+    }
+}
+```
+        
+    for (int i = index; i < candidates.length; i++) {
+        if (candidates[i] <= target) {
+            temp.add(candidates[i]);
+            backtracking(candidates, i, tempSize + 1, target - candidates[i], temp);
+            temp.remove(tempSize);
+        }
+    }
+        
+    }
+    }
+```
+
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
