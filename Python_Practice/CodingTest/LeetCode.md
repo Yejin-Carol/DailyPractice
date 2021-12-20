@@ -2301,5 +2301,71 @@ class Solution {
     }
     }
 ```
+2021-12-21
 
+332 Reconstruct Itinerary (Hard...스스로 아직 못풉니다 ㅠ) 
+- better follow in lexical order.
+- 1. DFS (근데 LeetCode에 Wrong Answer;;; 2.Stack으로..)
+```python
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph = collections.defaultdict(list)
+        
+        #그래프 순서대로 구성
+        for a, b in sorted(tickets):
+            graph[a].append(b)
+       
+        route = []
+        def dfs(a):
+            while graph[a]:
+                dfs(graph[a].pop(0))             
+            route.append(a)
+        
+        dfs('JFK')
+        # 뒤집어 
+        return route[::-1]
+```
+
+- 2. Stack: pop(0)은 O(n), pop()은 O(1)
+```python
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph = collections.defaultdict(list)
+        
+        #그래프 뒤집어서 구성
+        for a, b in sorted(tickets, reverse=True):
+            graph[a].append(b)
+            
+        route = []
+        def dfs(a):
+            # 마지막 값을 읽어 어휘 순 방문
+            while graph[a]:
+                dfs(graph[a].pop())
+            route.append(a)
+        
+    
+        dfs('JFK')
+        # 다시 뒤집어 어휘 순 결과로
+        return route[::-1]
+```
+- 3. 일정 그래프 반복 (재귀 아닌 동일한 구조 반복)
+```python
+def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph = collections.defaultdict(list)
+        
+        #그래프 순서대로 구성
+        for a, b in sorted(tickets):
+            graph[a].append(b)
+       
+        #경로가 끊어지는 경우 스택 값을 다시 pop()하여 거꾸로 푸러낼 변수 필요
+        route, stack = [], ['JFK']
+        while stack:
+            while graph[stack[-1]]:
+                stack.append(graph[stack[-1]].pop(0)) #한번 방문한 곳 다시 방문하지 않게 pop()으로 값 제거
+            route.append(stack.pop())
+        
+        # 뒤집어 어휘 순 결과
+        return route[::-1]
+```
+4. Java (https://cheonhyangzhang.gitbooks.io/leetcode-solutions/content/332-reconstruct-itinerary.html) 코드가 길다..
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
