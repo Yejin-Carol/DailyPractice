@@ -2367,5 +2367,50 @@ def findItinerary(self, tickets: List[List[str]]) -> List[str]:
         # 뒤집어 어휘 순 결과
         return route[::-1]
 ```
+
+2021-12-22
+
+207. Course Schedule (Medium)
+
+1. DFS 순환 구조 판결 (Time Limit Exceeded)
+*  순환 구조 판별 for a in list(graph): list()로 감싼것은 RuntimeError 예방책
+       
+2. 가지치기를 이용한 최적화 (visted 활용!)
+
+```python
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = collections.defaultdict(list)
+        for a, b in prerequisites:
+            graph[a].append(b)
+            
+        traced = set()
+        visited = set() # 방문한 노드 저장    
+        
+        def dfs(i):
+            # 순환 구조-False
+            if i in traced:
+                return False
+            
+            if i in visited:
+                return True
+        
+            traced.add(i)
+            for b in graph[i]:
+                if not dfs(b):
+                    return False
+            # 탐색 종료 후 순환 노드 삭제
+            traced.remove(i)
+            visited.add(i)
+            
+            return True
+        
+        # 순환 구조 판별
+        for a in list(graph):
+            if not dfs(a):
+                return False
+                
+        return True
+```
 4. Java (https://cheonhyangzhang.gitbooks.io/leetcode-solutions/content/332-reconstruct-itinerary.html) 코드가 길다..
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
+
