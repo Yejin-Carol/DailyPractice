@@ -2411,6 +2411,46 @@ def findItinerary(self, tickets: List[List[str]]) -> List[str]:
                 
         return True
 ```
+
 4. Java (https://cheonhyangzhang.gitbooks.io/leetcode-solutions/content/332-reconstruct-itinerary.html) 코드가 길다..
+
+2021-12-23
+
+경로 탐색 
+- 최단 경로 문제
+- Diijkstra Algorithm: 항상 노드 주변의 최단 거리 택하는 Greedy Algorithm 중 하나로 BFS 
+- 참고 Occam's Razor (단순한 알고리즘 가장 훌륭!)
+
+743. Network Delay Time (Medium)
+- 우선순위 큐를 최소 힙 (Min Heap)으로 구현한 모듈인 heapq 사용하는 형태로 구현. pseudo code 이해
+- 참고: https://www.youtube.com/watch?v=EaphyqKU4PQ
+
+```python
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+    
+        edges = collections.defaultdict(list)
+        for u, v, w in times:
+            edges[u].append((v, w))
+            
+        minHeap = [(0, k)]
+        visited = set()
+        result = 0 
+        while minHeap:
+            w1, n1 = heapq.heappop(minHeap)
+            if n1 in visited:
+                continue
+            visited.add(n1)
+            result = max(result, w1)
+            
+            for n2, w2 in edges[n1]:
+                if n2 not in visited:
+                    heapq.heappush(minHeap, (w1 + w2, n2))
+        
+        return result if len(visited) == n else -1
+```
+
+
+
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
 
