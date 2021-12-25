@@ -2449,7 +2449,64 @@ class Solution:
         
         return result if len(visited) == n else -1
 ```
+2021-12-25
+* Q. 787. Cheapest Flights Within Stops
+경로 탐색 (최단 경로 문제)
+- Diijkstra Algorithm
+1. 출발 노드 설정
+2. 최단 거리 테이블 초기화
+3. 방문하지 않은 노드 중 최단 거리가 가장 짧은 노드 선택
+4. 해당 노드를 거쳐 다른 노드로 가는 비용 계산해 최단 거리 테이블 갱신
+5. 3, 4번 반복
 
+    - 교재 풀이 Time Limit Exeeded....
+
+```python
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        graph = collections.defaultdict(list)
+        #그래프 인전 리스트 구정
+        for u, v, w in flights:
+            graph[u].append((v, w))
+        
+        # Q 변수: [(가격, 정점, 남은 가능 경유지 수)]
+        Q = [(0, src, K)]
+        
+        # 우선순위 큐 최솟값 기준으로 도착점까지 최소 비용 판별
+        while Q:
+            price, node, k = heapq.heappop(Q)
+            if node == dst:
+                return price
+            if k >= 0:
+                for v, w in graph[node]:
+                    alt = price + w
+                    heapq.heappush(Q, (alt, v, k - 1))        
+        return -1
+```
+
+- Bellman-Ford로 풀기 (참고: https://www.youtube.com/watch?v=5eIK3zUdYmE): with at most k stops 이라는 조건 때문에 다익스타라 추천하지 않았음;;
+tmpPrices 만들어서 코딩.
+
+```python
+
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        prices = [float("inf")] * n #infinity
+        prices[src] = 0
+        
+        for i in range(k + 1):
+            tmpPrices = prices.copy()
+            
+            for s, d, p in flights: # s=source, d=destination, p=price
+                if prices[s] == float("inf"):
+                    continue
+                # src + price < dst로 직항보다 가격이 적으면 tmp 업데이트    
+                if prices[s] + p  < tmpPrices[d]:
+                    tmpPrices[d] = prices[s] + p 
+                    
+            prices = tmpPrices
+        
+        return -1 if prices[dst] == float("inf") else prices[dst]
+```
 
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
