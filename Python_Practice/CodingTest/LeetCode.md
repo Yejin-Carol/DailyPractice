@@ -2507,7 +2507,66 @@ tmpPrices 만들어서 코딩.
         
         return -1 if prices[dst] == float("inf") else prices[dst]
 ```
+2021-12-26
 
+Tree : 계층형 트리 구조를 시뮬레이션 하는 추상 자료형(ADT), root에서 시작. Parent-Child 관계가지고, Edge(간선)으로 연결, 차수(Degree = Node의 개수), Size는 자신을 포함한! 모든 자식 노드의 개수. Height (현재 위치에서부터 Leaf까지의 거리) , Depth는 root에서부터 현재 노드까지의 거리.
+
+* Graph vs Tree
+    - Tree는 순환 구조(Cyclic)를 갖지 않는 그래프
+    - Tree는 특수한 형태의 그래프의 일종, 크게 그래프의 범주에 포함됨.
+    - 그래프와 달리 한번 연결된 노드가 다시 연결되는 법 없음. 
+    - 단방향(Uni-Directional), 양방향(Bi-Directional) 모두 가리킬 수 있는 그래프와 달리, 트리는 부모 노드에서 자식 노드를 가리키는 단방향뿐임.
+    - Tree는 하나의 부모 노드를 가짐 
+* 이진 트리 vs 이진 탐색 트리BST (Binary Search Tree)
+    - 각 노드가 m개 이하의 자식을 갖고 있으면, m-ary트리(다항 트리, 다진 트리)라고 함.
+    - m = 2, 모든 노드의 차수가 2이하일 때 특별히 이진 트리(Binary Tree)라고 구분해서 부름. 
+    - 이진 트리는 왼쪽, 오른쪽 최대 2개의 자식을 갖는 매우 단순한 형태.
+    - 이진 트리 대표적인 유형 3가지 (그림이 이해 더 쉬움)
+        - 정 이진 트리(Full Binary Tree): 모든 노드가 0개 또는 2개의 자식 노드를 가짐
+        - 완전 이진 트리(Complete Binary Tree): 마지막 레벨 제외하고 모든 레벨 완전히 채워져 있으며, 마지막 레벨 모든 노드는 가장 왼쪽부터 채워져 있음.
+        - 포화 이진 트리(Perfect Binary Tree): 모든 노드가 2개의 자식 노드를 갖고 있으며, 모든 리프 노드가 동일한 깊이 또는 레벨 가짐. 
+
+* 104. Maximum Depth of Binary Tree (Easy)
+    - 깊이 측정은 BFS (Breadth First Search, 너비 우선 탐색, Queue), 참고: DFS (Stack)
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if root is None:
+            return 0        
+        queue = collections.deque([root])
+        depth = 0
+        
+        while queue: 
+            depth += 1
+            #큐 연산 추출 노드의 자식 노드 삽입
+            for _ in range(len(queue)):
+                cur_root = queue.popleft()
+                if cur_root.left:
+                    queue.append(cur_root.left)
+                if cur_root.right:
+                    queue.append(cur_root.right)
+        # BFS 반복 횟수 == 깊이            
+        return depth
+```
+
+* 간단한 Java 풀이 (else의 1+를 뒤에 붙이면 fail 주의!)
+참고: https://www.tutorialcup.com/leetcode-solutions/maximum-depth-of-binary-tree-leetcode-solution.htm
+```java
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null)
+            return 0;
+        else return 1+Math.max(maxDepth(root.left), maxDepth(root.right));        
+    }
+}
+```
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
 
