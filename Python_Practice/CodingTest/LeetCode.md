@@ -2568,5 +2568,48 @@ class Solution {
 }
 ```
 
+2021-12-27
+
+* 543. Diameter of Binary Tree (Easy)
+    - 상태값 누적 트리 DFS (Stack)
+    - python: 중첩 합수에서 클래스 변수 사용하는 이유는 self.longest를 사용해 longest 변수에 값을 재할당 했기 때문이며 변수 값이 숫자나 문자가 아닌 리스트나 딕셔너리 자료형이라면 append() 등의 메소드 이용해 재할당 없이 조작 가능. longest처럼 숫자나 문자인 경우 불변 객체이므로 함수 내 값 변경 불가능하므로 클래스 변수 사용.
+```python
+class Solution:
+    longest: int = 0
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        def dfs(node: TreeNode) -> int:
+            if not node:
+                return -1 #Full Binary 아닌 경우 패널티처럼 부여
+            # left, right 각 leaf node까지 탐색
+            left = dfs(node.left)
+            right = dfs(node.right)
+            self.longest = max(self.longest, left + right + 2) # 거리
+            return max(left, right) + 1 #상태값
+        
+        dfs(root)
+        return self.longest 
+```
+
+* Java 풀이 
+참고: https://escapefromcoding.tistory.com/162
+```java
+class Solution {
+    int longest = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if(root==null) return -1;
+        DFS(root);
+        return longest;
+    }
+    public int DFS(TreeNode root) {
+        if(root==null) return -1;
+        int left = DFS(root.left);
+        int right = DFS(root.right);
+        longest = Math.max(longest, left+right+2);
+        return Math.max(left, right) + 1;
+    }
+}
+```
+
+
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
 
