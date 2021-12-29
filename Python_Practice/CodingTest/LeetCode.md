@@ -2610,6 +2610,72 @@ class Solution {
 }
 ```
 
+687. Longest Univalue Path
+* Python
+```python
+class Solution:
+    result: int = 0
+    
+    def longestUnivaluePath(self, root: Optional[TreeNode]) -> int:    
+        def dfs(node: TreeNode):
+            if node is None:
+                return 0 
+            
+            # 존재하지 않는 노드까지 DFS 재귀 탐색
+            left = dfs(node.left)
+            right = dfs(node.right)
+            
+            if node.left and node.left.val == node.val:
+                left += 1
+            else:
+                left = 0
+            if node.right and node.right.val == node.val:
+                right += 1
+            else:
+                right = 0
+            
+            
+            self.result = max(self.result, left + right)
+            
+            return max(left, right)
+            
+        dfs(root)
+        return self.result
+            
+```
+* Java
+```java
+class Solution {
+        int result;
+    public int longestUnivaluePath(TreeNode root) {
+        result = 0;
+        arrowLength(root);
+        return result;
+    }
+    public int arrowLength(TreeNode node) {
+        if(node == null) {
+            return 0;
+        }
+        
+        int left = arrowLength(node.left);
+        int right = arrowLength(node.right);
+        
+        int arrowLeft = 0, arrowRight = 0;
+        
+        if (node.left != null && node.left.val == node.val) {
+            arrowLeft += left + 1;
+        }
+        if (node.right != null && node.right.val == node.val) {
+            arrowRight += right + 1;
+        }
+        
+        result = Math.max(result, arrowLeft + arrowRight);
+        return Math.max(arrowLeft, arrowRight);
+    }
+    
+}
+```
+
 
 * References: 파이썬 알고리즘 인터뷰, 각종 유튜브, 블로그
 
