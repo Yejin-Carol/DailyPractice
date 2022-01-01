@@ -1,4 +1,4 @@
-2021-01-01
+2022-01-01
 
 226. Invert Binary Tree (Easy)
 
@@ -68,3 +68,41 @@ class Solution {
     }
 }
 ```
+2022-01-02
+
+617. Merge Two Binary Trees
+
+- Recursive (post-order)
+```python
+class Solution:
+    def mergeTrees(self, t1: TreeNode, t2: TreeNode) -> TreeNode:
+        if t1 and t2:
+            node = TreeNode(t1.val + t2.val)
+            node.left = self.mergeTrees(t1.left, t2.left)
+            node.right = self.mergeTrees(t1.right, t2.right)
+            
+            return node
+        else:
+            return t1 or t2
+```
+
+- Java (참고: https://afteracademy.com/blog/merge-two-binary-trees)
+1) Recursive
+```java
+class Solution {
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        if(root1 == null) {
+            return root2;
+        } else if(root2 == null) {
+            return root1; 
+        }
+        root1.val += root2.val;
+        root1.left = mergeTrees(root1.left, root2.left);
+        root1.right = mergeTrees(root1.right, root2.right);
+        
+        return root1;        
+        
+    }
+}
+```
+2) Iterator (by using stack-more complicated)
