@@ -106,3 +106,54 @@ class Solution {
 }
 ```
 2) Iterator (by using stack-more complicated)
+
+2022-01-03
+
+297. Serialize and Deserialize Binary Tree (Hard - referenced by the textbook)
+- file, disk -> Serialize <-> Deserialize
+- Pickle: serialization module of python 
+- Pickling: Hierarchy Structure -> Byte Stream (Marshalling, Flattening, etc.)
+``` python
+class Codec:
+
+    def serialize(self, root: TreeNode) -> str:
+        queue = collections.deque([(root)])
+        result = ['#']
+        # Tree BFS Serialization
+        while queue:
+            node = queue.popleft()
+            if node:
+                queue.append(node.left)
+                queue.append(node.right)
+                
+                result.append(str(node.val))
+            else : 
+                result.append('#')
+        return ' '.join(result)
+
+    def deserialize(self, data: str) -> TreeNode:
+        # Exception
+        if data == '# #':
+            return None
+        
+        nodes = data.split()
+        
+        root = TreeNode(int(nodes[1]))
+        queue = collections.deque([root])
+        index = 2
+        # like fast runner
+        while queue:
+            node = queue.popleft()
+            if nodes[index] is not '#':
+                node.left = TreeNode(int(nodes[index]))
+                queue.append(node.left)
+            index += 1
+            
+            if nodes[index] is not '#':
+                node.right = TreeNode(int(nodes[index]))
+                queue.append(node.right)
+            index += 1
+        return root
+        
+```
+
