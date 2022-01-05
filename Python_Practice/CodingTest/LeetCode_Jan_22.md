@@ -221,3 +221,27 @@ class Solution:
 
 * AVL tree, Red-Black tree, Hash Table (Seperate Chaining)
 
+2022-01-06
+
+108. Convert Sorted Array to Binary Search Tree
+
+* Asc -> height-balanced binary search tree (the depth of the two substrees of every node never differs by more than one)
+* Binary Tree (finding log(n) value in any arranged array)
+* BST is also based on an arranged array.
+* Using Python Slicing
+    - //: Divides the number on its left by the number on its right, rounds down the answer, and returns a whole number.
+
+```python
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if not nums:
+            return None
+        
+        mid = len(nums) // 2
+        
+        node = TreeNode(nums[mid])
+        node.left = self.sortedArrayToBST(nums[:mid])
+        node.right = self.sortedArrayToBST(nums[mid + 1:])
+        
+        return node
+```
