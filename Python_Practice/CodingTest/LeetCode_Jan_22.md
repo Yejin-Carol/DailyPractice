@@ -245,3 +245,58 @@ class Solution:
         
         return node
 ```
+2022-01-10
+
+938. Range Sum of BST (Easy)
+
+* In Binary Tree, left values are lower than the root but right values are greater than 
+* Iterative DFS
+
+```python
+class Solution:
+    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
+        stack, sum = [root], 0
+        while stack:
+            node = stack.pop()
+            if node:
+                if node.val > low:
+                    stack.append(node.left)
+                if node.val < high:
+                    stack.append(node.right)
+                if low <= node.val <= high:
+                    sum += node.val
+        return sum
+```
+
+* O(n) - Java
+```java
+class Solution {
+    int sum = 0;
+    
+    public int rangeSumBST(TreeNode root, int low, int high) {
+      
+        if(root == null)
+            return sum;
+        
+        calculateSum(root, low, high);
+            
+        return sum;
+    }
+    private void calculateSum(TreeNode root, int low, int high) {
+        
+        if(root == null)
+            return;
+        
+        if(root.val > low)
+            calculateSum(root.left, low, high);
+        
+        if(root.val >= low && root.val <= high) {
+            sum = sum + root.val;
+            
+        }
+                
+        if(high > root.val)
+            calculateSum(root.right, low, high);  
+    }
+}
+```
