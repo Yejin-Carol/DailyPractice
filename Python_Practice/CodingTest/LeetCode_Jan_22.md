@@ -300,3 +300,52 @@ class Solution {
     }
 }
 ```
+2022-01-11
+
+783. Minimum Distance Between BST Nodes
+
+* Tree Traversals (트리 순회): 1. Pre-Order (전위 순회, NLR), 2. In-Order (중위 순회, LNR), 3. Post-Order (후위 순회, LRN) (L: Left, R: Right, N: 8Node itself)
+
+* Recursive Inorder Traversal
+```python
+class Solution:
+    prev = -sys.maxsize
+    result = sys.maxsize
+        
+    
+    def minDiffInBST(self, root: Optional[TreeNode]) -> int:
+        if root.left:
+            self.minDiffInBST(root.left)
+            
+        self.result = min(self.result, root.val - self.prev)
+        self.prev = root.val
+            
+        if root.right:
+            self.minDiffInBST(root.right)
+        
+        return self.result
+```       
+* Iterative Inorder Traversal
+```python
+class Solution:
+    def minDiffInBST(self, root: Optional[TreeNode]) -> int:
+        prev = -sys.maxsize
+        result = sys.maxsize
+            
+        stack = []
+        node = root
+            
+        while stack or node:
+            while node:
+                stack.append(node)
+                node = node.left
+            
+            node = stack.pop()
+            
+            result = min(result, node.val - prev)
+            prev = node.val
+            
+            node = node.right
+        
+        return result      
+```
