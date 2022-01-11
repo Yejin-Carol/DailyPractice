@@ -349,3 +349,68 @@ class Solution:
         
         return result      
 ```
+2022-01-12
+
+105. Construct Binary Tree from Preorder and Inorder Traversal (Medium..)
+
+* Pre-order
+* In-order: Confusing... Divide and Conquer
+
+* Python
+```python
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if inorder:
+            #preorder: pop(0) -> O(n):Time Complexity
+            index = inorder.index(preorder.pop(0))
+            
+            #inorder: divde and conquer
+            node = TreeNode(inorder[index])
+            node.left = self.buildTree(preorder, inorder[0:index])
+            node.right = self.buildTree(preorder, inorder[index + 1:])
+            
+            return node
+```            
+
+* Java
+```java
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
+        
+        for(int i=0; i<inorder.length; i++) {
+            inMap.put(inorder[i], i);
+        }
+        
+        TreeNode root = buildTree(preorder, 0, preorder.length -1, 
+                                  inorder, 0, inorder.length -1, inMap);
+        return root;
+    }
+    public TreeNode buildTree(int[] preorder, int preStart, int preEnd, 
+                             int[] inorder, int inStart, int inEnd,
+                             Map<Integer, Integer> inMap) {
+        
+        if(preStart > preEnd || inStart > inEnd) return null;
+        
+        TreeNode root = new TreeNode(preorder[preStart]);
+        
+        int inRoot = inMap.get(root.val);
+        int numsLeft = inRoot - inStart;
+        
+        root.left = buildTree(preorder, preStart + 1, preStart + numsLeft,
+                             inorder, inStart, inRoot - 1, inMap);
+        
+        root.right = buildTree(preorder, preStart + numsLeft + 1, preEnd, 
+                              inorder, inRoot + 1, inEnd, inMap);
+        
+        return root;
+    }
+        
+}
+```
+
+* referece: 
+    -Data Structure: https://yoongrammer.tistory.com/70#:~:text=Output%3A%20A%20B%20D%20E%20C%20F%20G-,%EC%A4%91%EC%9C%84%20%EC%88%9C%ED%9A%8C%20(Inorder%20Traversal),%EC%9D%84%20%EA%B0%80%EC%A0%B8%EC%98%AC%20%EB%95%8C%20%EC%82%AC%EC%9A%A9%EB%90%A9%EB%8B%88%EB%8B%A4.
+
+    -Java: https://www.youtube.com/watch?time_continue=946&v=aZNaLrVebKQ&feature=emb_logo
+
