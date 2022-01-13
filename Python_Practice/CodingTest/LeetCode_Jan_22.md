@@ -414,3 +414,53 @@ class Solution {
 
     -Java: https://www.youtube.com/watch?time_continue=946&v=aZNaLrVebKQ&feature=emb_logo
 
+2022-01-13
+
+- Heap: In Min Heap, values of parents are always equal or lower than their children. Almost Complete Tree. Also, heap is used in Prim's Algorithm like Minimum Spanning Tree (최소 신장 트리) and finding Approximation (근사값) quickly.
+
+  - Especially in binary heap, it is always used from index 1.
+  - Insertion: Up-Heap: percolate_up(), insert(): self.items.append()
+
+
+2022-01-14
+
+215. Kth Largest Element in an Array
+* for _ in rage: "we don't care about the iterator value, just that it should run some specific number of times". (https://stackoverflow.com/questions/66425508/what-is-the-meaning-of-for-in-range)
+
+* Solution 1: heapq module
+```python
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        heap = list()
+        for n in nums:
+            heapq.heappush(heap, -n)
+                
+        for _ in range(1, k):
+            heapq.heappop(heap)
+        
+        return -heapq.heappop(heap)
+```
+
+* Solution 2: heapify() : w/o push
+```python
+def findKthLargest(self, nums: List[int], k: int) -> int:
+        heapq.heapify(nums)
+        
+        for _ in range(len(nums) - k):
+            heapq.heappop(nums)
+            
+        return heapq.heappop(nums)
+```        
+
+* Solution 3: nlargest in heapq module
+```python
+def findKthLargest(self, nums: List[int], k: int) -> int:
+        return heapq.nlargest(k, nums)[-1]
+```
+
+* Solution 4: array
+```python
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        return sorted(nums, reverse=True)[k - 1]
+```
+* Java: https://www.programcreek.com/2014/05/leetcode-kth-largest-element-in-an-array-java/
