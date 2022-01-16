@@ -464,3 +464,56 @@ def findKthLargest(self, nums: List[int], k: int) -> int:
         return sorted(nums, reverse=True)[k - 1]
 ```
 * Java: https://www.programcreek.com/2014/05/leetcode-kth-largest-element-in-an-array-java/
+
+2022-01-17
+
+* Trie: it is a type of Tree Data Structure and the keys are normally String type (used to efficiently store and retrieve keys in a dataset of strings such as autocomplete and spellchecker - LeetCode).  It uses for dynamic array or for saving the related array. It is used widely in NLP (Natural Language Processing) and it orinigally comes from the word 'retrieval (the process of getting stored information from a computer, 검색/인출)', m-ary (k-ary or k-way) Tree
+
+208. Implement Trie (Prefix Tree)
+* Dictionary
+
+```python
+class TrieNode:
+    def __init__(self):
+        self.word = False
+        # self.children = {}
+        self.children = collections.defaultdict(TrieNode)
+        
+class Trie:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        node = self.root
+        for char in word:
+            # if char not in node.children:
+                # node.children[char] = TrieNode()
+            node = node.children[char]
+        node.word = True   
+
+    def search(self, word: str) -> bool: #if the string word is in the trie
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        
+        return node.word
+
+    def startsWith(self, prefix: str) -> bool:#return true if there is a previously inserted stirng word that has the prefix
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        
+        return True
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
+```
