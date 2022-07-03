@@ -21,6 +21,7 @@ SELECT name AS 'Customers' FROM Customers
 SELECT Name AS 'Customers' FROM Customers c LEFT JOIN Orders o ON c.Id = o.CustomerId WHERE o.CustomerId IS NULL
 
 1873. Calculate Special Bonus
+
 ![image](https://user-images.githubusercontent.com/81130006/177058733-6c4fd249-d784-4462-9e2c-1464e4222027.png)
 * CASE, ORDER BY 
 SELECT employee_id,
